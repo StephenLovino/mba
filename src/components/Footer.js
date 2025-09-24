@@ -36,7 +36,7 @@ const Footer = () => {
           
           <div className="footer-bottom">
             <p className="copyright">© MBA 2024. All Rights Reserved.</p>
-            <p className="designer">Designed by Wize</p>
+            <p className="designer">Designed by SL</p>
           </div>
         </div>
       </div>

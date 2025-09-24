@@ -24,13 +24,14 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('https://framerusercontent.com/images/pA9bUThxVP8czm17AmfCWp313o.jpg');
+  background-image: url('./pA9bUThxVP8czm17AmfCWp313o.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   z-index: -1;
   filter: brightness(0.4);
+  animation: kenburns-bg 24s ease-in-out infinite alternate;
 }
 
 code {
@@ -117,5 +118,24 @@ code {
   
   .section-subtitle {
     font-size: 1.125rem;
+  }
+}
+
+/* Subtle Ken Burns motion on the background image */
+@keyframes kenburns-bg {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0) rotate(0deg);
+    filter: brightness(0.4) saturate(1);
+  }
+  100% {
+    transform: scale(1.08) translate3d(2%, -2%, 0) rotate(0.2deg);
+    filter: brightness(0.45) saturate(1.05);
+  }
+}
+
+/* Respect user preference to reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
   }
 }
