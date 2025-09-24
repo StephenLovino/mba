@@ -9,7 +9,7 @@ const Footer = () => {
           <div className="footer-cta">
             <h3 className="cta-title">Join the community</h3>
             <p className="cta-description">
-              With Valour, your satisfaction is our priority. If you're not completely satisfied with your learning experience within [specific time frame], we'll refund your investment, no questions asked.
+              With MBA, your satisfaction is our priority. If you're not completely satisfied with your learning experience within [specific time frame], we'll refund your investment, no questions asked.
             </p>
             
             <div className="social-links">
@@ -21,7 +21,7 @@ const Footer = () => {
           
           <div className="footer-main">
             <div className="footer-brand">
-              <h4 className="brand-title">Valour - Framer Template for Course Creators</h4>
+              <h4 className="brand-title">MBA - Webinar Training</h4>
             </div>
             
             <div className="footer-links">
@@ -35,7 +35,7 @@ const Footer = () => {
           </div>
           
           <div className="footer-bottom">
-            <p className="copyright">© Valour 2024. All Rights Reserved.</p>
+            <p className="copyright">© MBA 2024. All Rights Reserved.</p>
             <p className="designer">Designed by Wize</p>
           </div>
         </div>

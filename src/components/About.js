@@ -9,10 +9,10 @@ const About = () => {
           <div className="about-text">
             <h2>Meet Mai Nguyen</h2>
             <p>
-              Meet Mai Nguyen, the visionary founder behind Valour. With a passion for education and a diverse background in [relevant field], Mai's mission is to empower learners worldwide.
+              Meet Mai Nguyen, the visionary founder behind MBA. With a passion for education and a diverse background in [relevant field], Mai's mission is to empower learners worldwide.
             </p>
             <p>
-              Her commitment to excellence drives every aspect of Valour, ensuring an enriching experience that propels students toward success. Join Mai on this transformative journey with Valour.
+              Her commitment to excellence drives every aspect of MBA, ensuring an enriching experience that propels students toward success. Join Mai on this transformative journey with MBA.
             </p>
             <div className="about-stats">
               <div className="stat">

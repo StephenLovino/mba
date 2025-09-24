@@ -1,6 +1,6 @@
-# Valour Template Clone
+# MBA Webinar Site
 
-A React clone of the Valour course creator template from [valourtemplate.framer.website](https://valourtemplate.framer.website). This project replicates the exact design, layout, and visual elements of the original Framer template.
+React site for the MBA webinar, styled to match our design system and content.
 
 ## Features
 
@@ -32,7 +32,7 @@ A React clone of the Valour course creator template from [valourtemplate.framer.
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd valour-template-clone
+cd mba-site
 ```
 
 2. Install dependencies:
@@ -98,10 +98,10 @@ src/
 
 ## License
 
-This project is for educational purposes. The original design belongs to the Valour template creators.
+This project is for educational purposes.
 
 ## Credits
 
-- Original design: [Valour Framer Template](https://valourtemplate.framer.website)
+ 
 - Font: Inter (Google Fonts)
 - Icons: Custom CSS icons
