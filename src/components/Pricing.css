@@ -135,6 +135,14 @@
 
 .plan-cta { width: 100%; text-align: center; padding: 14px 24px; font-size: 1rem; border-radius: 9999px; background: linear-gradient(90deg, var(--brand-pink) 0%, var(--brand-bluegreen) 100%); display: inline-flex; align-items: center; justify-content: center; }
 
+/* Footer texts under the CTA */
+.plan-guarantee,
+.plan-limited {
+  text-align: center;
+  margin-top: 0.5rem;
+  color: rgba(255,255,255,0.8);
+}
+
 @media (max-width: 768px) {
   .pricing-plans {
     grid-template-columns: 1fr;
