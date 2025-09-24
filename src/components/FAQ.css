@@ -19,7 +19,7 @@
 }
 
 .faq-item {
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
   margin-bottom: 1rem;
 }
 
@@ -35,69 +35,68 @@
   align-items: center;
   font-size: 1.1rem;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--brand-bluegreen, #6fccdb);
   transition: color 0.3s ease;
 }
 
-.faq-question:hover {
-  color: #667eea;
-}
+.faq-question:hover { color: var(--brand-bluegreen-dark, #50a6af); }
 
 .faq-icon {
   width: 30px;
   height: 30px;
-  background: #f8f9fa;
+  background: rgba(255,255,255,0.08);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
   font-weight: 600;
-  color: #667eea;
+  color: var(--brand-bluegreen, #6fccdb);
   transition: all 0.3s ease;
   flex-shrink: 0;
 }
 
 .faq-item.open .faq-icon {
-  background: #667eea;
-  color: white;
+  background: var(--brand-bluegreen, #6fccdb);
+  color: #0b0b0b;
 }
 
 .faq-answer {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease;
+  transition: max-height 0.4s ease;
 }
 
 .faq-item.open .faq-answer {
-  max-height: 200px;
+  max-height: 500px;
 }
 
 .faq-answer p {
   padding: 0 0 1.5rem 0;
-  color: #666;
-  line-height: 1.6;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.8;
   margin: 0;
 }
 
 .faq-cta {
   text-align: center;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
   padding: 3rem 2rem;
   border-radius: 16px;
   margin-top: 2rem;
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
 .cta-title {
   font-size: 2rem;
   font-weight: 800;
-  color: #1a1a1a;
+  color: #fff;
   margin-bottom: 1rem;
 }
 
 .cta-description {
   font-size: 1.1rem;
-  color: #666;
+  color: rgba(255,255,255,0.8);
   margin-bottom: 2rem;
   line-height: 1.6;
 }
@@ -116,12 +115,12 @@
 .stat-number {
   font-size: 2rem;
   font-weight: 800;
-  color: #667eea;
+  color: var(--brand-bluegreen, #6fccdb);
 }
 
 .stat-label {
   font-size: 1rem;
-  color: #666;
+  color: rgba(255,255,255,0.8);
   font-weight: 500;
 }
 
