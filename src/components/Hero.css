@@ -120,6 +120,42 @@
   transform: translateY(-2px);
 }
 
+/* Claymorphism enhancements (only when Clay mode is ON) */
+body.clay .hero-badge {
+  background: #181c22;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 10px 10px 24px rgba(0,0,0,0.45), -8px -8px 20px rgba(255,255,255,0.06);
+}
+
+body.clay .hero-actions .btn {
+  background: linear-gradient(145deg, #20242a, #13171c);
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 8px 8px 16px rgba(0,0,0,0.45), -6px -6px 14px rgba(255,255,255,0.05);
+}
+
+body.clay .hero-actions .btn.btn-primary {
+  background: linear-gradient(145deg, #a83086, #4db1bd);
+}
+
+body.clay .hero-actions .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 10px 10px 24px rgba(0,0,0,0.5), -8px -8px 22px rgba(255,255,255,0.07);
+}
+
+/* Stronger clay surface for the whole hero content */
+body.clay .hero > .container {
+  background: rgba(24, 28, 34, 0.9);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+  box-shadow: 18px 18px 36px rgba(0,0,0,0.55), -12px -12px 28px rgba(255,255,255,0.06);
+  padding-top: 32px;
+  padding-bottom: 32px;
+  overflow: visible;
+  position: relative;
+  pointer-events: auto;
+}
+
 .button-icon {
   display: flex;
   align-items: center;
@@ -209,6 +245,8 @@
   justify-content: center;
   gap: 30px;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 60;
 }
 
 .logo {

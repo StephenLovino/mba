@@ -35,7 +35,7 @@ const Pricing = () => {
         
         <div className="pricing-plans">
           {plans.map((plan, index) => (
-            <div key={plan.name} className={`plan ${plan.popular ? 'popular' : ''}`}>
+            <div key={plan.name} className={`plan ${plan.popular ? 'popular' : ''} ${typeof document !== 'undefined' && document.body.classList.contains('clay') ? 'clay-card' : ''}`}>
               {plan.popular && <div className="popular-badge">🔥 Popular</div>}
               
               <div className="plan-header">

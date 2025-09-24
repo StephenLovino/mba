@@ -54,7 +54,7 @@ const Testimonials = () => {
             {testimonials.map((testimonial, index) => (
               <div 
                 key={testimonial.id} 
-                className={`testimonial ${index === currentSlide ? 'active' : ''}`}
+                className={`testimonial ${index === currentSlide ? 'active' : ''} ${typeof document !== 'undefined' && document.body.classList.contains('clay') ? 'clay-card' : ''}`}
               >
                 <div className="testimonial-content">
                   <h3 className="testimonial-quote">"{testimonial.quote}"</h3>

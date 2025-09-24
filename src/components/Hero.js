@@ -74,8 +74,8 @@ const Hero = () => {
           
           <div className="trusted-by">
             <p>Tools You’ll Master</p>
-            <div className="trusted-logos" style={{justifyContent:'center'}}>
-              <Dock>
+            <div className="trusted-logos" style={{justifyContent:'center', pointerEvents:'auto', position:'relative', zIndex:20}}>
+              <Dock className="pointer-events-auto">
                 {/* AHA (provided asset) */}
                 <DockIcon href="#aha" name="AHA" src="https://storage.googleapis.com/msgsndr/LL7TmGrkL72EOf8O0FKA/media/48904ea3-fd99-4567-81a4-c3b6663a653d.png" />
                 {/* ChatGPT (OpenAI) */}

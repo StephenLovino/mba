@@ -23,6 +23,15 @@
   margin-bottom: 1rem;
 }
 
+/* Clay: lift each item into a soft card */
+body.clay .faq-item {
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 0 1rem;
+  background: rgba(24,28,34,.92);
+  box-shadow: 14px 14px 28px rgba(0,0,0,.5), -10px -10px 22px rgba(255,255,255,.06);
+}
+
 .faq-question {
   width: 100%;
   background: none;

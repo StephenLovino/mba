@@ -16,10 +16,10 @@
   content: '';
   position: fixed;
   inset: 0;
-  pointer-events: none;
+  pointer-events: none; /* keep overlay transparent to mouse */
   background: radial-gradient(1200px 600px at 20% 10%, rgba(168, 85, 247, 0.12), transparent 60%),
               radial-gradient(900px 500px at 80% 90%, rgba(59, 130, 246, 0.12), transparent 60%);
-  z-index: 0;
+  z-index: 1;
 }
 
 .story-content {

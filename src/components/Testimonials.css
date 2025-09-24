@@ -1,3 +1,10 @@
+.testimonial.clay-card {
+  background: rgba(24,28,34,.92);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 16px 16px 32px rgba(0,0,0,.5), -10px -10px 24px rgba(255,255,255,.06);
+}
 .testimonials {
   position: relative;
   background: transparent;

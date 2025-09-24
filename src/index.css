@@ -32,9 +32,10 @@ body::before {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  z-index: -1;
+  z-index: 0;
   filter: brightness(0.4);
   animation: kenburns-bg 24s ease-in-out infinite alternate;
+  pointer-events: none; /* never block mouse on desktop */
 }
 
 code {
@@ -179,4 +180,69 @@ code {
   background: rgba(10,10,12,0.85);
   border: 1px solid rgba(255,255,255,0.08);
   box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+/* Claymorphism theme (opt-in via body.clay) */
+body.clay {
+  background: radial-gradient(1200px 600px at 20% 10%, rgba(168, 85, 247, 0.08), transparent 60%),
+              radial-gradient(900px 500px at 80% 90%, rgba(59, 130, 246, 0.08), transparent 60%),
+              #0f1318;
+}
+
+.clay-card {
+  background: #181c22;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 10px 10px 24px rgba(0,0,0,0.45), -8px -8px 20px rgba(255,255,255,0.06);
+}
+
+.clay-btn {
+  background: linear-gradient(145deg, #20242a, #13171c);
+  box-shadow: 8px 8px 16px rgba(0,0,0,0.45), -6px -6px 14px rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Floating buttons site-wide when clay is on */
+body.clay .btn,
+body.clay .plan-cta,
+body.clay button {
+  box-shadow: 10px 16px 32px rgba(0,0,0,0.5), -6px -6px 14px rgba(255,255,255,0.06) !important;
+  transform: translateY(0) !important;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  position: relative;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+/* Provide clay background to non-outline buttons */
+body.clay .btn:not(.btn-outline),
+body.clay .plan-cta {
+  background: linear-gradient(145deg, #20242a, #12161b) !important;
+}
+
+body.clay .btn:hover,
+body.clay .plan-cta:hover,
+body.clay button:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 14px 22px 40px rgba(0,0,0,0.55), -8px -8px 18px rgba(255,255,255,0.08) !important;
+}
+
+body.clay .btn:active,
+body.clay .plan-cta:active,
+body.clay button:active {
+  transform: translateY(-1px) !important;
+  box-shadow: 8px 12px 24px rgba(0,0,0,0.45), -5px -5px 12px rgba(255,255,255,0.05), inset 0 2px 6px rgba(0,0,0,0.35) !important;
+}
+
+body.clay .btn.btn-primary {
+  background: linear-gradient(145deg, #a83086, #4db1bd) !important;
+}
+
+/* Ensure Dock sits above any clay containers and receives hover */
+.trusted-logos nav,
+.trusted-logos ul {
+  position: relative;
+  z-index: 5;
+  pointer-events: auto;
 }
