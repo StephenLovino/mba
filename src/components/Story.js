@@ -5,6 +5,8 @@ import ScrollReveal from './ui/ScrollReveal';
 const Story = () => {
   return (
     <section className="story section" id="story">
+      {/* Sticky background overlay to prevent underlying sections from showing through during reveals */}
+      <div className="story-sticky-bg" aria-hidden="true" />
       <div className="container">
         <div className="story-content">
           <div className="story-header">
