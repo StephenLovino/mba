@@ -2,9 +2,9 @@
   --hue: 27;
   --sat: 69%;
   --white: hsl(0, 0%, 100%);
-  --purple-primary: rgba(255, 107, 107, 1); /* Our pink color */
-  --purple-glow: rgba(255, 107, 107, 0.2);
-  --purple-border: rgba(255, 107, 107, 0.8);
+  --purple-primary: rgba(196, 76, 156, 1); /* brand pink */
+  --purple-glow: rgba(196, 76, 156, 0.2);
+  --purple-border: rgba(196, 76, 156, 0.8);
   --border-color: rgba(255, 255, 255, 0.2);
   --background-dark: #060010;
   color-scheme: light dark;
@@ -65,7 +65,7 @@
 .card__label {
   font-size: 16px;
   font-weight: 600;
-  color: #FF6B6B; /* Our pink accent color */
+  color: var(--brand-pink); /* brand accent */
 }
 
 .card__title,
@@ -146,8 +146,8 @@
   padding: 6px;
   background: radial-gradient(
     var(--glow-radius) circle at var(--glow-x) var(--glow-y),
-    rgba(255, 107, 107, calc(var(--glow-intensity) * 0.8)) 0%,
-    rgba(255, 107, 107, calc(var(--glow-intensity) * 0.4)) 30%,
+    rgba(196, 76, 156, calc(var(--glow-intensity) * 0.8)) 0%,
+    rgba(196, 76, 156, calc(var(--glow-intensity) * 0.4)) 30%,
     transparent 60%
   );
   border-radius: inherit;
@@ -170,7 +170,7 @@
 
 .card--border-glow:hover {
   box-shadow:
-    0 4px 20px rgba(255, 107, 107, 0.4),
+    0 4px 20px rgba(196, 76, 156, 0.4),
     0 0 30px var(--purple-glow);
 }
 
@@ -186,14 +186,14 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: rgba(255, 107, 107, 0.2);
+  background: rgba(196, 76, 156, 0.2);
   border-radius: 50%;
   z-index: -1;
 }
 
 .particle-container:hover {
   box-shadow:
-    0 4px 20px rgba(255, 107, 107, 0.2),
+    0 4px 20px rgba(196, 76, 156, 0.2),
     0 0 30px var(--purple-glow);
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import './Hero.css';
+import ShinyText from './ui/ShinyText';
 import { Dock, DockIcon } from './ui/dock';
 
 const Hero = () => {
@@ -8,15 +9,17 @@ const Hero = () => {
       <div className="container">
         <div className="hero-content">
           <div className="hero-badge">
-            <span>Build Apps, Portfolios, and Databases in Just 1 Hour – Guaranteed Results + AI Certification</span>
+            <span>AI Career Starter Pack: Apps, Portfolio & Certificate</span>
           </div>
           
           <h1 className="hero-title">
-            FROM ZERO TO AI HERO<span className="highlight">🚀</span>
+            <ShinyText text="FROM ZERO TO" speed={3} className="hero-title-thin" />{' '}
+            <span className="hero-title-strong">AI HERO</span>
+            <span className="highlight">🚀</span>
           </h1>
           
           <p className="hero-description">
-            Build Apps, Portfolios, and Databases in Just 1 Hour – Guaranteed Results + AI Certification
+            Launch Your AI Career: Build Real Apps & Get Certified in 1 Hour
           </p>
           
           <div className="hero-actions">
@@ -63,7 +66,7 @@ const Hero = () => {
           </div>
           
           <div className="trusted-by">
-            <p>Trusted by</p>
+            <p>Tools You’ll Master</p>
             <div className="trusted-logos" style={{justifyContent:'center'}}>
               <Dock>
                 {/* AHA (provided asset) */}

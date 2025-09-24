@@ -34,17 +34,20 @@
 
 .solution-section {
   margin-top: 32px; /* 4 * 8px */
+  max-width: 800px;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .solution-section h3 {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 16px; /* 2 * 8px */
-  color: #FF6B6B;
+  color: var(--brand-pink);
 }
 
 .story-text strong {
-  color: #FF6B6B;
+  color: var(--brand-pink);
   font-weight: 700;
 }
 
@@ -71,7 +74,7 @@
 .stat-number {
   font-size: 2rem;
   font-weight: 800;
-  color: #FF6B6B;
+  color: var(--brand-pink);
 }
 
 .stat-label {
@@ -98,7 +101,7 @@
 .feature-icon {
   width: 20px;
   height: 20px;
-  background: #FF6B6B;
+  background: var(--brand-pink);
   color: white;
   border-radius: 50%;
   display: flex;

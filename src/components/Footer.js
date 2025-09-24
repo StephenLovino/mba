@@ -21,7 +21,7 @@ const Footer = () => {
           
           <div className="footer-main">
             <div className="footer-brand">
-              <h4 className="brand-title">MBA - Webinar Training</h4>
+              <h4 className="brand-title">Millennial Business Academy</h4>
             </div>
             
             <div className="footer-links">
@@ -30,7 +30,7 @@ const Footer = () => {
               <a href="#contact" className="footer-link">Contact</a>
               <a href="#" className="footer-link">Terms & Conditions</a>
               <a href="#" className="footer-link">Privacy policy</a>
-              <a href="#" className="footer-link">Remix this template for free</a>
+              <a href="#" className="footer-link">Refund policy</a>
             </div>
           </div>
           

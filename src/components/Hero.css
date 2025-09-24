@@ -44,7 +44,7 @@
 
 .hero-title {
   font-size: 4.5rem; /* Increased for more shouting impact */
-  font-weight: 900; /* Maximum weight for shouting */
+  font-weight: 800; /* slightly lighter than 900 for better readability */
   margin-bottom: 32px; /* 4 * 8px */
   line-height: 1.1; /* Tighter for more impact */
   letter-spacing: -0.02em; /* Tighter letter spacing for impact */
@@ -53,11 +53,14 @@
 }
 
 .hero-title .highlight {
-  background: linear-gradient(90deg, #FF6B6B 0%, #4ECDC4 100%);
+  background: linear-gradient(90deg, var(--brand-pink) 0%, var(--brand-bluegreen) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+.hero-title-thin { font-weight: 300; }
+.hero-title-strong { font-weight: 900; }
 
 .hero-description {
   font-size: 1.375rem; /* Increased for better readability */
@@ -91,13 +94,14 @@
 }
 
 .btn-primary {
-  background: linear-gradient(90deg, #FF6B6B 0%, #4ECDC4 100%);
-  color: white;
+  background: linear-gradient(90deg, var(--brand-pink) 0%, var(--brand-bluegreen) 100%);
+  color: #ffffff;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+  background: linear-gradient(90deg, var(--brand-pink-dark) 0%, var(--brand-bluegreen-dark) 100%);
+  box-shadow: 0 10px 20px rgba(166, 48, 134, 0.35);
 }
 
 .button-icon {
@@ -152,7 +156,7 @@
 }
 
 .photo-4 {
-  background: linear-gradient(90deg, #FF6B6B 0%, #4ECDC4 100%);
+  background: linear-gradient(90deg, var(--brand-pink) 0%, var(--brand-bluegreen) 100%);
 }
 
 .stats-text {

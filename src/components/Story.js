@@ -1,5 +1,6 @@
 import React from 'react';
 import './Story.css';
+import ScrollReveal from './ui/ScrollReveal';
 
 const Story = () => {
   return (
@@ -7,23 +8,35 @@ const Story = () => {
       <div className="container">
         <div className="story-content">
           <div className="story-header">
-            <h2 className="section-title">Why This Webinar?</h2>
-            <p className="section-subtitle">If any of these sound familiar, you're in the right place</p>
+            <ScrollReveal rotationEnd="+=800 bottom" wordAnimationEnd="+=800 bottom">
+              Why This Webinar?
+            </ScrollReveal>
+            <ScrollReveal rotationEnd="+=800 bottom" wordAnimationEnd="+=800 bottom">
+              If any of these sound familiar, you're in the right place
+            </ScrollReveal>
           </div>
           
           <div className="story-text">
             <div className="problem-list">
-              <p>• Stuck in a job with no growth?</p>
-              <p>• No portfolio or GitHub projects to showcase?</p>
-              <p>• Overwhelmed by where to start in AI?</p>
-              <p>• Tired of expensive courses that give you no real results?</p>
+              <ScrollReveal rotationEnd="+=800 bottom" wordAnimationEnd="+=800 bottom">
+                • Stuck in a job with no growth?
+              </ScrollReveal>
+              <ScrollReveal rotationEnd="+=800 bottom" wordAnimationEnd="+=800 bottom">
+                • No portfolio or GitHub projects to showcase?
+              </ScrollReveal>
+              <ScrollReveal rotationEnd="+=800 bottom" wordAnimationEnd="+=800 bottom">
+                • Overwhelmed by where to start in AI?
+              </ScrollReveal>
+              <ScrollReveal rotationEnd="+=800 bottom" wordAnimationEnd="+=800 bottom">
+                • Tired of expensive courses that give you no real results?
+              </ScrollReveal>
             </div>
             
             <div className="solution-section">
               <h3>The Solution:</h3>
-              <p>
+              <ScrollReveal baseOpacity={0} enableBlur={true} baseRotation={5} blurStrength={10} rotationEnd="+=800 bottom" wordAnimationEnd="+=800 bottom">
                 This 3-hour hands-on sprint guarantees results: walk away with your first AI app, a GitHub-ready portfolio, and your AI certification.
-              </p>
+              </ScrollReveal>
             </div>
           </div>
           

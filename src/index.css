@@ -61,25 +61,27 @@ code {
   font-size: 16px;
 }
 
+/* Button brand styles */
 .btn-primary {
-  background: linear-gradient(90deg, #FF6B6B 0%, #4ECDC4 100%);
-  color: white;
+  background: linear-gradient(90deg, var(--brand-pink) 0%, var(--brand-bluegreen) 100%);
+  color: #ffffff;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+  background: linear-gradient(90deg, var(--brand-pink-dark) 0%, var(--brand-bluegreen-dark) 100%);
+  box-shadow: 0 10px 25px rgba(166, 48, 134, 0.35);
 }
 
 .btn-outline {
   background: transparent;
-  color: #FF6B6B;
-  border: 2px solid #FF6B6B;
+  color: var(--brand-pink);
+  border: 2px solid var(--brand-pink);
 }
 
 .btn-outline:hover {
-  background: #FF6B6B;
-  color: white;
+  background: var(--brand-pink);
+  color: #ffffff;
 }
 
 .section {
@@ -156,6 +158,13 @@ code {
   --popover: 0 0% 8%;
   --card: 0 0% 10%;
   --primary: 0 0% 100%;
+  /* Brand palette */
+  --brand-pink: #c44c9c;
+  --brand-bluegreen: #6fccdb;
+  --brand-pink-dark: #a63086;
+  --brand-bluegreen-dark: #50a6af;
+  --brand-gray: #17192e;
+  --brand-black: #000000;
 }
 
 /* Navigation menu content aesthetics */
