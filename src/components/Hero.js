@@ -8,6 +8,12 @@ const Hero = () => {
     <section className="hero" id="home">
       <div className="container">
         <div className="hero-content">
+          {/* Mobile logo above the banner */}
+          <img
+            className="hero-mobile-logo"
+            src={require('../MBA.png')}
+            alt="MBA"
+          />
           <div className="hero-badge">
             <span>AI Career Starter Pack: Apps, Portfolio & Certificate</span>
           </div>
@@ -22,12 +28,6 @@ const Hero = () => {
             Launch Your AI Career: Build Real Apps & Get Certified in 1 Hour
           </p>
 
-          {/* Mobile logo filler for spacing on small screens */}
-          <img
-            className="hero-mobile-logo"
-            src={require('../MBA.png')}
-            alt="MBA"
-          />
           
           <div className="hero-actions">
             <a href="#enroll" className="btn btn-primary">
