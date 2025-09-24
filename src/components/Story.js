@@ -43,7 +43,7 @@ const Story = () => {
           </div>
           
           <div className="story-cta">
-            <a href="#enroll" className="btn btn-primary">Enroll now</a>
+            <a href="/checkout" className="btn btn-primary">Enroll now</a>
             
             <div className="story-stats">
               <div className="stat">

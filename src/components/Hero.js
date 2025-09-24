@@ -30,7 +30,7 @@ const Hero = () => {
 
           
           <div className="hero-actions">
-            <a href="#enroll" className="btn btn-primary">
+            <a href="/checkout" className="btn btn-primary">
               <div className="button-icon">
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
                   <path d="M 13.084 19.699 L 16.855 15.995 L 13.084 12.292 C 12.705 11.919 12.705 11.318 13.084 10.946 C 13.463 10.574 14.076 10.574 14.455 10.946 L 18.916 15.327 C 19.295 15.699 19.295 16.301 18.916 16.673 L 14.455 21.054 C 14.076 21.426 13.463 21.426 13.084 21.054 C 12.715 20.682 12.705 20.071 13.084 19.699 Z" fill="white"/>

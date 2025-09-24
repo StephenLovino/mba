@@ -59,7 +59,7 @@ const Pricing = () => {
                 ))}
               </div>
               
-              <a href="#enroll" className="plan-cta btn btn-primary">
+              <a href="/checkout" className="plan-cta btn btn-primary">
                 Register Now - Only ₱888🚀
               </a>
               <p className="plan-guarantee">🔒 Secure payment • 💯 100% satisfaction guarantee</p>

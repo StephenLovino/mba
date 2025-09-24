@@ -246,3 +246,22 @@ body.clay .btn.btn-primary {
   z-index: 5;
   pointer-events: auto;
 }
+
+/* Stronger clay utilities for dome effect */
+body.clay {
+  --clay-surface: #181c22;
+  --clay-highlight: rgba(255,255,255,0.18);
+  --clay-shadow: rgba(0,0,0,0.55);
+}
+
+body.clay .clay-strong {
+  background: radial-gradient(120% 180% at 30% 20%, rgba(255,255,255,0.06), rgba(255,255,255,0.02)), var(--clay-surface);
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    18px 22px 40px var(--clay-shadow),
+    -12px -12px 28px rgba(255,255,255,0.06),
+    inset 8px 8px 16px rgba(0,0,0,0.35),
+    inset -8px -8px 18px var(--clay-highlight);
+  backdrop-filter: blur(10px);
+}

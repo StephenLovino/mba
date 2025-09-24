@@ -69,7 +69,7 @@ const FAQ = () => {
             <p className="cta-description">
               Your career transformation is just one click away. Join hundreds of students who've already made the leap to AI mastery.
             </p>
-            <a href="#enroll" className="btn btn-primary">Register for ₱888</a>
+            <a href="/checkout" className="btn btn-primary">Register for ₱888</a>
             
             <div className="cta-stats">
               <div className="stat">
