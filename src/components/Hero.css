@@ -35,6 +35,7 @@
   padding: 12px 24px; /* 1.5 * 8px, 3 * 8px */
   border-radius: 24px; /* 3 * 8px */
   font-size: 16px; /* Increased for better readability */
+  margin-top: 32px; /* match space below for visual balance */
   margin-bottom: 32px; /* 4 * 8px */
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
