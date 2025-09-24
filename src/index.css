@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   margin: 0;
   padding: 0;
@@ -138,4 +142,33 @@ code {
   body::before {
     animation: none;
   }
+}
+
+@keyframes accordion-down { from { height: 0; } to { height: var(--radix-accordion-content-height); } }
+@keyframes accordion-up { from { height: var(--radix-accordion-content-height); } to { height: 0; } }
+
+/* shadcn UI CSS variables for colors (light/dark neutral) */
+:root {
+  --background: 0 0% 6%;
+  --foreground: 0 0% 100%;
+  --muted: 0 0% 20%;
+  --accent: 0 0% 14%;
+  --border: 0 0% 20%;
+  --popover: 0 0% 8%;
+  --card: 0 0% 10%;
+  --primary: 0 0% 100%;
+}
+
+/* Navigation menu content aesthetics */
+[data-slot="navigation-menu-content"] {
+  background: rgba(10,10,12,0.85);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+[data-slot="navigation-menu-viewport"] {
+  background: rgba(10,10,12,0.85);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
 }
