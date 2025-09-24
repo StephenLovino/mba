@@ -67,14 +67,7 @@ const Testimonials = () => {
             ))}
           </div>
           
-          <div className="slider-controls">
-            <button className="slider-btn prev" onClick={prevSlide}>
-              <span>Back Arrow</span>
-            </button>
-            <button className="slider-btn next" onClick={nextSlide}>
-              <span>Next Arrow</span>
-            </button>
-          </div>
+          {/* slider controls removed for cleaner UI */}
         </div>
       </div>
     </section>
