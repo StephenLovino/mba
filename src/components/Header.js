@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavBar } from './ui/tubelight-navbar';
+import { Home, MessageSquare, Tag, Rocket } from 'lucide-react';
 import './Header.css';
 
 const Header = () => {
@@ -9,10 +10,10 @@ const Header = () => {
         <div className="header-content full-nav">
           <NavBar
             items={[
-              { name: 'MBA', url: '#home', icon: () => null },
-              { name: 'Testimonies', url: '#testimonials', icon: () => null },
-              { name: 'Pricing', url: '#pricing', icon: () => null },
-              { name: 'Get Started', url: '#enroll', icon: () => null },
+              { name: 'MBA', url: '#home', icon: Home },
+              { name: 'Testimonies', url: '#testimonials', icon: MessageSquare },
+              { name: 'Pricing', url: '#pricing', icon: Tag },
+              { name: 'Get Started', url: '#enroll', icon: Rocket },
             ]}
           />
         </div>
