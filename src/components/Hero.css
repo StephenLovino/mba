@@ -49,6 +49,7 @@
   line-height: 1.1; /* Tighter for more impact */
   letter-spacing: -0.02em; /* Tighter letter spacing for impact */
   text-transform: uppercase; /* Already uppercase in content, but ensure it */
+  font-family: 'Montserrat', sans-serif;
 }
 
 .hero-title .highlight {

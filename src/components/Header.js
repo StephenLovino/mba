@@ -10,7 +10,7 @@ const Header = () => {
           <NavBar
             items={[
               { name: 'Product', url: '#product', icon: () => null },
-              { name: 'Company', url: '#company', icon: () => null },
+              { name: 'Testimonies', url: '#testimonials', icon: () => null },
               { name: 'Pricing', url: '#pricing', icon: () => null },
               { name: 'Get Started', url: '#enroll', icon: () => null },
             ]}

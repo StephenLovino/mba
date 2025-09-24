@@ -1,5 +1,6 @@
 import React from 'react';
 import './Hero.css';
+import { Dock, DockIcon } from './ui/dock';
 
 const Hero = () => {
   return (
@@ -63,12 +64,23 @@ const Hero = () => {
           
           <div className="trusted-by">
             <p>Trusted by</p>
-            <div className="trusted-logos">
-              <div className="logo">Logoipsum</div>
-              <div className="logo">Logoipsum</div>
-              <div className="logo">Logoipsum</div>
-              <div className="logo">Logoipsum</div>
-              <div className="logo">Logoipsum</div>
+            <div className="trusted-logos" style={{justifyContent:'center'}}>
+              <Dock>
+                {/* AHA (provided asset) */}
+                <DockIcon href="#aha" name="AHA" src="https://storage.googleapis.com/msgsndr/LL7TmGrkL72EOf8O0FKA/media/48904ea3-fd99-4567-81a4-c3b6663a653d.png" />
+                {/* ChatGPT (OpenAI) */}
+                <DockIcon href="#chatgpt" name="ChatGPT" src="https://cdn.simpleicons.org/openai/10A37F" />
+                {/* Gemini */}
+                <DockIcon href="#gemini" name="Gemini" src="https://cdn.simpleicons.org/googlegemini/4285F4" />
+                {/* n8n */}
+                <DockIcon href="#n8n" name="n8n" src="https://cdn.simpleicons.org/n8n/FF6A6A" />
+                {/* GitHub */}
+                <DockIcon href="#github" name="GitHub" src="https://cdn.simpleicons.org/github/FFFFFF" />
+                {/* MySQL */}
+                <DockIcon href="#mysql" name="MySQL" src="https://cdn.simpleicons.org/mysql/4479A1" />
+                {/* Lovable (local asset) */}
+                <DockIcon href="#lovable" name="Lovable" src={require('../lovable-logo-icon.png')} />
+              </Dock>
             </div>
           </div>
         </div>
