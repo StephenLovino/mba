@@ -1,0 +1,121 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  color: #fff;
+  background: #000;
+  min-height: 100vh;
+}
+
+/* Unified background for entire page */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://framerusercontent.com/images/pA9bUThxVP8czm17AmfCWp313o.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  z-index: -1;
+  filter: brightness(0.4);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Global styles - 8-point spacing system */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px; /* 3 * 8px */
+}
+
+.btn {
+  display: inline-block;
+  padding: 16px 32px; /* 2 * 8px, 4 * 8px */
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #FF6B6B 0%, #4ECDC4 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  color: #FF6B6B;
+  border: 2px solid #FF6B6B;
+}
+
+.btn-outline:hover {
+  background: #FF6B6B;
+  color: white;
+}
+
+.section {
+  padding: 96px 0; /* 12 * 8px */
+}
+
+.section-title {
+  font-size: 3rem; /* Increased for more impact */
+  font-weight: 900; /* Increased weight */
+  text-align: center;
+  margin-bottom: 16px; /* 2 * 8px */
+  color: #fff;
+  line-height: 1.1; /* Tighter line height for impact */
+}
+
+.section-subtitle {
+  font-size: 1.25rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 48px; /* 6 * 8px */
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 16px; /* 2 * 8px */
+  }
+  
+  .section {
+    padding: 64px 0; /* 8 * 8px */
+  }
+  
+  .section-title {
+    font-size: 2.5rem; /* Still impactful on mobile */
+  }
+  
+  .section-subtitle {
+    font-size: 1.125rem;
+  }
+}

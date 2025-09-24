@@ -1,0 +1,25 @@
+.curriculum {
+  position: relative;
+  background: transparent;
+  color: #fff;
+}
+
+.curriculum-header {
+  text-align: center;
+  margin-bottom: 64px; /* 8 * 8px */
+}
+
+.curriculum-bento {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .curriculum-bento {
+    padding: 0 16px; /* 2 * 8px */
+  }
+}
