@@ -9,7 +9,7 @@ const Header = () => {
         <div className="header-content full-nav">
           <NavBar
             items={[
-              { name: 'Product', url: '#product', icon: () => null },
+              { name: 'MBA', url: '#home', icon: () => null },
               { name: 'Testimonies', url: '#testimonials', icon: () => null },
               { name: 'Pricing', url: '#pricing', icon: () => null },
               { name: 'Get Started', url: '#enroll', icon: () => null },
