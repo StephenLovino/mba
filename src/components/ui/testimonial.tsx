@@ -8,13 +8,13 @@ const testimonials = [
   {
     quote: "If you're seeing this, this is your sign! As an online freelancer for 5 years, I vouch for the mentors and the quality of training they provide.",
     name: "Kaye Araquel",
-    designation: "Student",
+    designation: "",
     src: "/stories/Kaye.png",
   },
   {
     quote: "Affordable bootcamp with approachable mentors. Kahit hindi ko pa natapos dahil busy, may recordings naman para sa mga nakalagpas na sessions.",
     name: "Aaron Arcilla",
-    designation: "Student",
+    designation: "",
     src: "/stories/Aaron.png",
   },
   {
@@ -26,31 +26,31 @@ const testimonials = [
   {
     quote: "Super affordable! Very well-structured even for beginners. The mentors teach with heart and patience. I learned so much in such a short time!",
     name: "Shak Ni Pearl",
-    designation: "Student",
+    designation: "",
     src: "/stories/Shak.png",
   },
   {
     quote: "The program exceeded my expectations! The hands-on approach and real-world projects helped me land my dream job in data analytics.",
     name: "Elvira",
-    designation: "Data Analyst",
+    designation: "",
     src: "/stories/Elvira.png",
   },
   {
     quote: "Best investment I've made for my career. The mentors are incredibly supportive and the curriculum is comprehensive.",
     name: "Jona",
-    designation: "Business Intelligence Specialist",
+    designation: "",
     src: "/stories/Jona.png",
   },
   {
     quote: "The practical approach and industry-relevant projects made all the difference. I'm now working as a senior analyst!",
     name: "Mae",
-    designation: "Senior Business Analyst",
+    designation: "",
     src: "/stories/Mae.png",
   },
   {
     quote: "Amazing program! The instructors are knowledgeable and the community is supportive. Highly recommend to anyone looking to break into analytics.",
     name: "Normilah",
-    designation: "Student",
+    designation: "",
     src: "/stories/Normila.png",
   },
 ];
