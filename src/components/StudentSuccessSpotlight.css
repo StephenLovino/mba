@@ -1,0 +1,263 @@
+.student-success-spotlight {
+  padding: 80px 0;
+  position: relative;
+}
+
+.spotlight-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+}
+
+.spotlight-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.spotlight-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  line-height: 1.1;
+}
+
+.title-main {
+  color: #ffffff;
+  display: block;
+}
+
+.title-gradient {
+  background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+}
+
+.spotlight-subtitle {
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 300;
+  opacity: 0.9;
+}
+
+.spotlight-card {
+  background: linear-gradient(135deg, #1e1e2e 0%, #2a2a3e 100%);
+  border-radius: 24px;
+  padding: 60px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.spotlight-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.spotlight-text {
+  color: #ffffff;
+}
+
+.spotlight-section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #00d4ff;
+  margin-bottom: 30px;
+}
+
+.spotlight-narrative {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 40px;
+  color: #e0e0e0;
+}
+
+.highlight-name,
+.highlight-role,
+.highlight-company,
+.highlight-rank {
+  background: linear-gradient(135deg, #8b5cf6 0%, #00d4ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+}
+
+.spotlight-quote {
+  position: relative;
+  font-style: italic;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #ffffff;
+  margin: 40px 0;
+  padding-left: 30px;
+  border-left: 4px solid #8b5cf6;
+}
+
+.achievement-highlights {
+  margin-top: 40px;
+}
+
+.achievements-title {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.achievements-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  color: #e0e0e0;
+  font-size: 1rem;
+}
+
+.achievement-icon {
+  width: 8px;
+  height: 8px;
+  background: #00d4ff;
+  border-radius: 50%;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.spotlight-image-container {
+  position: relative;
+}
+
+.image-wrapper {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.spotlight-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+}
+
+.image-overlay {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.success-badge {
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.trophy-icon {
+  font-size: 1.2rem;
+}
+
+.role-info {
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #8b5cf6 0%, #00d4ff 100%);
+  text-align: center;
+  min-width: 180px;
+}
+
+.role-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.company-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.rank-info {
+  font-size: 0.85rem;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .student-success-spotlight {
+    padding: 60px 0;
+  }
+  
+  .spotlight-title {
+    font-size: 2.5rem;
+  }
+  
+  .spotlight-card {
+    padding: 40px 30px;
+  }
+  
+  .spotlight-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .spotlight-section-title {
+    font-size: 1.5rem;
+  }
+  
+  .spotlight-narrative {
+    font-size: 1rem;
+  }
+  
+  .spotlight-quote {
+    font-size: 1.1rem;
+    padding-left: 20px;
+  }
+  
+  .image-overlay {
+    padding: 8px 12px;
+  }
+  
+  .success-badge {
+    top: 15px;
+    right: 15px;
+    font-size: 0.8rem;
+  }
+  
+  .role-info {
+    bottom: 15px;
+    right: 15px;
+    min-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .spotlight-card {
+    padding: 30px 20px;
+  }
+  
+  .spotlight-title {
+    font-size: 2rem;
+  }
+  
+  .spotlight-section-title {
+    font-size: 1.3rem;
+  }
+}
