@@ -1,6 +1,8 @@
 import React from 'react';
 import './Hero.css';
 import ShinyText from './ui/ShinyText';
+import { Announcement, AnnouncementTag, AnnouncementTitle } from './ui/announcement';
+import { ArrowUpRight } from 'lucide-react';
 import { Dock, DockIcon } from './ui/dock';
 
 const Hero = () => {
@@ -14,8 +16,14 @@ const Hero = () => {
             src={require('../MBA.png')}
             alt="MBA"
           />
-          <div className="hero-badge">
-            <span>AI Career Starter Pack: Apps, Portfolio & Certificate</span>
+          <div className="hero-badge" style={{background:'transparent', border:'none', padding:0, marginBottom:24}}>
+            <Announcement themed variant="outline" className="backdrop-blur supports-[backdrop-filter]:bg-white/5 border-white/10 text-white">
+              <AnnouncementTag className="text-white/90">AI Career Starter Pack</AnnouncementTag>
+              <AnnouncementTitle>
+                Apps, Portfolio & Certificate
+                <ArrowUpRight size={16} className="shrink-0 text-white/70" />
+              </AnnouncementTitle>
+            </Announcement>
           </div>
           
           <h1 className="hero-title">
@@ -74,41 +82,41 @@ const Hero = () => {
           
           <div className="trusted-by">
             <p>Tools You’ll Master</p>
-            <div className="trusted-logos" style={{justifyContent:'center', pointerEvents:'auto', position:'relative', zIndex:20}}>
+            <div className="trusted-logos" style={{pointerEvents:'auto', position:'relative', zIndex:20}}>
               <Dock className="pointer-events-auto">
                 {/* AHA (provided asset) */}
-                <DockIcon href="#aha" name="AHA" src="https://storage.googleapis.com/msgsndr/LL7TmGrkL72EOf8O0FKA/media/48904ea3-fd99-4567-81a4-c3b6663a653d.png" />
+                <DockIcon newTab href="https://www.aha-innovations.com" name="AHA" src="https://storage.googleapis.com/msgsndr/LL7TmGrkL72EOf8O0FKA/media/48904ea3-fd99-4567-81a4-c3b6663a653d.png" />
                 {/* ChatGPT (OpenAI) */}
-                <DockIcon href="#chatgpt" name="ChatGPT" src="https://cdn.simpleicons.org/openai/10A37F" />
+                <DockIcon newTab href="https://chat.openai.com" name="ChatGPT" src="https://cdn.simpleicons.org/openai/10A37F" />
                 {/* Gemini */}
-                <DockIcon href="#gemini" name="Gemini" src="https://cdn.simpleicons.org/googlegemini/4285F4" />
+                <DockIcon newTab href="https://gemini.google.com" name="Gemini" src="https://cdn.simpleicons.org/googlegemini/4285F4" />
                 {/* n8n */}
-                <DockIcon href="#n8n" name="n8n" src="https://cdn.simpleicons.org/n8n/FF6A6A" />
+                <DockIcon newTab href="https://n8n.io" name="n8n" src="https://cdn.simpleicons.org/n8n/FF6A6A" />
                 {/* GitHub */}
-                <DockIcon href="#github" name="GitHub" src="https://cdn.simpleicons.org/github/FFFFFF" />
+                <DockIcon newTab href="https://github.com" name="GitHub" src="https://cdn.simpleicons.org/github/FFFFFF" />
                 {/* MySQL */}
-                <DockIcon href="#mysql" name="MySQL" src="https://cdn.simpleicons.org/mysql/4479A1" />
+                <DockIcon newTab href="https://www.mysql.com" name="MySQL" src="https://cdn.simpleicons.org/mysql/4479A1" />
                 {/* Lovable (local asset) */}
-                <DockIcon href="#lovable" name="Lovable" src={require('../lovable-logo-icon.png')} />
+                <DockIcon newTab href="https://lovable.dev" name="Lovable" src={require('../lovable-logo-icon.png')} />
               </Dock>
             </div>
           </div>
         </div>
-      </div>
-      <div className="hero-video">
-        <div className="video-container">
-          <div className="video-placeholder">
-            <div className="video-thumbnail" style={{
-              backgroundImage: 'url(https://i.ytimg.com/vi_webp/QBDel4ck-SI/maxresdefault.webp)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
-            }}>
-              <button className="play-button">
-                <svg height="100%" version="1.1" viewBox="0 0 68 48" width="100%">
-                  <path d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z" fill="#212121" fillOpacity="0.8"/>
-                  <path d="M 45,24 27,14 27,34" fill="#fff"/>
-                </svg>
-              </button>
+        <div className="hero-video">
+          <div className="video-container">
+            <div className="video-placeholder">
+              <div className="video-thumbnail" style={{
+                backgroundImage: 'url(https://i.ytimg.com/vi_webp/QBDel4ck-SI/maxresdefault.webp)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}>
+                <button className="play-button">
+                  <svg height="100%" version="1.1" viewBox="0 0 68 48" width="100%">
+                    <path d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z" fill="#212121" fillOpacity="0.8"/>
+                    <path d="M 45,24 27,14 27,34" fill="#fff"/>
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>

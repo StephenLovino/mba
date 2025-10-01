@@ -20,6 +20,7 @@ interface DockIconProps {
   handleIconHover?: (e: React.MouseEvent<HTMLLIElement>) => void;
   children?: React.ReactNode;
   iconSize?: number;
+  newTab?: boolean;
 }
 
 type ScaleValueParams = [number, number];
@@ -42,6 +43,7 @@ export function DockIcon({
   handleIconHover,
   children,
   iconSize,
+  newTab,
 }: DockIconProps) {
   const ref = useRef<HTMLLIElement | null>(null);
 
@@ -126,6 +128,8 @@ export function DockIcon({
       >
         <a
           href={href}
+          target={newTab ? "_blank" : undefined}
+          rel={newTab ? "noopener noreferrer" : undefined}
           className="relative z-20 aspect-square w-full overflow-visible rounded-[10px] border border-gray-100 bg-gradient-to-t from-neutral-100 to-white p-1.5 shadow-[rgba(0,_0,_0,_0.05)_0px_1px_0px_inset] after:absolute after:inset-0 after:rounded-[inherit] after:shadow-md after:shadow-zinc-800/10 dark:border-zinc-900 dark:from-zinc-900 dark:to-zinc-800 dark:shadow-[rgba(255,_255,_255,_0.3)_0px_1px_0px_inset]"
         >
           <span className="tooltip pointer-events-none absolute top-[-40px] left-1/2 -translate-x-1/2 rounded-md border border-gray-100 bg-gradient-to-t from-neutral-100 to-white p-1 px-2 text-xs whitespace-nowrap text-black opacity-0 transition-opacity duration-200 z-10 dark:border-zinc-800 dark:from-zinc-900 dark:to-zinc-800 dark:text-white">

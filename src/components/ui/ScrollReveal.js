@@ -15,8 +15,9 @@ const ScrollReveal = ({
   blurStrength = 4,
   containerClassName = '',
   textClassName = '',
-  rotationEnd = '+=2000 bottom',
-  wordAnimationEnd = '+=2000 bottom'
+  rotationEnd = 'top center',
+  wordAnimationEnd = 'top center',
+  instantReveal = false
 }) => {
   const containerRef = useRef(null);
 
@@ -38,21 +39,25 @@ const ScrollReveal = ({
 
     const scroller = scrollContainerRef && scrollContainerRef.current ? scrollContainerRef.current : window;
 
-    gsap.fromTo(
-      el,
-      { transformOrigin: '0% 50%', rotate: baseRotation },
-      {
-        ease: 'none',
-        rotate: 0,
-        scrollTrigger: {
-          trigger: el,
-          scroller,
-          start: 'top bottom',
-          end: rotationEnd,
-          scrub: true
+    if (instantReveal) {
+      gsap.set(el, { rotate: 0 });
+    } else {
+      gsap.fromTo(
+        el,
+        { transformOrigin: '0% 50%', rotate: baseRotation },
+        {
+          ease: 'none',
+          rotate: 0,
+          scrollTrigger: {
+            trigger: el,
+            scroller,
+            start: 'top 85%',
+            end: rotationEnd,
+            scrub: true
+          }
         }
-      }
-    );
+      );
+    }
 
     const wordElements = el.querySelectorAll('.word');
 
@@ -62,13 +67,15 @@ const ScrollReveal = ({
       {
         ease: 'none',
         opacity: 1,
-        stagger: 0.05,
+        duration: instantReveal ? 0.4 : undefined,
+        stagger: instantReveal ? 0 : 0.06,
         scrollTrigger: {
           trigger: el,
           scroller,
-          start: 'top bottom-=20%',
-          end: wordAnimationEnd,
-          scrub: true
+          start: 'top 85%',
+          end: instantReveal ? 'top 85%' : wordAnimationEnd,
+          scrub: instantReveal ? false : true,
+          toggleActions: instantReveal ? 'play none none reverse' : undefined
         }
       }
     );
@@ -80,13 +87,15 @@ const ScrollReveal = ({
         {
           ease: 'none',
           filter: 'blur(0px)',
-          stagger: 0.05,
+          duration: instantReveal ? 0.4 : undefined,
+          stagger: instantReveal ? 0 : 0.06,
           scrollTrigger: {
             trigger: el,
             scroller,
-            start: 'top bottom-=20%',
-            end: wordAnimationEnd,
-            scrub: true
+            start: 'top 85%',
+            end: instantReveal ? 'top 85%' : wordAnimationEnd,
+            scrub: instantReveal ? false : true,
+            toggleActions: instantReveal ? 'play none none reverse' : undefined
           }
         }
       );
