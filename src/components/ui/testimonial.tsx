@@ -3,60 +3,55 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 // Updated testimonials with real screenshots from stories folder
+// Now using properly named image files
 const testimonials = [
   {
-    quote: "Super affordable! Very well-structured even for beginners. The mentors teach with heart and patience. I learned so much in such a short time!",
-    name: "Shak Ni Pearl",
+    quote: "If you're seeing this, this is your sign! As an online freelancer for 5 years, I vouch for the mentors and the quality of training they provide.",
+    name: "Kaye Araquel",
     designation: "Student",
-    src: "/stories/09589d46-3c4d-4f47-a0c6-5cdae0919684.png",
+    src: "/stories/Kaye.png",
   },
   {
     quote: "Affordable bootcamp with approachable mentors. Kahit hindi ko pa natapos dahil busy, may recordings naman para sa mga nakalagpas na sessions.",
     name: "Aaron Arcilla",
     designation: "Student",
-    src: "/stories/2cfa557c-0ed6-4936-84c6-3ba1fd37894a.png",
-  },
-  {
-    quote: "If you're seeing this, this is your sign! As an online freelancer for 5 years, I vouch for the mentors and the quality of training they provide.",
-    name: "Kaye Araquel",
-    designation: "Student",
-    src: "/stories/4ddcd2db-b7bb-40b4-97b9-95764d57fc88.png",
+    src: "/stories/Aaron.png",
   },
   {
     quote: "From learner to manager in record time, Andrew proves your career transformation is within reach.",
     name: "Andrew",
     designation: "Business Analytics Officer at BPI BanKo - Manager Rank",
-    src: "/stories/9367a1b1-509a-4aad-87d1-8651f4e7285b.png",
+    src: "/stories/Andrew.png",
+  },
+  {
+    quote: "Super affordable! Very well-structured even for beginners. The mentors teach with heart and patience. I learned so much in such a short time!",
+    name: "Shak Ni Pearl",
+    designation: "Student",
+    src: "/stories/Shak.png",
   },
   {
     quote: "The program exceeded my expectations! The hands-on approach and real-world projects helped me land my dream job in data analytics.",
-    name: "Maria Santos",
+    name: "Elvira",
     designation: "Data Analyst",
-    src: "/stories/b27b9a5a-4e64-446f-abee-38c652b0370b.png",
+    src: "/stories/Elvira.png",
   },
   {
     quote: "Best investment I've made for my career. The mentors are incredibly supportive and the curriculum is comprehensive.",
-    name: "John Dela Cruz",
+    name: "Jona",
     designation: "Business Intelligence Specialist",
-    src: "/stories/b6425142-e428-438e-ab8b-94f1a6690e37.png",
+    src: "/stories/Jona.png",
   },
   {
     quote: "The practical approach and industry-relevant projects made all the difference. I'm now working as a senior analyst!",
-    name: "Sarah Johnson",
+    name: "Mae",
     designation: "Senior Business Analyst",
-    src: "/stories/c4e3f5bf-d042-40af-82f0-af5e9f2de30d.png",
+    src: "/stories/Mae.png",
   },
   {
     quote: "Amazing program! The instructors are knowledgeable and the community is supportive. Highly recommend to anyone looking to break into analytics.",
-    name: "Michael Chen",
-    designation: "Analytics Consultant",
-    src: "/stories/d9fd6392-e76c-47e9-ac83-2ea93dcacfd5.png",
-  },
-  {
-    quote: "The bootcamp transformed my career completely. From zero knowledge to landing a high-paying analytics role in just 6 months!",
-    name: "Lisa Rodriguez",
-    designation: "Data Science Manager",
-    src: "/stories/ff31ccd6-b728-4752-be11-966c826fcac3.png",
+    name: "Normilah",
+    designation: "Student",
+    src: "/stories/Normila.png",
   },
 ];
 
@@ -109,9 +104,9 @@ const AnimatedTestimonials = ({
                     key={testimonial.src}
                     initial={{ opacity: 0, scale: 0.9, y: 50, rotate: randomRotate() }}
                     animate={{
-                      opacity: isActive(index) ? 1 : 0.5,
-                      scale: isActive(index) ? 1 : 0.9,
-                      y: isActive(index) ? 0 : 20,
+                      opacity: isActive(index) ? 1 : 0.15,
+                      scale: isActive(index) ? 1 : 0.85,
+                      y: isActive(index) ? 0 : 30,
                       zIndex: isActive(index) ? testimonialsData.length : testimonialsData.length - Math.abs(index - active),
                       rotate: isActive(index) ? '0deg' : randomRotate(),
                     }}
@@ -127,6 +122,9 @@ const AnimatedTestimonials = ({
                       height={600}
                       draggable={false}
                       className="h-full w-full rounded-3xl object-contain shadow-2xl bg-white/5 border border-white/10"
+                    style={{
+                      filter: isActive(index) ? 'none' : 'blur(2px) brightness(0.3)',
+                    }}
                       onError={(e) => {
                         e.currentTarget.src = `https://placehold.co/600x600/e2e8f0/64748b?text=${testimonial.name.charAt(0)}`;
                         e.currentTarget.onerror = null;
@@ -150,13 +148,13 @@ const AnimatedTestimonials = ({
               className="flex flex-col justify-between"
             >
                 <div>
-                    <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-50">
+                    <h3 className="text-2xl font-bold text-white">
                         {testimonialsData[active]?.name || ''}
                     </h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                    <p className="text-sm text-gray-300">
                         {testimonialsData[active]?.designation || ''}
                     </p>
-                    <motion.p className="mt-8 text-lg text-slate-700 dark:text-slate-300">
+                    <motion.p className="mt-8 text-lg text-gray-200">
                         "{testimonialsData[active]?.quote || ''}"
                     </motion.p>
                 </div>
@@ -166,16 +164,16 @@ const AnimatedTestimonials = ({
             <button
               onClick={handlePrev}
               aria-label="Previous testimonial"
-              className="group flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 transition-colors hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:bg-slate-800 dark:hover:bg-slate-700 dark:focus:ring-slate-500"
+              className="group flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-transparent"
             >
-              <ArrowLeft className="h-5 w-5 text-slate-800 transition-transform duration-300 group-hover:-translate-x-1 dark:text-slate-300" />
+              <ArrowLeft className="h-5 w-5 text-white transition-transform duration-300 group-hover:-translate-x-1" />
             </button>
             <button
               onClick={handleNext}
               aria-label="Next testimonial"
-              className="group flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 transition-colors hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:bg-slate-800 dark:hover:bg-slate-700 dark:focus:ring-slate-500"
+              className="group flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-transparent"
             >
-              <ArrowRight className="h-5 w-5 text-slate-800 transition-transform duration-300 group-hover:translate-x-1 dark:text-slate-300" />
+              <ArrowRight className="h-5 w-5 text-white transition-transform duration-300 group-hover:translate-x-1" />
             </button>
           </div>
         </div>

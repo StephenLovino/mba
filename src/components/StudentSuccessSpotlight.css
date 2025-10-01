@@ -28,7 +28,7 @@
 }
 
 .title-gradient {
-  background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -64,7 +64,7 @@
 .spotlight-section-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #00d4ff;
+  color: #8b5cf6;
   margin-bottom: 30px;
 }
 
@@ -125,7 +125,7 @@
 .achievement-icon {
   width: 8px;
   height: 8px;
-  background: #00d4ff;
+  background: #8b5cf6;
   border-radius: 50%;
   margin-right: 15px;
   flex-shrink: 0;
@@ -162,7 +162,7 @@
 .success-badge {
   top: 20px;
   right: 20px;
-  background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
   display: flex;
   align-items: center;
   gap: 8px;
