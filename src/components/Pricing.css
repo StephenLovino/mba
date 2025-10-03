@@ -112,6 +112,7 @@
 .plan-name { font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 1rem; }
 .price-currency { font-size: 1.5rem; font-weight: 600; color: var(--brand-bluegreen, #6fccdb); }
 .price-amount { font-size: 3rem; font-weight: 800; color: #fff; margin: 0 0.25rem; }
+.original-price { text-decoration: line-through; opacity: 0.8; margin-right: 8px; }
 .price-period {
   font-size: 1.2rem;
   color: #666;

@@ -19,7 +19,7 @@ const FAQ = () => {
     },
     {
       question: "Can I enroll later?",
-      answer: "While you can enroll later, the special ₱888 pricing and the ₱10,000 discount on the Data Analytics Masterclass are limited-time offers available only during this promotion."
+      answer: "While you can enroll later, the special launch pricing (Students ₱500, Professionals ₱1000) and the ₱10,000 discount on the Data Analytics Masterclass are limited-time offers available only during this promotion."
     },
     {
       question: "What if I can't attend the live session?",
@@ -69,7 +69,7 @@ const FAQ = () => {
             <p className="cta-description">
               Your career transformation is just one click away. Join hundreds of students who've already made the leap to AI mastery.
             </p>
-            <a href="/checkout" className="btn btn-primary">Register for ₱888</a>
+            <a href="/checkout" className="btn btn-primary">Register Now – From ₱500</a>
             
             <div className="cta-stats">
               <div className="stat">

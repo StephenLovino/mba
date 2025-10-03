@@ -12,31 +12,36 @@ const cardData = [
     color: '#060010',
     title: 'Build Real AI Apps',
     description: 'Hands-on projects guided step by step',
-    label: 'Live'
+    label: 'Live',
+    image: '/ai_app.jpg'
   },
   {
     color: '#060010',
     title: 'Launch Your Portfolio',
     description: 'GitHub projects to showcase to recruiters',
-    label: 'Project'
+    label: 'Project',
+    image: '/portfolio.jpg'
   },
   {
     color: '#060010',
     title: 'Master Databases',
     description: 'Learn how to set up and use databases',
-    label: 'Database'
+    label: 'Database',
+    image: '/database.jpg'
   },
   {
     color: '#060010',
     title: 'Be AI Certified',
     description: 'Earn your official AI Certification',
-    label: 'AI'
+    label: 'AI',
+    image: '/certified.jpg'
   },
   {
     color: '#060010',
     title: 'Guaranteed Transformation',
     description: 'By the end of this webinar, you\'ll have tangible projects in your portfolio and the confidence to pursue your AI career',
-    label: 'Real'
+    label: 'Real',
+    image: '/transform.jpg'
   }
 ];
 
@@ -516,6 +521,9 @@ const MagicBento = ({
                 clickEffect={clickEffect}
                 enableMagnetism={enableMagnetism}
               >
+                {card.image && (
+                  <img className="card__image" src={card.image} alt={card.title} />
+                )}
                 <div className="card__header">
                   <div className="card__label">{card.label}</div>
                 </div>
@@ -639,6 +647,9 @@ const MagicBento = ({
                 el.addEventListener('click', handleClick);
               }}
             >
+              {card.image && (
+                <img className="card__image" src={card.image} alt={card.title} />
+              )}
               <div className="card__header">
                 <div className="card__label">{card.label}</div>
               </div>

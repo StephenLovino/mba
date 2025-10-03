@@ -43,7 +43,7 @@ const Hero = () => {
                   <path d="M 13.084 19.699 L 16.855 15.995 L 13.084 12.292 C 12.705 11.919 12.705 11.318 13.084 10.946 C 13.463 10.574 14.076 10.574 14.455 10.946 L 18.916 15.327 C 19.295 15.699 19.295 16.301 18.916 16.673 L 14.455 21.054 C 14.076 21.426 13.463 21.426 13.084 21.054 C 12.715 20.682 12.705 20.071 13.084 19.699 Z" fill="white"/>
                 </svg>
               </div>
-              Register Now for Only ₱888
+              Register Now – From ₱500
             </a>
             <a href="#preview" className="btn btn-outline">
               Watch Preview
@@ -93,8 +93,8 @@ const Hero = () => {
                 <DockIcon newTab href="https://n8n.io" name="n8n" src="https://cdn.simpleicons.org/n8n/FF6A6A" />
                 {/* GitHub */}
                 <DockIcon newTab href="https://github.com" name="GitHub" src="https://cdn.simpleicons.org/github/FFFFFF" />
-                {/* MySQL */}
-                <DockIcon newTab href="https://www.mysql.com" name="MySQL" src="https://cdn.simpleicons.org/mysql/4479A1" />
+                {/* PostgreSQL */}
+                <DockIcon newTab href="https://www.postgresql.org" name="PostgreSQL" src="https://cdn.simpleicons.org/postgresql/4169E1" />
                 {/* Lovable (local asset) */}
                 <DockIcon newTab href="https://lovable.dev" name="Lovable" src={require('../lovable-logo-icon.png')} />
               </Dock>

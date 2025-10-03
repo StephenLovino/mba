@@ -6,10 +6,10 @@ const Pricing = () => {
 
   const plans = [
     {
-      name: "AI Hero Training",
-      monthlyPrice: 888,
-      yearlyPrice: 888,
-      originalPrice: 2000,
+      name: "AI Workshop | Students",
+      monthlyPrice: 500,
+      yearlyPrice: 500,
+      originalPrice: 15000,
       features: [
         "Guaranteed results by the end of the webinar",
         "Build your first AI application step-by-step",
@@ -21,7 +21,25 @@ const Pricing = () => {
         "Lifetime access to training materials"
       ],
       popular: true,
-      discount: "Save 55% Today Only"
+      discount: "Special launch pricing"
+    },
+    {
+      name: "AI Workshop | Professional",
+      monthlyPrice: 1000,
+      yearlyPrice: 1000,
+      originalPrice: 15000,
+      features: [
+        "Guaranteed results by the end of the webinar",
+        "Build your first AI application step-by-step",
+        "Create a professional GitHub portfolio",
+        "Master database setup and integration",
+        "Earn official AI certification",
+        "3 hours of intensive hands-on training",
+        "Direct access to expert instructors",
+        "Lifetime access to training materials"
+      ],
+      popular: false,
+      discount: "Special launch pricing"
     }
   ];
 
@@ -60,7 +78,7 @@ const Pricing = () => {
               </div>
               
               <a href="/checkout" className="plan-cta btn btn-primary">
-                Register Now - Only ₱888🚀
+                {`Register Now - Only ₱${isYearly ? plan.yearlyPrice : plan.monthlyPrice}🚀`}
               </a>
               <p className="plan-guarantee">🔒 Secure payment • 💯 100% satisfaction guarantee</p>
               <p className="plan-limited">Limited spots available - Only 50 seats remaining</p>

@@ -41,6 +41,24 @@
   --glow-radius: 200px;
 }
 
+/* Background image that reveals on hover */
+.card__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 300ms ease, transform 300ms ease;
+  filter: brightness(0.9) saturate(1.05);
+}
+
+.card:hover .card__image {
+  opacity: 0.22;
+  transform: scale(1);
+}
+
 .card:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
