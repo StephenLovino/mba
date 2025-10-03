@@ -1,6 +1,5 @@
 import React from 'react';
 import './Hero.css';
-import ShinyText from './ui/ShinyText';
 import { Announcement, AnnouncementTag, AnnouncementTitle } from './ui/announcement';
 import { ArrowUpRight } from 'lucide-react';
 import { Dock, DockIcon } from './ui/dock';
@@ -27,7 +26,7 @@ const Hero = () => {
           </div>
           
           <h1 className="hero-title">
-            <ShinyText text="FROM ZERO TO" speed={3} className="hero-title-thin" />{' '}
+            <span className="hero-title-thin">FROM ZERO TO</span>{' '}
             <span className="hero-title-strong">AI HERO</span>
             <span className="highlight">🚀</span>
           </h1>

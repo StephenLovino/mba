@@ -16,7 +16,7 @@ const Checkout = () => {
     <div style={{ minHeight: '100vh', background: '#0b0b0b', position: 'relative' }}>
       <iframe
         title="MBA Checkout"
-        src="https://www.millennialbusinessacademy.net/widget/form/5rnBslAAkfQvHEw6Bv3V"
+        src="https://www.millennialbusinessacademy.net/widget/form/FUDB6yW7NgEmzuH57YQV"
         ref={iframeRef}
         onLoad={() => setLoaded(true)}
         style={{ width: '100%', height: '100vh', border: '0', display: 'block' }}
@@ -31,7 +31,7 @@ const Checkout = () => {
           <div style={{ textAlign: 'center' }}>
             <p style={{ color: 'rgba(255,255,255,0.85)', marginBottom: 16 }}>Loading checkout…</p>
             <a
-              href="https://www.millennialbusinessacademy.net/widget/form/5rnBslAAkfQvHEw6Bv3V"
+              href="https://www.millennialbusinessacademy.net/widget/form/FUDB6yW7NgEmzuH57YQV"
               target="_blank" rel="noopener noreferrer"
               className="btn btn-primary"
               style={{ display: 'inline-block' }}
