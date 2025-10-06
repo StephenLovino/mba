@@ -40,11 +40,14 @@ PRICE_PROFESSIONAL=1000
 XENDIT_STUDENT_LINK=https://checkout-student
 XENDIT_PROFESSIONAL_LINK=https://checkout-pro
 XENDIT_WEBHOOK_TOKEN=your-webhook-token
+
+# For local React dev server, point API to your Vercel preview (or prod) URL
+REACT_APP_API_BASE=https://<your-vercel-deployment>.vercel.app
 ```
 
 2. Run locally:
-- Use `vercel dev` to run `api/` routes.
-- Or deploy to Vercel and test via preview URL.
+- Option A (recommended): deploy to Vercel and test via the preview URL; the React dev server will call the preview using `REACT_APP_API_BASE`.
+- Option B: run `vercel dev` locally to serve `api/` routes on the same origin and omit `REACT_APP_API_BASE`.
 
 3. To receive Xendit webhooks locally, expose a tunnel (e.g., `ngrok http 3000`) and set the webhook URL to `http(s)://<host>/api/webhooks/xendit`.
 

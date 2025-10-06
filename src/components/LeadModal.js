@@ -51,7 +51,8 @@ const LeadModal = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/lead', {
+      const apiBase = process.env.REACT_APP_API_BASE || '';
+      const res = await fetch(`${apiBase}/api/lead`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, role, utms })
@@ -60,9 +61,14 @@ const LeadModal = () => {
       const data = await res.json();
       if (data && data.redirectUrl) {
         window.location.href = data.redirectUrl;
-      } else {
-        throw new Error('No redirect URL returned');
+        return;
       }
+      if (data && data.created) {
+        setStep(3);
+        setError('');
+        return;
+      }
+      throw new Error('No redirect URL returned');
     } catch (e) {
       setError('Something went wrong. Please try again.');
     } finally {
@@ -112,6 +118,9 @@ const LeadModal = () => {
             <p className="lm-summary"><strong>Name:</strong> {name}</p>
             <p className="lm-summary"><strong>Email:</strong> {email}</p>
             <p className="lm-summary"><strong>Role:</strong> {role}</p>
+            {!error && !loading && (
+              <p className="lm-success">You're in! We'll email details shortly.</p>
+            )}
             {error && <p className="lm-error">{error}</p>}
             <div className="lm-actions">
               <button className="lm-btn-secondary" onClick={() => setStep(2)}>Back</button>

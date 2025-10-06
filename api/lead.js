@@ -23,14 +23,24 @@ export default async function handler(req, res) {
       return;
     }
 
-    const headers = { 'Content-Type': 'application/json' };
+    const headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' };
     if (ghlToken) {
       headers['Authorization'] = `Bearer ${ghlToken}`;
       headers['Version'] = '2021-07-28';
     }
 
     // 1) Create or upsert contact
-    const contactBody = { name, email, locationId, source: 'public api', tags: ['MBA Lead', role] };
+    const [firstName, ...rest] = String(name || '').trim().split(' ');
+    const lastName = rest.join(' ').trim() || undefined;
+    const contactBody = {
+      name,
+      firstName: firstName || undefined,
+      lastName,
+      email,
+      locationId,
+      source: 'public api',
+      tags: ['MBA Lead', role]
+    };
     const contactUrl = process.env.PRIVATE_GHL_PROXY_URL
       ? `${process.env.PRIVATE_GHL_PROXY_URL.replace(/\/$/, '')}/contacts/upsert`
       : `${apiBase}/contacts/`;
@@ -40,13 +50,14 @@ export default async function handler(req, res) {
       headers,
       body: JSON.stringify(contactBody)
     });
+    const rawContactText = await contactRes.text();
+    let contactJson = {};
+    try { contactJson = JSON.parse(rawContactText || '{}'); } catch {}
     if (!contactRes.ok) {
-      const text = await contactRes.text();
-      console.error('GHL contact error', contactRes.status, text);
-      res.status(502).json({ error: 'Failed to create contact' });
+      console.error('GHL contact error', contactRes.status, rawContactText);
+      res.status(502).json({ error: 'Failed to create contact', details: contactJson || rawContactText });
       return;
     }
-    const contactJson = await contactRes.json().catch(() => ({}));
     const contactId = contactJson?.contact?.id || contactJson?.id || contactJson?.contactId;
 
     // 2) Optionally create opportunity if pipeline configured
@@ -78,20 +89,21 @@ export default async function handler(req, res) {
     // Decide redirect URL based on role
     const studentUrl = process.env.XENDIT_STUDENT_LINK;
     const proUrl = process.env.XENDIT_PROFESSIONAL_LINK;
-    const redirectUrl = role === 'student' ? studentUrl : proUrl;
-    if (!redirectUrl) {
-      res.status(500).json({ error: 'Payment link not configured' });
+    const chosen = role === 'student' ? studentUrl : proUrl;
+    if (!chosen) {
+      // Contact created; payment link not configured yet. Return success without redirect.
+      res.status(200).json({ created: true, contactId, redirectUrl: null, contact: contactJson });
       return;
     }
 
     // Optionally append non-sensitive tracking
-    const url = new URL(redirectUrl);
+    const url = new URL(chosen);
     if (utms && typeof utms === 'object') {
       Object.entries(utms).forEach(([k, v]) => { if (v) url.searchParams.set(k, String(v)); });
     }
     url.searchParams.set('r', role);
 
-    res.status(200).json({ redirectUrl: url.toString() });
+    res.status(200).json({ created: true, contactId, redirectUrl: url.toString(), contact: contactJson });
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: 'Internal server error' });
