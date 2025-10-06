@@ -105,8 +105,8 @@ export default async function handler(req, res) {
 
     res.status(200).json({ created: true, contactId, redirectUrl: url.toString(), contact: contactJson });
   } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error('lead api fatal', e && (e.stack || e.message || e));
+    res.status(500).json({ error: 'Internal server error', message: e?.message || String(e) });
   }
 }
 
