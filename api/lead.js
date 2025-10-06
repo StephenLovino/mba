@@ -47,22 +47,63 @@ export default async function handler(req, res) {
 
     let contactRes;
     try {
+      console.log('GHL Request:', { url: contactUrl, headers, body: contactBody });
       contactRes = await fetch(contactUrl, {
         method: 'POST',
         headers,
         body: JSON.stringify(contactBody)
       });
     } catch (err) {
-      console.error('contact fetch failed', err && (err.cause || err.message || err));
-      res.status(502).json({ error: 'Upstream fetch failed', reason: err?.message || String(err), url: contactUrl, hasToken: Boolean(ghlToken), locationId });
+      console.error('GHL fetch failed:', {
+        error: err?.message || String(err),
+        cause: err?.cause,
+        url: contactUrl,
+        hasToken: Boolean(ghlToken),
+        locationId,
+        stack: err?.stack
+      });
+      res.status(502).json({ 
+        error: 'Upstream fetch failed', 
+        reason: err?.message || String(err), 
+        url: contactUrl, 
+        hasToken: Boolean(ghlToken), 
+        locationId,
+        details: err?.cause || err?.stack
+      });
       return;
     }
+    
     const rawContactText = await contactRes.text();
     let contactJson = {};
-    try { contactJson = JSON.parse(rawContactText || '{}'); } catch {}
+    try { 
+      contactJson = JSON.parse(rawContactText || '{}'); 
+    } catch (parseErr) {
+      console.error('GHL response parse error:', parseErr);
+    }
+    
+    console.log('GHL Response:', {
+      status: contactRes.status,
+      statusText: contactRes.statusText,
+      headers: Object.fromEntries(contactRes.headers.entries()),
+      body: rawContactText,
+      parsed: contactJson
+    });
+    
     if (!contactRes.ok) {
-      console.error('GHL contact error', contactRes.status, rawContactText);
-      res.status(502).json({ error: 'Failed to create contact', details: contactJson || rawContactText });
+      console.error('GHL contact creation failed:', {
+        status: contactRes.status,
+        statusText: contactRes.statusText,
+        response: rawContactText,
+        parsed: contactJson,
+        request: { url: contactUrl, headers, body: contactBody }
+      });
+      res.status(502).json({ 
+        error: 'Failed to create contact', 
+        status: contactRes.status,
+        statusText: contactRes.statusText,
+        details: contactJson || rawContactText,
+        request: { url: contactUrl, hasToken: Boolean(ghlToken), locationId }
+      });
       return;
     }
     const contactId = contactJson?.contact?.id || contactJson?.id || contactJson?.contactId;

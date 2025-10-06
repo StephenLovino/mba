@@ -54,33 +54,49 @@ const LeadModal = () => {
     setError('');
     try {
       const apiBase = process.env.REACT_APP_API_BASE || '';
+      const payload = {
+        name,
+        email,
+        role,
+        utms,
+        participants: extraParticipants
+          .map(p => ({ name: String(p.name||'').trim(), email: String(p.email||'').trim() }))
+          .filter(p => p.name && EMAIL_REGEX.test(p.email))
+      };
+      
+      console.log('Submitting lead:', { payload, apiBase });
+      
       const res = await fetch(`${apiBase}/api/lead`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          email,
-          role,
-          utms,
-          participants: extraParticipants
-            .map(p => ({ name: String(p.name||'').trim(), email: String(p.email||'').trim() }))
-            .filter(p => p.name && EMAIL_REGEX.test(p.email))
-        })
+        body: JSON.stringify(payload)
       });
-      if (!res.ok) throw new Error('Failed to submit');
+      
       const data = await res.json();
+      console.log('API Response:', { status: res.status, data });
+      
+      if (!res.ok) {
+        console.error('API Error:', data);
+        const errorMsg = data?.details || data?.error || `Server error (${res.status})`;
+        setError(`Error: ${errorMsg}`);
+        return;
+      }
+      
       if (data && data.redirectUrl) {
+        console.log('Redirecting to:', data.redirectUrl);
         window.location.href = data.redirectUrl;
         return;
       }
       if (data && data.created) {
+        console.log('Contact created successfully:', data.contactId);
         setStep(3);
         setError('');
         return;
       }
-      throw new Error('No redirect URL returned');
+      throw new Error('Unexpected response format');
     } catch (e) {
-      setError('Something went wrong. Please try again.');
+      console.error('Submit error:', e);
+      setError(`Network error: ${e.message}`);
     } finally {
       setLoading(false);
     }
