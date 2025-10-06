@@ -338,63 +338,93 @@ body.clay .hero > .container {
     padding-top: 72px; /* tightened top spacing on mobile */
   }
   
+  .hero .container {
+    padding: 0 16px; /* Increased mobile padding */
+  }
+  
+  .hero-content {
+    padding: 0 8px; /* Additional content padding */
+    max-width: 100%;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+  }
+  
   .hero-title {
-    font-size: 3rem; /* Still impactful on mobile */
+    font-size: 2.6rem; /* Reduced for mobile */
+    line-height: 1.2;
+    word-break: break-word; /* Prevent text overflow */
   }
   
   .hero-description {
     font-size: 1.125rem;
+    line-height: 1.5;
+  }
+  
+  .hero-badge {
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 16px;
+    margin-top: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
   }
   
   .hero-actions {
     flex-direction: column;
     align-items: center;
-    gap: 16px; /* 2 * 8px */
+    gap: 16px;
+    width: 100%;
   }
   
   .btn {
     width: 100%;
-    max-width: 320px; /* 40 * 8px */
-    padding: 16px 32px; /* 2 * 8px, 4 * 8px */
+    max-width: 320px;
+    padding: 12px 20px;
+    font-size: 15px;
+    border-radius: 32px;
   }
   
   .hero-stats {
     flex-direction: column;
-    gap: 24px; /* 3 * 8px */
+    gap: 24px;
+    width: 100%;
   }
   
   .trusted-logos {
-    gap: 24px; /* 3 * 8px */
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
   }
   
   .video-container {
     max-height: 300px;
+    width: 100%;
+    padding: 0 8px;
   }
   
   .hero-video-player {
     max-height: 300px;
+    width: 100%;
   }
   
   .play-button {
-    width: 64px; /* 8 * 8px */
-    height: 64px; /* 8 * 8px */
+    width: 64px;
+    height: 64px;
   }
   
   .play-button svg {
-    width: 32px; /* 4 * 8px */
-    height: 32px; /* 4 * 8px */
+    width: 32px;
+    height: 32px;
   }
-
-  .hero-title { font-size: 2.6rem; }
-  .hero-badge { padding: 8px 16px; font-size: 14px; border-radius: 16px; margin-top: 8px; }
-  .hero-actions .btn { padding: 12px 20px; font-size: 15px; border-radius: 32px; }
 
   /* Show mobile logo to fill vertical gap */
   .hero-mobile-logo {
     display: block;
     width: 120px;
     height: auto;
-    margin: 0 auto 6px; /* smaller gap under logo */
+    margin: 0 auto 6px;
     opacity: 0.9;
   }
 }

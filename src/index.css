@@ -50,6 +50,23 @@ code {
   padding: 0 24px; /* 3 * 8px */
 }
 
+/* Mobile container adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 16px; /* Increased mobile padding */
+  }
+  
+  /* Prevent horizontal overflow on mobile */
+  body {
+    overflow-x: hidden;
+  }
+  
+  /* Ensure all content stays within viewport */
+  * {
+    max-width: 100%;
+  }
+}
+
 .btn {
   display: inline-block;
   padding: 16px 32px; /* 2 * 8px, 4 * 8px */
