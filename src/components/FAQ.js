@@ -72,7 +72,7 @@ const FAQ = () => {
               Your career transformation is just one click away. Join hundreds of students who've already made the leap to AI mastery.
             </p>
             <button onClick={open} className="btn btn-primary">Register Now</button>
-            
+            image.png
             <div className="cta-stats">
               <div className="stat">
                 <span className="stat-number">500+</span>

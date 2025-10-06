@@ -15,23 +15,34 @@ const Eticket = () => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'radial-gradient( circle at 20% 20%, #0b1220, #070b16 60%, #050912 100%)'
+      background: '#0b1220',
+      position: 'relative',
+      zIndex: 1
     }}>
       <div style={{ textAlign: 'center', padding: 16 }}>
         <img
           src={src}
           alt="MBA E-ticket"
-          style={{ maxWidth: '96vw', height: 'auto', borderRadius: 16, boxShadow: '0 12px 40px rgba(0,0,0,0.5)' }}
+          style={{ 
+            maxWidth: '96vw', 
+            height: 'auto', 
+            borderRadius: 16, 
+            boxShadow: '0 12px 40px rgba(0,0,0,0.5)',
+            position: 'relative',
+            zIndex: 2,
+            background: 'white',
+            display: 'block'
+          }}
           onError={(e) => {
             // Show a simple placeholder when not found
             e.currentTarget.replaceWith(Object.assign(document.createElement('div'), {
-              style: 'color:#cbd5e1',
+              style: 'color:#cbd5e1;background:#0b1220;padding:20px;border-radius:8px;z-index:2;position:relative',
               textContent: `Ticket image not found: ${src}`
             }));
           }}
         />
         <p style={{ color: '#cbd5e1', marginTop: 16 }}>
-          Save this e-ticket. You’ll also receive it via email.
+          Save this e-ticket. You'll also receive it via email.
         </p>
       </div>
     </div>
