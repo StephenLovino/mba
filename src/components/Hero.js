@@ -3,8 +3,10 @@ import './Hero.css';
 import { Announcement, AnnouncementTag, AnnouncementTitle } from './ui/announcement';
 import { ArrowUpRight } from 'lucide-react';
 import { Dock, DockIcon } from './ui/dock';
+import { useLeadModal } from './LeadModalContext';
 
 const Hero = () => {
+  const { open } = useLeadModal();
   return (
     <section className="hero" id="home">
       <div className="container">
@@ -37,14 +39,14 @@ const Hero = () => {
 
           
           <div className="hero-actions">
-            <a href="/checkout" className="btn btn-primary">
+            <button onClick={open} className="btn btn-primary">
               <div className="button-icon">
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
                   <path d="M 13.084 19.699 L 16.855 15.995 L 13.084 12.292 C 12.705 11.919 12.705 11.318 13.084 10.946 C 13.463 10.574 14.076 10.574 14.455 10.946 L 18.916 15.327 C 19.295 15.699 19.295 16.301 18.916 16.673 L 14.455 21.054 C 14.076 21.426 13.463 21.426 13.084 21.054 C 12.715 20.682 12.705 20.071 13.084 19.699 Z" fill="white"/>
                 </svg>
               </div>
               Register Now – From ₱500
-            </a>
+            </button>
             <a href="#preview" className="btn btn-outline">
               Watch Preview
             </a>
@@ -103,20 +105,15 @@ const Hero = () => {
         </div>
         <div className="hero-video">
           <div className="video-container">
-            <div className="video-placeholder">
-              <div className="video-thumbnail" style={{
-                backgroundImage: 'url(https://i.ytimg.com/vi_webp/QBDel4ck-SI/maxresdefault.webp)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
-              }}>
-                <button className="play-button">
-                  <svg height="100%" version="1.1" viewBox="0 0 68 48" width="100%">
-                    <path d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z" fill="#212121" fillOpacity="0.8"/>
-                    <path d="M 45,24 27,14 27,34" fill="#fff"/>
-                  </svg>
-                </button>
-              </div>
-            </div>
+            <video 
+              className="hero-video-player"
+              controls
+              preload="metadata"
+              poster="https://i.ytimg.com/vi_webp/QBDel4ck-SI/maxresdefault.webp"
+            >
+              <source src="/hero_video.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
         </div>
       </div>

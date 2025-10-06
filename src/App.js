@@ -8,22 +8,27 @@ import Testimonials from './components/Testimonials';
 import Pricing from './components/Pricing';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
+import { LeadModalProvider } from './components/LeadModalContext';
+import LeadModal from './components/LeadModal';
  
 
 function App() {
 
   return (
-    <div className="App">
-      <Header />
-      <Hero />
-      <Story />
-      <Curriculum />
-      <StudentSuccessSpotlight />
-      <Testimonials />
-      <Pricing />
-      <FAQ />
-      <Footer />
-    </div>
+    <LeadModalProvider>
+      <div className="App">
+        <Header />
+        <Hero />
+        <Story />
+        <Curriculum />
+        <StudentSuccessSpotlight />
+        <Testimonials />
+        <Pricing />
+        <FAQ />
+        <Footer />
+        <LeadModal />
+      </div>
+    </LeadModalProvider>
   );
 }
 

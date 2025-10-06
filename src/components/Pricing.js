@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Pricing.css';
+import { useLeadModal } from './LeadModalContext';
 
 const Pricing = () => {
   const [isYearly, setIsYearly] = useState(false);
@@ -43,6 +44,7 @@ const Pricing = () => {
     }
   ];
 
+  const { open } = useLeadModal();
   return (
     <section className="pricing section" id="pricing">
       <div className="container">
@@ -77,9 +79,9 @@ const Pricing = () => {
                 ))}
               </div>
               
-              <a href="/checkout" className="plan-cta btn btn-primary">
+              <button onClick={open} className="plan-cta btn btn-primary">
                 {`Register Now - Only ₱${isYearly ? plan.yearlyPrice : plan.monthlyPrice}🚀`}
-              </a>
+              </button>
               <p className="plan-guarantee">🔒 Secure payment • 💯 100% satisfaction guarantee</p>
               <p className="plan-limited">Limited spots available - Only 50 seats remaining</p>
             </div>
