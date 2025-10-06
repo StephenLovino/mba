@@ -1,3 +1,4 @@
+export const config = { runtime: 'nodejs18.x' };
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Method not allowed' });
@@ -45,11 +46,18 @@ export default async function handler(req, res) {
       ? `${process.env.PRIVATE_GHL_PROXY_URL.replace(/\/$/, '')}/contacts/upsert`
       : `${apiBase}/contacts/`;
 
-    const contactRes = await fetch(contactUrl, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(contactBody)
-    });
+    let contactRes;
+    try {
+      contactRes = await fetch(contactUrl, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(contactBody)
+      });
+    } catch (err) {
+      console.error('contact fetch failed', err && (err.cause || err.message || err));
+      res.status(502).json({ error: 'Upstream fetch failed', reason: err?.message || String(err), url: contactUrl, hasToken: Boolean(ghlToken), locationId });
+      return;
+    }
     const rawContactText = await contactRes.text();
     let contactJson = {};
     try { contactJson = JSON.parse(rawContactText || '{}'); } catch {}
