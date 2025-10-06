@@ -7,26 +7,38 @@ This app uses Vercel serverless functions to sync leads to GHL and process Xendi
 Set these in your local `.env` (for `vercel dev`) and in Vercel Project Settings → Environment Variables.
 
 Required:
-- `GHL_LOCATION_ID`: GHL subaccount/location ID to store contacts
+- `GHL_LOCATION_ID`: GHL subaccount/location ID to store contacts/opportunities
 - `XENDIT_STUDENT_LINK`: Payment link for students
 - `XENDIT_PROFESSIONAL_LINK`: Payment link for professionals
 
-One of the following for GHL auth:
-- `PRIVATE_GHL_PROXY_URL`: Your own secure proxy that talks to GHL (preferred)
-  - or -
-- `GHL_API_BASE` and `GHL_API_KEY`: Direct GHL API base and key
+GHL auth (choose one):
+- Direct Private Integration token (recommended):
+  - `GHL_TOKEN`: Private Integration token from the intended Location
+  - `GHL_API_BASE` (optional, defaults to `https://services.leadconnectorhq.com`)
+- Via your own proxy:
+  - `PRIVATE_GHL_PROXY_URL`: Your proxy that forwards to GHL
 
 Webhook verification:
 - `XENDIT_WEBHOOK_TOKEN`: Shared secret (x-callback-token) for Xendit callbacks
+
+Opportunities (optional):
+- `GHL_PIPELINE_ID`: Pipeline to create an opportunity in
+- `GHL_PIPELINE_STAGE_ID`: Stage ID (optional)
+- `PRICE_STUDENT` / `PRICE_PROFESSIONAL`: Used for `monetaryValue` if set
 
 ## Local development
 
 1. Create `.env.local` at the project root:
 ```bash
 GHL_LOCATION_ID=xxxxxxxx
+GHL_TOKEN=your-private-integration-token
+GHL_PIPELINE_ID=VDm7RPYC2GLUvdpKmBfC
+# GHL_PIPELINE_STAGE_ID=optional-stage
+PRICE_STUDENT=500
+PRICE_PROFESSIONAL=1000
+
 XENDIT_STUDENT_LINK=https://checkout-student
 XENDIT_PROFESSIONAL_LINK=https://checkout-pro
-PRIVATE_GHL_PROXY_URL=https://your-proxy.example.com
 XENDIT_WEBHOOK_TOKEN=your-webhook-token
 ```
 
@@ -45,7 +57,16 @@ XENDIT_WEBHOOK_TOKEN=your-webhook-token
 
 - Frontend opens a multi-step modal from any CTA.
 - Submit hits `POST /api/lead` with `{ name, email, role, utms }`.
-- Server syncs to GHL and returns the appropriate Xendit link; frontend redirects.
+- Server creates/updates Contact with tags (e.g., `MBA Lead`, `student`/`professional`) and returns the appropriate Xendit link; frontend redirects.
+- Optional: If `GHL_PIPELINE_ID` is configured, the server will also create an Opportunity. If you prefer to create opportunities in GHL Workflows based on tags, simply leave `GHL_PIPELINE_ID` unset.
+
+## Recommended approach
+
+For simplicity and maximum control in GHL:
+1. Let the site create Contact + tags only.
+2. In GHL, build a Workflow that triggers on tag added (e.g., `MBA Lead` + role) and creates the Opportunity in the correct Pipeline/Stage.
+
+This keeps logic centralized in GHL and allows easy changes to routing without code updates.
 - Xendit calls `POST /api/webhooks/xendit` on payment; server updates contact in GHL.
 
 ## Notes
