@@ -187,9 +187,7 @@ const LeadModal = () => {
                 </ul>
               </div>
             )}
-            {!error && !loading && (
-              <p className="lm-success">You're in! We'll email details shortly.</p>
-            )}
+            {/* Success message removed; user proceeds directly to payment */}
             {error && <p className="lm-error">{error}</p>}
             <div className="lm-actions">
               <button className="lm-btn-secondary" onClick={() => setStep(2)}>Back</button>
