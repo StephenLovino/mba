@@ -66,9 +66,13 @@ const LeadModal = () => {
       
       console.log('Submitting lead:', { payload, apiBase });
       
-      const res = await fetch(`${apiBase}/api/lead`, {
+      const res = await fetch(`${apiBase}/api/lead?t=${Date.now()}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        },
         body: JSON.stringify(payload)
       });
       

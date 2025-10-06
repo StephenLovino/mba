@@ -23,7 +23,12 @@ export default async function handler(req, res) {
       return;
     }
 
-    const headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' };
+    const headers = { 
+      'Content-Type': 'application/json', 
+      'Accept': 'application/json',
+      'Cache-Control': 'no-cache',
+      'Pragma': 'no-cache'
+    };
     if (ghlToken) {
       headers['Authorization'] = `Bearer ${ghlToken}`;
       headers['Version'] = '2021-07-28';
