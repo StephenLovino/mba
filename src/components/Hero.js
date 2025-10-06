@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './Hero.css';
 import { Announcement, AnnouncementTag, AnnouncementTitle } from './ui/announcement';
 import { ArrowUpRight } from 'lucide-react';
@@ -7,10 +7,39 @@ import { useLeadModal } from './LeadModalContext';
 
 const Hero = () => {
   const { open } = useLeadModal();
+  const contentRef = useRef(null);
+  const logosRef = useRef(null);
+  const videoContainerRef = useRef(null);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    function applyMaxHeight() {
+      if (!contentRef.current || !videoContainerRef.current) return;
+      const contentRect = contentRef.current.getBoundingClientRect();
+      let capHeight = contentRect.height;
+      if (logosRef.current) {
+        const logosRect = logosRef.current.getBoundingClientRect();
+        capHeight = Math.max(0, Math.round(logosRect.bottom - contentRect.top));
+      }
+      videoContainerRef.current.style.maxHeight = `${capHeight}px`;
+    }
+
+    applyMaxHeight();
+
+    const ro = new ResizeObserver(applyMaxHeight);
+    if (contentRef.current) ro.observe(contentRef.current);
+    if (logosRef.current) ro.observe(logosRef.current);
+    window.addEventListener('resize', applyMaxHeight);
+
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', applyMaxHeight);
+    };
+  }, []);
   return (
     <section className="hero" id="home">
       <div className="container">
-        <div className="hero-content">
+        <div className="hero-content" ref={contentRef}>
           {/* Mobile logo above the banner */}
           <img
             className="hero-mobile-logo"
@@ -45,11 +74,29 @@ const Hero = () => {
                   <path d="M 13.084 19.699 L 16.855 15.995 L 13.084 12.292 C 12.705 11.919 12.705 11.318 13.084 10.946 C 13.463 10.574 14.076 10.574 14.455 10.946 L 18.916 15.327 C 19.295 15.699 19.295 16.301 18.916 16.673 L 14.455 21.054 C 14.076 21.426 13.463 21.426 13.084 21.054 C 12.715 20.682 12.705 20.071 13.084 19.699 Z" fill="white"/>
                 </svg>
               </div>
-              Register Now – From ₱500
+              Register Now
             </button>
-            <a href="#preview" className="btn btn-outline">
+            <button
+              className="btn btn-outline"
+              onClick={(e) => {
+                e.preventDefault();
+                if (videoRef.current) {
+                  try {
+                    videoRef.current.muted = false;
+                    // Restart from beginning for a clean preview
+                    if (videoRef.current.currentTime > 0.1) {
+                      videoRef.current.currentTime = 0;
+                    }
+                    const playPromise = videoRef.current.play();
+                    if (playPromise && typeof playPromise.then === 'function') {
+                      playPromise.catch(() => {});
+                    }
+                  } catch {}
+                }
+              }}
+            >
               Watch Preview
-            </a>
+            </button>
           </div>
           
           <div className="hero-stats">
@@ -83,7 +130,7 @@ const Hero = () => {
           
           <div className="trusted-by">
             <p>Tools You’ll Master</p>
-            <div className="trusted-logos" style={{pointerEvents:'auto', position:'relative', zIndex:20}}>
+            <div ref={logosRef} className="trusted-logos" style={{pointerEvents:'auto', position:'relative', zIndex:20}}>
               <Dock className="pointer-events-auto">
                 {/* AHA (provided asset) */}
                 <DockIcon newTab href="https://www.aha-innovations.com" name="AHA" src="https://storage.googleapis.com/msgsndr/LL7TmGrkL72EOf8O0FKA/media/48904ea3-fd99-4567-81a4-c3b6663a653d.png" />
@@ -104,12 +151,15 @@ const Hero = () => {
           </div>
         </div>
         <div className="hero-video">
-          <div className="video-container">
+          <div className="video-container" ref={videoContainerRef}>
             <video 
               className="hero-video-player"
               controls
               preload="metadata"
-              poster="https://i.ytimg.com/vi_webp/QBDel4ck-SI/maxresdefault.webp"
+              muted
+              autoPlay
+              playsInline
+              ref={videoRef}
             >
               <source src="/hero_video.mp4" type="video/mp4" />
               Your browser does not support the video tag.

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useLeadModal } from './LeadModalContext';
 import './FAQ.css';
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const { open } = useLeadModal();
 
   const faqs = [
     {
@@ -69,7 +71,7 @@ const FAQ = () => {
             <p className="cta-description">
               Your career transformation is just one click away. Join hundreds of students who've already made the leap to AI mastery.
             </p>
-            <a href="/checkout" className="btn btn-primary">Register Now – From ₱500</a>
+            <button onClick={open} className="btn btn-primary">Register Now</button>
             
             <div className="cta-stats">
               <div className="stat">

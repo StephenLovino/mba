@@ -404,8 +404,8 @@ body.clay .hero > .container {
   .hero .container {
     grid-template-columns: 1.1fr 0.9fr;
     gap: 56px;
-    align-items: start;
-    min-height: 100vh;
+    align-items: stretch; /* make both columns share the same row height */
+    min-height: auto; /* let row height be driven by content */
   }
   .hero-content {
     text-align: left;
@@ -423,21 +423,31 @@ body.clay .hero > .container {
   .hero-video {
     display: flex;
     align-items: flex-start;
-    height: 100vh;
+    height: auto;
+    align-self: start; /* allow capping via max-height on inner container */
   }
   .video-container { 
     margin-bottom: 0; 
-    height: 100vh;
-    width: 100%;
-    max-width: 300px;
+    height: 100%;
+    width: 100%; /* fill the column so height can be driven independently */
+    max-width: none; /* don't cap width so height can fully match */
+    max-height: none; /* override base 500px cap */
     display: flex;
-    align-items: flex-start;
+    align-items: center; /* center when not fully filling width */
     justify-content: center;
+    overflow: hidden; /* clip video when capped */
+    background: #000; /* neutral background around contained video */
+    border-radius: 20px; /* soften edges */
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5); /* subtle embed shadow */
+    outline: 1px solid rgba(255,255,255,0.06); /* faint rim to blend */
   }
   .hero-video-player {
     width: 100%;
-    height: 100vh;
-    object-fit: cover;
+    height: 100%;
+    max-height: none;
+    object-fit: cover; /* fill height */
+    object-position: top center; /* favor top so head isn't cut */
+    display: block;
   }
 }
 

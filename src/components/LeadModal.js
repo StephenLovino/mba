@@ -32,6 +32,7 @@ const LeadModal = () => {
   const [role, setRole] = useState('professional');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [extraParticipants, setExtraParticipants] = useState([]); // up to 4 {name,email}
 
   useEffect(() => {
     if (isOpen) {
@@ -40,6 +41,7 @@ const LeadModal = () => {
       setEmail('');
       setRole('professional');
       setError('');
+      setExtraParticipants([]);
     }
   }, [isOpen]);
 
@@ -55,7 +57,15 @@ const LeadModal = () => {
       const res = await fetch(`${apiBase}/api/lead`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, role, utms })
+        body: JSON.stringify({
+          name,
+          email,
+          role,
+          utms,
+          participants: extraParticipants
+            .map(p => ({ name: String(p.name||'').trim(), email: String(p.email||'').trim() }))
+            .filter(p => p.name && EMAIL_REGEX.test(p.email))
+        })
       });
       if (!res.ok) throw new Error('Failed to submit');
       const data = await res.json();
@@ -106,6 +116,53 @@ const LeadModal = () => {
                 Professional
               </label>
             </div>
+            {role === 'student' && (
+              <div className="lm-extra">
+                <h4>Add participants (optional)</h4>
+                <p className="lm-help">You can add up to 4 additional participants besides yourself.</p>
+                {extraParticipants.map((p, idx) => (
+                  <div key={idx} className="lm-extra-row">
+                    <label className="lm-label">Participant {idx + 2} name
+                      <input
+                        className="lm-input"
+                        value={p.name || ''}
+                        onChange={e => {
+                          const next = [...extraParticipants];
+                          next[idx] = { ...next[idx], name: e.target.value };
+                          setExtraParticipants(next);
+                        }}
+                        placeholder="Full name"
+                      />
+                    </label>
+                    <label className="lm-label">Email
+                      <input
+                        className="lm-input"
+                        type="email"
+                        value={p.email || ''}
+                        onChange={e => {
+                          const next = [...extraParticipants];
+                          next[idx] = { ...next[idx], email: e.target.value };
+                          setExtraParticipants(next);
+                        }}
+                        placeholder="email@example.com"
+                      />
+                    </label>
+                    <button
+                      type="button"
+                      className="lm-btn-secondary lm-inline-remove"
+                      onClick={() => setExtraParticipants(extraParticipants.filter((_, i) => i !== idx))}
+                    >Remove</button>
+                  </div>
+                ))}
+                {extraParticipants.length < 4 && (
+                  <button
+                    type="button"
+                    className="lm-btn-secondary"
+                    onClick={() => setExtraParticipants([...extraParticipants, { name: '', email: '' }])}
+                  >+ Add another participant</button>
+                )}
+              </div>
+            )}
             <div className="lm-actions">
               <button className="lm-btn-secondary" onClick={() => setStep(1)}>Back</button>
               <button className="lm-btn" onClick={() => setStep(3)}>Continue</button>
@@ -118,6 +175,18 @@ const LeadModal = () => {
             <p className="lm-summary"><strong>Name:</strong> {name}</p>
             <p className="lm-summary"><strong>Email:</strong> {email}</p>
             <p className="lm-summary"><strong>Role:</strong> {role}</p>
+            {role === 'student' && extraParticipants.length > 0 && (
+              <div className="lm-summary-list">
+                <p className="lm-summary"><strong>Additional participants:</strong></p>
+                <ul>
+                  {extraParticipants
+                    .filter(p => p.name && EMAIL_REGEX.test(p.email))
+                    .map((p, i) => (
+                      <li key={i}>{p.name} — {p.email}</li>
+                    ))}
+                </ul>
+              </div>
+            )}
             {!error && !loading && (
               <p className="lm-success">You're in! We'll email details shortly.</p>
             )}

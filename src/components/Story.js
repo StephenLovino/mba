@@ -1,7 +1,9 @@
 import React from 'react';
+import { useLeadModal } from './LeadModalContext';
 import './Story.css';
 
 const Story = () => {
+  const { open } = useLeadModal();
   return (
     <section className="story section" id="story">
       {/* Sticky background overlay to prevent underlying sections from showing through during reveals */}
@@ -28,7 +30,7 @@ const Story = () => {
           </div>
           
           <div className="story-cta">
-            <a href="/checkout" className="btn btn-primary">Enroll now</a>
+            <button onClick={open} className="btn btn-primary">Enroll now</button>
             
             <div className="story-stats">
               <div className="stat">

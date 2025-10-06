@@ -4,7 +4,7 @@ export default async function handler(req, res) {
     return;
   }
   try {
-    const { name, email, role, utms } = req.body || {};
+    const { name, email, role, utms, participants } = req.body || {};
     if (!name || !email || !role) {
       res.status(400).json({ error: 'Missing required fields' });
       return;
@@ -66,6 +66,32 @@ export default async function handler(req, res) {
       return;
     }
     const contactId = contactJson?.contact?.id || contactJson?.id || contactJson?.contactId;
+
+    // Optionally create/update additional contacts for student participants
+    if (role === 'student' && Array.isArray(participants) && participants.length) {
+      const cleaned = participants
+        .map(p => ({ name: String(p.name||'').trim(), email: String(p.email||'').trim() }))
+        .filter(p => p.name && /.+@.+\..+/.test(p.email));
+      for (const p of cleaned) {
+        const [pf, ...pr] = p.name.split(' ');
+        const pl = pr.join(' ').trim() || undefined;
+        const body = {
+          name: p.name,
+          firstName: pf || undefined,
+          lastName: pl,
+          email: p.email,
+          locationId,
+          source: 'public api',
+          tags: ['MBA Lead', 'student', 'participant']
+        };
+        const url = process.env.PRIVATE_GHL_PROXY_URL
+          ? `${process.env.PRIVATE_GHL_PROXY_URL.replace(/\/$/, '')}/contacts/upsert`
+          : `${apiBase}/contacts/`;
+        try {
+          await fetch(url, { method: 'POST', headers, body: JSON.stringify(body) });
+        } catch {}
+      }
+    }
 
     // 2) Optionally create opportunity if pipeline configured
     const pipelineId = process.env.GHL_PIPELINE_ID;
