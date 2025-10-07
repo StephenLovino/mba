@@ -168,6 +168,15 @@ export default async function handler(req, res) {
     // Check if we're in test mode (for staging)
     const isTestMode = req.headers['x-test-mode'] === 'true' || req.query.test === 'true';
     
+    console.log('Payment link selection:', {
+      isTestMode,
+      testHeader: req.headers['x-test-mode'],
+      testQuery: req.query.test,
+      studentStagingLink: process.env.XENDIT_STUDENT_STAGING_LINK,
+      studentProdLink: process.env.XENDIT_STUDENT_LINK,
+      role
+    });
+    
     const studentUrl = isTestMode ? 
       (process.env.XENDIT_STUDENT_STAGING_LINK || 'https://checkout-staging.xendit.co/od/student') :
       process.env.XENDIT_STUDENT_LINK;
@@ -175,6 +184,8 @@ export default async function handler(req, res) {
       (process.env.XENDIT_PROFESSIONAL_STAGING_LINK || 'https://checkout-staging.xendit.co/od/professional') :
       process.env.XENDIT_PROFESSIONAL_LINK;
     const chosen = role === 'student' ? studentUrl : proUrl;
+    
+    console.log('Selected payment URL:', { chosen, isTestMode, role });
     if (!chosen) {
       res.status(200).json({ created: true, contactId, redirectUrl: null, contact: contactJson });
       return;
