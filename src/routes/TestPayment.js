@@ -49,9 +49,16 @@ const TestPayment = () => {
         console.log('Lead API Response:', { status: response.status, data });
 
         if (response.ok && data.redirectUrl) {
-          console.log('Redirecting to Xendit staging:', data.redirectUrl);
-          // Redirect to Xendit staging payment link
-          window.location.href = 'https://checkout-staging.xendit.co/od/student';
+          console.log('Lead API returned URL:', data.redirectUrl);
+          // Use the URL from API but replace with staging if it's a Xendit URL
+          if (data.redirectUrl.includes('checkout.xendit.co')) {
+            const stagingUrl = data.redirectUrl.replace('checkout.xendit.co', 'checkout-staging.xendit.co');
+            console.log('Redirecting to Xendit staging:', stagingUrl);
+            window.location.href = stagingUrl;
+          } else {
+            console.log('Redirecting to API URL:', data.redirectUrl);
+            window.location.href = data.redirectUrl;
+          }
         } else {
           // Fallback: redirect directly to staging
           console.log('Lead API failed, redirecting directly to staging');
