@@ -41,52 +41,84 @@ export default async function handler(req, res) {
     // Determine payment tag based on role
     const paymentTag = role === 'student' ? 'students-paid' : 'professionals-paid';
     
-    console.log('Updating contact with payment tag:', { email, role, paymentTag });
+    console.log('Adding payment tag to contact:', { email, role, paymentTag });
 
-    // Update contact with payment tag
-    const updateRes = await fetch(`${apiBase}/contacts/`, {
-      method: 'PUT',
+    // First, find the contact by email
+    const searchRes = await fetch(`${apiBase}/contacts/?email=${encodeURIComponent(email)}&locationId=${locationId}`, {
+      method: 'GET',
+      headers
+    });
+
+    if (!searchRes.ok) {
+      console.error('Failed to search for contact:', searchRes.status, await searchRes.text());
+      res.status(502).json({ 
+        error: 'Failed to find contact', 
+        details: 'Could not locate contact by email' 
+      });
+      return;
+    }
+
+    const searchData = await searchRes.json();
+    const contacts = searchData.contacts || [];
+    
+    if (contacts.length === 0) {
+      console.log('No contact found with email:', email);
+      res.status(404).json({ 
+        error: 'Contact not found', 
+        details: 'No contact found with this email address' 
+      });
+      return;
+    }
+
+    const contact = contacts[0];
+    const contactId = contact.id;
+    
+    console.log('Found contact:', { contactId, email: contact.email, currentTags: contact.tags });
+
+    // Add payment tag to existing contact
+    const addTagRes = await fetch(`${apiBase}/contacts/${contactId}/tags`, {
+      method: 'POST',
       headers,
       body: JSON.stringify({
-        email,
-        tags: ['MBA Lead', role, paymentTag],
-        locationId
+        tags: [paymentTag]
       })
     });
 
-    const updateText = await updateRes.text();
-    let updateJson = {};
+    const addTagText = await addTagRes.text();
+    let addTagJson = {};
     try { 
-      updateJson = JSON.parse(updateText || '{}'); 
+      addTagJson = JSON.parse(addTagText || '{}'); 
     } catch (parseErr) {
-      console.error('Update response parse error:', parseErr);
+      console.error('Add tag response parse error:', parseErr);
     }
 
-    console.log('GHL Update Response:', {
-      status: updateRes.status,
-      statusText: updateRes.statusText,
-      body: updateText,
-      parsed: updateJson
+    console.log('GHL Add Tag Response:', {
+      status: addTagRes.status,
+      statusText: addTagRes.statusText,
+      body: addTagText,
+      parsed: addTagJson
     });
 
-    if (!updateRes.ok) {
-      console.error('Failed to update contact with payment tag:', {
-        status: updateRes.status,
-        response: updateText,
-        request: { email, role, paymentTag }
+    if (!addTagRes.ok) {
+      console.error('Failed to add payment tag to contact:', {
+        status: addTagRes.status,
+        response: addTagText,
+        request: { contactId, email, role, paymentTag }
       });
       res.status(502).json({ 
-        error: 'Failed to update contact', 
-        details: updateJson || updateText 
+        error: 'Failed to add payment tag', 
+        details: addTagJson || addTagText 
       });
       return;
     }
 
     res.status(200).json({ 
       success: true, 
-      message: 'Contact updated with payment status',
-      contactId: updateJson?.contact?.id || updateJson?.id,
-      tags: ['MBA Lead', role, paymentTag]
+      message: 'Payment tag added successfully',
+      contactId: contactId,
+      email: email,
+      role: role,
+      paymentTag: paymentTag
     });
 
   } catch (e) {
