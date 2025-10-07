@@ -13,21 +13,21 @@
 .hero .container {
   position: relative;
   z-index: 2;
-  max-width: 1440px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px; /* 3 * 8px */
   flex: 1;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 40px;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
 .hero-content {
   text-align: center;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   color: white;
+  width: 100%;
 }
 
 .hero-badge {
@@ -262,75 +262,6 @@ body.clay .hero > .container {
   font-weight: 500;
 }
 
-.hero-video {
-  position: relative;
-  z-index: 2;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: auto;
-}
-
-.video-container {
-  width: 100%;
-  margin: 0 auto 40px;
-  display: flex;
-  justify-content: center;
-  height: auto;
-  max-height: 500px;
-}
-
-.hero-video-player {
-  width: 100%;
-  height: auto;
-  max-height: 500px;
-  border-radius: 12px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  background: #000;
-  object-fit: contain;
-}
-
-.video-placeholder {
-  position: relative;
-  width: 100%;
-  height: 450px;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
-.video-thumbnail {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.play-button {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.8);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.play-button:hover {
-  background: rgba(0, 0, 0, 0.9);
-  transform: scale(1.1);
-}
-
-.play-button svg {
-  width: 40px;
-  height: 40px;
-}
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -398,26 +329,6 @@ body.clay .hero > .container {
     width: 100%;
   }
   
-  .video-container {
-    max-height: 300px;
-    width: 100%;
-    padding: 0 8px;
-  }
-  
-  .hero-video-player {
-    max-height: 300px;
-    width: 100%;
-  }
-  
-  .play-button {
-    width: 64px;
-    height: 64px;
-  }
-  
-  .play-button svg {
-    width: 32px;
-    height: 32px;
-  }
 
   /* Show mobile logo to fill vertical gap */
   .hero-mobile-logo {
@@ -429,55 +340,18 @@ body.clay .hero > .container {
   }
 }
 
-/* Desktop/tablet two-column layout */
+/* Desktop layout - keep content centered */
 @media (min-width: 992px) {
   .hero .container {
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 56px;
-    align-items: stretch; /* make both columns share the same row height */
-    min-height: auto; /* let row height be driven by content */
+    max-width: 1200px;
   }
+  
   .hero-content {
-    text-align: left;
-    margin: 0;
-    max-width: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    height: 100%;
+    max-width: 900px;
   }
-  .hero-actions { justify-content: flex-start; }
-  .hero-stats { justify-content: flex-start; }
-  .trusted-by { text-align: left; }
-  .trusted-logos { justify-content: flex-start; }
-  .hero-video {
-    display: flex;
-    align-items: flex-start;
-    height: auto;
-    align-self: start; /* allow capping via max-height on inner container */
-  }
-  .video-container { 
-    margin-bottom: 0; 
-    height: 100%;
-    width: 100%; /* fill the column so height can be driven independently */
-    max-width: none; /* don't cap width so height can fully match */
-    max-height: none; /* override base 500px cap */
-    display: flex;
-    align-items: center; /* center when not fully filling width */
-    justify-content: center;
-    overflow: hidden; /* clip video when capped */
-    background: #000; /* neutral background around contained video */
-    border-radius: 20px; /* soften edges */
-    box-shadow: 0 24px 60px rgba(0,0,0,0.5); /* subtle embed shadow */
-    outline: 1px solid rgba(255,255,255,0.06); /* faint rim to blend */
-  }
-  .hero-video-player {
-    width: 100%;
-    height: 100%;
-    max-height: none;
-    object-fit: cover; /* fill height */
-    object-position: top center; /* favor top so head isn't cut */
-    display: block;
+  
+  .hero-title {
+    font-size: 5rem; /* Slightly larger on desktop */
   }
 }
 

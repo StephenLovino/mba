@@ -9,33 +9,6 @@ const Hero = () => {
   const { open } = useLeadModal();
   const contentRef = useRef(null);
   const logosRef = useRef(null);
-  const videoContainerRef = useRef(null);
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    function applyMaxHeight() {
-      if (!contentRef.current || !videoContainerRef.current) return;
-      const contentRect = contentRef.current.getBoundingClientRect();
-      let capHeight = contentRect.height;
-      if (logosRef.current) {
-        const logosRect = logosRef.current.getBoundingClientRect();
-        capHeight = Math.max(0, Math.round(logosRect.bottom - contentRect.top));
-      }
-      videoContainerRef.current.style.maxHeight = `${capHeight}px`;
-    }
-
-    applyMaxHeight();
-
-    const ro = new ResizeObserver(applyMaxHeight);
-    if (contentRef.current) ro.observe(contentRef.current);
-    if (logosRef.current) ro.observe(logosRef.current);
-    window.addEventListener('resize', applyMaxHeight);
-
-    return () => {
-      ro.disconnect();
-      window.removeEventListener('resize', applyMaxHeight);
-    };
-  }, []);
   return (
     <section className="hero" id="home">
       <div className="container">
@@ -59,7 +32,7 @@ const Hero = () => {
           <h1 className="hero-title">
             <span className="hero-title-thin">FROM ZERO TO</span>{' '}
             <span className="hero-title-strong">AI HERO</span>
-            <span className="highlight">🚀</span>
+            <span className="highlight"> 🚀</span>
           </h1>
           
           <p className="hero-description">
@@ -80,22 +53,14 @@ const Hero = () => {
               className="btn btn-outline"
               onClick={(e) => {
                 e.preventDefault();
-                if (videoRef.current) {
-                  try {
-                    videoRef.current.muted = false;
-                    // Restart from beginning for a clean preview
-                    if (videoRef.current.currentTime > 0.1) {
-                      videoRef.current.currentTime = 0;
-                    }
-                    const playPromise = videoRef.current.play();
-                    if (playPromise && typeof playPromise.then === 'function') {
-                      playPromise.catch(() => {});
-                    }
-                  } catch {}
+                // Scroll to testimonials section
+                const testimonialsSection = document.getElementById('testimonials');
+                if (testimonialsSection) {
+                  testimonialsSection.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
             >
-              Watch Preview
+              View Testimonials
             </button>
           </div>
           
@@ -148,22 +113,6 @@ const Hero = () => {
                 <DockIcon newTab href="https://lovable.dev" name="Lovable" src={require('../lovable-logo-icon.png')} />
               </Dock>
             </div>
-          </div>
-        </div>
-        <div className="hero-video">
-          <div className="video-container" ref={videoContainerRef}>
-            <video 
-              className="hero-video-player"
-              controls
-              preload="metadata"
-              muted
-              autoPlay
-              playsInline
-              ref={videoRef}
-            >
-              <source src="/hero_video.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
           </div>
         </div>
       </div>

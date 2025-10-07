@@ -23,7 +23,7 @@
 }
 
 .story-content {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   text-align: center;
   position: relative;
@@ -68,9 +68,9 @@
 
 .solution-section {
   margin-top: 32px; /* 4 * 8px */
-  max-width: 800px;
-  margin-left: 0;
-  margin-right: 0;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .solution-section h3 {
