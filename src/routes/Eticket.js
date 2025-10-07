@@ -10,6 +10,8 @@ const Eticket = () => {
     const type = searchParams.get('t'); // student or professional
     const email = searchParams.get('email'); // if passed from Xendit
 
+    console.log('Eticket page loaded:', { type, email, searchParams: Object.fromEntries(searchParams.entries()) });
+
     if (!type) {
       setStatus('error');
       setMessage('Invalid ticket type. Please contact support.');
@@ -60,15 +62,22 @@ const Eticket = () => {
       display: 'flex', 
       alignItems: 'center', 
       justifyContent: 'center',
-      padding: '20px'
+      padding: '20px',
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      zIndex: 10000
     }}>
       <div style={{ 
         textAlign: 'center', 
         maxWidth: '600px',
-        background: 'rgba(255, 255, 255, 0.05)',
+        background: 'rgba(0, 0, 0, 0.8)',
         padding: '40px',
         borderRadius: '20px',
-        border: '1px solid rgba(255, 255, 255, 0.1)'
+        border: '2px solid rgba(255, 255, 255, 0.3)',
+        boxShadow: '0 0 20px rgba(255, 255, 255, 0.1)'
       }}>
         <div style={{ 
           fontSize: '4rem', 
