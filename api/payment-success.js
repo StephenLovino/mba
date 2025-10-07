@@ -15,7 +15,7 @@ export default async function handler(req, res) {
       return;
     }
     
-    const { email, role } = body;
+    const { email, role, organization, yearInCollege } = body;
     if (!email || !role) {
       res.status(400).json({ error: 'Missing email or role' });
       return;
@@ -44,7 +44,16 @@ export default async function handler(req, res) {
     console.log('Adding payment tag to contact:', { email, role, paymentTag });
 
     // Use the Upsert Contact API instead - it can handle both create and update
-    console.log('Upserting contact with payment tags:', { email, role, paymentTag });
+    console.log('Upserting contact with payment tags:', { email, role, paymentTag, organization, yearInCollege });
+    
+    // Build tags array with new fields
+    const tags = ['MBA Lead', role, paymentTag];
+    if (organization) {
+      tags.push(`org:${organization.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase()}`);
+    }
+    if (yearInCollege) {
+      tags.push(`year:${yearInCollege.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase()}`);
+    }
     
     const upsertRes = await fetch(`${apiBase}/contacts/`, {
       method: 'POST',
@@ -53,7 +62,7 @@ export default async function handler(req, res) {
         email: email,
         locationId: locationId,
         source: 'payment confirmation',
-        tags: ['MBA Lead', role, paymentTag]
+        tags: tags
       })
     });
 

@@ -14,7 +14,7 @@ export default async function handler(req, res) {
       return;
     }
     
-    const { name, email, role, utms, participants } = body;
+    const { name, email, role, organization, yearInCollege, utms, participants } = body;
     if (!name || !email || !role) {
       res.status(400).json({ error: 'Missing required fields' });
       return;
@@ -42,6 +42,15 @@ export default async function handler(req, res) {
     // 1) Create or upsert contact
     const [firstName, ...rest] = String(name || '').trim().split(' ');
     const lastName = rest.join(' ').trim() || undefined;
+    // Build tags array with new fields
+    const tags = ['MBA Lead', role];
+    if (organization) {
+      tags.push(`org:${organization.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase()}`);
+    }
+    if (yearInCollege) {
+      tags.push(`year:${yearInCollege.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase()}`);
+    }
+
     const contactBody = {
       name,
       firstName: firstName || undefined,
@@ -49,7 +58,7 @@ export default async function handler(req, res) {
       email,
       locationId,
       source: 'public api',
-      tags: ['MBA Lead', role]
+      tags: tags
     };
     const contactUrl = `${apiBase}/contacts/`;
 

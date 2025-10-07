@@ -30,6 +30,8 @@ const LeadModal = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('professional');
+  const [organization, setOrganization] = useState('');
+  const [yearInCollege, setYearInCollege] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [extraParticipants, setExtraParticipants] = useState([]); // up to 4 {name,email}
@@ -40,6 +42,8 @@ const LeadModal = () => {
       setName('');
       setEmail('');
       setRole('professional');
+      setOrganization('');
+      setYearInCollege('');
       setError('');
       setExtraParticipants([]);
     }
@@ -58,6 +62,8 @@ const LeadModal = () => {
         name,
         email,
         role,
+        organization: organization.trim(),
+        yearInCollege: yearInCollege.trim(),
         utms,
         participants: extraParticipants
           .map(p => ({ name: String(p.name||'').trim(), email: String(p.email||'').trim() }))
@@ -160,6 +166,35 @@ const LeadModal = () => {
                 Professional
               </label>
             </div>
+            
+            <label className="lm-label">
+              {role === 'student' ? 'School/University' : 'Organization/Company'}
+              <input 
+                className="lm-input" 
+                value={organization} 
+                onChange={(e) => setOrganization(e.target.value)} 
+                placeholder={role === 'student' ? 'University of the Philippines' : 'Google Inc.'} 
+              />
+            </label>
+            
+            {role === 'student' && (
+              <label className="lm-label">
+                Year in College
+                <select 
+                  className="lm-input" 
+                  value={yearInCollege} 
+                  onChange={(e) => setYearInCollege(e.target.value)}
+                >
+                  <option value="">Select year</option>
+                  <option value="1st Year">1st Year</option>
+                  <option value="2nd Year">2nd Year</option>
+                  <option value="3rd Year">3rd Year</option>
+                  <option value="4th Year">4th Year</option>
+                  <option value="5th Year">5th Year</option>
+                  <option value="Graduate Student">Graduate Student</option>
+                </select>
+              </label>
+            )}
             {role === 'student' && (
               <div className="lm-extra">
                 <h4>Add participants (optional)</h4>
@@ -219,6 +254,14 @@ const LeadModal = () => {
             <p className="lm-summary"><strong>Name:</strong> {name}</p>
             <p className="lm-summary"><strong>Email:</strong> {email}</p>
             <p className="lm-summary"><strong>Role:</strong> {role}</p>
+            {organization && (
+              <p className="lm-summary">
+                <strong>{role === 'student' ? 'School/University:' : 'Organization/Company:'}</strong> {organization}
+              </p>
+            )}
+            {role === 'student' && yearInCollege && (
+              <p className="lm-summary"><strong>Year in College:</strong> {yearInCollege}</p>
+            )}
             {role === 'student' && extraParticipants.length > 0 && (
               <div className="lm-summary-list">
                 <p className="lm-summary"><strong>Additional participants:</strong></p>

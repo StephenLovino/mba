@@ -53,6 +53,30 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+
+.hero-title-thin { 
+  font-weight: 300;
+  color: #ffffff;
+}
+.hero-title-strong { 
+  font-weight: 900;
+  color: #ffffff;
+  position: relative;
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #f0f0f0 25%,
+    #ffffff 50%,
+    #e8e8e8 75%,
+    #ffffff 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 3s ease-in-out infinite;
+}
+
 .hero-title .highlight {
   background: linear-gradient(90deg, var(--brand-pink) 0%, var(--brand-bluegreen) 100%);
   -webkit-background-clip: text;
@@ -60,8 +84,14 @@
   background-clip: text;
 }
 
-.hero-title-thin { font-weight: 300; }
-.hero-title-strong { font-weight: 900; }
+@keyframes shine {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
 
 .hero-description {
   font-size: 1.375rem; /* Increased for better readability */
