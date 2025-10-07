@@ -127,9 +127,9 @@ const Checkout = () => {
                 title="Xendit Payment"
                 style={{
                   width: '100%',
-                  height: '600px',
+                  height: '800px',
                   border: 'none',
-                  borderRadius: '12px',
+                  borderRadius: '16px',
                   backgroundColor: '#fff'
                 }}
                 allow="payment *; clipboard-write *;"
