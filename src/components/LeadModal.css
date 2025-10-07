@@ -20,6 +20,11 @@
 .lm-error{color:#ef4444;margin-top:8px}
 .lm-success{color:#22c55e;margin-top:8px}
 
+/* Payment step styles */
+.lm-success h4{margin:0 0 8px 0;color:#22c55e}
+.lm-error h4{margin:0 0 8px 0;color:#ef4444}
+#xendit-checkout-container{border:1px solid rgba(255,255,255,.12);border-radius:10px;background:#0f172a}
+
 /* Extra participants compact layout */
 .lm-extra{margin-top:8px}
 .lm-extra-row{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;margin-bottom:10px}
