@@ -165,8 +165,15 @@ export default async function handler(req, res) {
     }
 
     // Use static payment links with success redirect tracking
-    const studentUrl = process.env.XENDIT_STUDENT_LINK;
-    const proUrl = process.env.XENDIT_PROFESSIONAL_LINK;
+    // Check if we're in test mode (for staging)
+    const isTestMode = req.headers['x-test-mode'] === 'true' || req.query.test === 'true';
+    
+    const studentUrl = isTestMode ? 
+      (process.env.XENDIT_STUDENT_STAGING_LINK || 'https://checkout-staging.xendit.co/od/student') :
+      process.env.XENDIT_STUDENT_LINK;
+    const proUrl = isTestMode ? 
+      (process.env.XENDIT_PROFESSIONAL_STAGING_LINK || 'https://checkout-staging.xendit.co/od/professional') :
+      process.env.XENDIT_PROFESSIONAL_LINK;
     const chosen = role === 'student' ? studentUrl : proUrl;
     if (!chosen) {
       res.status(200).json({ created: true, contactId, redirectUrl: null, contact: contactJson });

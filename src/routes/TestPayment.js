@@ -35,12 +35,13 @@ const TestPayment = () => {
         console.log('Submitting to lead API:', payload);
         
         const apiBase = process.env.REACT_APP_API_BASE || '';
-        const response = await fetch(`${apiBase}/api/lead?t=${Date.now()}`, {
+        const response = await fetch(`${apiBase}/api/lead?t=${Date.now()}&test=true`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Cache-Control': 'no-cache',
-            'Pragma': 'no-cache'
+            'Pragma': 'no-cache',
+            'X-Test-Mode': 'true'
           },
           body: JSON.stringify(payload)
         });
@@ -49,16 +50,8 @@ const TestPayment = () => {
         console.log('Lead API Response:', { status: response.status, data });
 
         if (response.ok && data.redirectUrl) {
-          console.log('Lead API returned URL:', data.redirectUrl);
-          // Use the URL from API but replace with staging if it's a Xendit URL
-          if (data.redirectUrl.includes('checkout.xendit.co')) {
-            const stagingUrl = data.redirectUrl.replace('checkout.xendit.co', 'checkout-staging.xendit.co');
-            console.log('Redirecting to Xendit staging:', stagingUrl);
-            window.location.href = stagingUrl;
-          } else {
-            console.log('Redirecting to API URL:', data.redirectUrl);
-            window.location.href = data.redirectUrl;
-          }
+          console.log('Lead API returned staging URL:', data.redirectUrl);
+          window.location.href = data.redirectUrl;
         } else {
           // Fallback: redirect directly to staging
           console.log('Lead API failed, redirecting directly to staging');
