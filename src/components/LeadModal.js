@@ -88,56 +88,64 @@ const LeadModal = () => {
       
       if (!res.ok) {
         console.error('API Error:', data);
-        
-        // Fallback: Direct redirect to Xendit if API fails
-        console.log('API failed, using direct Xendit redirect');
-        const studentUrl = 'https://checkout.xendit.co/od/ai-student'; // Replace with your actual URLs
-        const proUrl = 'https://checkout.xendit.co/od/ai-professional';
-        const chosen = role === 'student' ? studentUrl : proUrl;
-        
-        if (chosen) {
-          window.location.href = chosen;
-          return;
-        }
-        
-        const errorMsg = data?.details || data?.error || `Server error (${res.status})`;
-        setError(`Error: ${errorMsg}`);
+
+        // Fallback: Redirect to checkout route even if API fails
+        // This allows user to still complete payment, we'll update GHL manually later
+        console.log('API failed, redirecting to checkout route anyway');
+
+        const params = new URLSearchParams({
+          name: name.trim(),
+          email: email.trim(),
+          org: organization.trim(),
+          year: yearInCollege.trim()
+        });
+
+        const checkoutRoute = role === 'student' ? '/checkout-student' : '/checkout-professional';
+
+        close();
+        window.location.href = `${checkoutRoute}?${params.toString()}`;
         return;
       }
       
       if (data && data.created) {
         console.log('Contact created successfully:', data.contactId);
-        
-        // Redirect to checkout page with query parameters
+
+        // Redirect to role-specific checkout page with query parameters
         const params = new URLSearchParams({
           name: name.trim(),
           email: email.trim(),
-          role: role,
           org: organization.trim(),
           year: yearInCollege.trim()
         });
-        
+
+        // Determine checkout route based on role
+        const checkoutRoute = role === 'student' ? '/checkout-student' : '/checkout-professional';
+
         // Close modal and redirect to checkout
         close();
-        window.location.href = `/checkout?${params.toString()}`;
+        window.location.href = `${checkoutRoute}?${params.toString()}`;
         return;
       }
       throw new Error('Unexpected response format');
     } catch (e) {
       console.error('Submit error:', e);
-      
-      // Fallback: Direct redirect to Xendit if network fails
-      console.log('Network error, using direct Xendit redirect');
-      const studentUrl = 'https://checkout.xendit.co/od/ai-student'; // Replace with your actual URLs
-      const proUrl = 'https://checkout.xendit.co/od/ai-professional';
-      const chosen = role === 'student' ? studentUrl : proUrl;
-      
-      if (chosen) {
-        window.location.href = chosen;
-        return;
-      }
-      
-      setError(`Network error: ${e.message}`);
+
+      // Fallback: Redirect to checkout route even if network fails
+      // This allows user to still complete payment, we'll update GHL manually later
+      console.log('Network error, redirecting to checkout route anyway');
+
+      const params = new URLSearchParams({
+        name: name.trim(),
+        email: email.trim(),
+        org: organization.trim(),
+        year: yearInCollege.trim()
+      });
+
+      const checkoutRoute = role === 'student' ? '/checkout-student' : '/checkout-professional';
+
+      close();
+      window.location.href = `${checkoutRoute}?${params.toString()}`;
+      return;
     } finally {
       setLoading(false);
     }

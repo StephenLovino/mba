@@ -45,7 +45,103 @@
 
 .checkout-header p {
   color: #cbd5e1;
+  margin: 0 0 16px 0;
+}
+
+.checkout-header-minimal {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 20px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.checkout-header-minimal h2 {
   margin: 0;
+  font-size: 24px;
+  background: linear-gradient(145deg, var(--brand-pink, #e91e63), var(--brand-bluegreen, #6fccdb));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.checkout-info {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 16px;
+  text-align: left;
+}
+
+.checkout-info p {
+  margin: 8px 0;
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+.checkout-info strong {
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.checkout-notice {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 20px auto;
+  max-width: 1000px;
+  text-align: center;
+}
+
+.checkout-notice p {
+  margin: 0;
+  color: #fbbf24;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.checkout-help {
+  text-align: center;
+  margin-top: 24px;
+  padding: 16px;
+}
+
+.checkout-help p {
+  color: #94a3b8;
+  font-size: 14px;
+  margin: 0;
+}
+
+.checkout-help a {
+  color: #6fccdb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.checkout-help a:hover {
+  text-decoration: underline;
+}
+
+.checkout-btn-primary {
+  background: linear-gradient(145deg, #22c55e, #16a34a) !important;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 14px 28px;
+}
+
+.checkout-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+}
+
+.checkout-btn:disabled,
+.checkout-btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
 }
 
 .checkout-summary {
@@ -174,25 +270,34 @@
   .checkout-container {
     padding: 20px 16px;
   }
-  
+
   .checkout-header {
     padding: 20px;
     margin-bottom: 30px;
   }
-  
+
   .checkout-header h2 {
     font-size: 24px;
   }
-  
+
+  .checkout-header-minimal {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  .checkout-header-minimal h2 {
+    font-size: 20px;
+  }
+
   .checkout-payment-container {
     padding: 15px;
     margin: 0 auto 20px auto;
   }
-  
+
   .checkout-actions {
     flex-direction: column;
   }
-  
+
   .checkout-btn,
   .checkout-btn-secondary {
     width: 100%;

@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import Checkout from './components/Checkout';
+import CheckoutStudent from './components/CheckoutStudent';
+import CheckoutProfessional from './components/CheckoutProfessional';
 import Eticket from './routes/Eticket';
 import TestPayment from './routes/TestPayment';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -14,6 +16,8 @@ root.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/checkout-student" element={<CheckoutStudent />} />
+        <Route path="/checkout-professional" element={<CheckoutProfessional />} />
         <Route path="/eticket" element={<Eticket />} />
         <Route path="/test-payment" element={<TestPayment />} />
       </Routes>

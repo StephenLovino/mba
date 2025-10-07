@@ -37,32 +37,35 @@ export default async function handler(req, res) {
     const event = JSON.parse(raw || '{}');
     console.log('Xendit webhook event:', JSON.stringify(event, null, 2));
 
-    // Extract payment information
+    // Extract payment information from invoice webhook
     const status = event?.status || event?.data?.status;
     const email = event?.payer_email || event?.data?.payer_email || event?.data?.payer?.email;
     const amount = event?.amount || event?.data?.amount;
     const description = event?.description || event?.data?.description || '';
+    const metadata = event?.metadata || event?.data?.metadata || {};
 
-    console.log('Extracted payment data:', { status, email, amount, description });
+    console.log('Extracted payment data:', { status, email, amount, description, metadata });
 
     if (status === 'PAID' && email) {
-      // Determine role based on amount or description
-      let role = 'professional';
-      let paymentTag = 'professionals-paid';
-      
-      // Check if it's a student payment (you can adjust these conditions)
-      if (amount && amount < 1000) { // Assuming student price is less than 1000
-        role = 'student';
-        paymentTag = 'students-paid';
-      }
-      
-      // Also check description for role indicators
-      if (description.toLowerCase().includes('student')) {
-        role = 'student';
-        paymentTag = 'students-paid';
+      // First try to get role from metadata (most reliable)
+      let role = metadata.role || 'professional';
+      let paymentTag = role === 'student' ? 'students-paid' : 'professionals-paid';
+
+      // Fallback: determine role based on amount
+      if (!metadata.role) {
+        if (amount && amount <= 500) {
+          role = 'student';
+          paymentTag = 'students-paid';
+        }
+
+        // Also check description for role indicators
+        if (description.toLowerCase().includes('student')) {
+          role = 'student';
+          paymentTag = 'students-paid';
+        }
       }
 
-      console.log('Updating GHL contact:', { email, role, paymentTag });
+      console.log('Updating GHL contact:', { email, role, paymentTag, metadata });
 
       // Update GHL contact with payment status
       const ghlToken = process.env.GHL_TOKEN;
@@ -84,7 +87,10 @@ export default async function handler(req, res) {
           email,
           locationId,
           tags: ['MBA Lead', role, paymentTag],
-          source: 'xendit webhook'
+          source: 'xendit webhook',
+          // Add metadata if available
+          ...(metadata.organization && { customField: { organization: metadata.organization } }),
+          ...(metadata.yearInCollege && { customField: { yearInCollege: metadata.yearInCollege } })
         };
 
         const contactRes = await fetch(`${apiBase}/contacts/`, {
