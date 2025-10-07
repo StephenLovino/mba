@@ -1,56 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-const Eticket = () => {
+const Success = () => {
   const [searchParams] = useSearchParams();
   const [status, setStatus] = useState('processing');
   const [message, setMessage] = useState('Processing your payment...');
 
   useEffect(() => {
-    const type = searchParams.get('t'); // student or professional
-    const email = searchParams.get('email'); // if passed from Xendit
+    const email = searchParams.get('email');
+    const role = searchParams.get('role');
 
-    if (!type) {
+    if (!email || !role) {
       setStatus('error');
-      setMessage('Invalid ticket type. Please contact support.');
+      setMessage('Missing payment information. Please contact support.');
       return;
     }
 
-    // If email is provided, update GHL contact with payment tag
-    if (email) {
-      const updateContact = async () => {
-        try {
-          console.log('Updating contact with payment status:', { email, role: type });
-          
-          const response = await fetch('/api/payment-success', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, role: type })
-          });
+    // Update GHL contact with payment tag
+    const updateContact = async () => {
+      try {
+        console.log('Updating contact with payment status:', { email, role });
+        
+        const response = await fetch('/api/payment-success', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, role })
+        });
 
-          const data = await response.json();
-          console.log('Payment success response:', data);
+        const data = await response.json();
+        console.log('Payment success response:', data);
 
-          if (response.ok) {
-            setStatus('success');
-            setMessage('Payment confirmed! Check your email for webinar details.');
-          } else {
-            setStatus('success'); // Still show success even if GHL update fails
-            setMessage('Payment confirmed! You will receive webinar details shortly.');
-          }
-        } catch (error) {
-          console.error('Payment success error:', error);
-          setStatus('success'); // Still show success even if API fails
-          setMessage('Payment confirmed! You will receive webinar details shortly.');
+        if (response.ok) {
+          setStatus('success');
+          setMessage('Payment confirmed! Check your email for webinar details.');
+        } else {
+          setStatus('error');
+          setMessage('Payment confirmed but there was an issue updating your registration. Please contact support.');
         }
-      };
+      } catch (error) {
+        console.error('Payment success error:', error);
+        setStatus('error');
+        setMessage('Payment confirmed but there was an issue updating your registration. Please contact support.');
+      }
+    };
 
-      updateContact();
-    } else {
-      // No email provided, just show success
-      setStatus('success');
-      setMessage('Payment confirmed! You will receive webinar details shortly.');
-    }
+    updateContact();
   }, [searchParams]);
 
   return (
@@ -75,7 +69,7 @@ const Eticket = () => {
           marginBottom: '20px',
           color: status === 'success' ? '#22c55e' : status === 'error' ? '#ef4444' : '#f59e0b'
         }}>
-          {status === 'success' ? '🎫' : status === 'error' ? '❌' : '⏳'}
+          {status === 'success' ? '✅' : status === 'error' ? '❌' : '⏳'}
         </div>
         
         <h1 style={{ 
@@ -84,9 +78,9 @@ const Eticket = () => {
           marginBottom: '20px',
           fontWeight: '700'
         }}>
-          {status === 'success' ? 'Your E-Ticket is Ready!' : 
-           status === 'error' ? 'Ticket Error' : 
-           'Processing Your Ticket...'}
+          {status === 'success' ? 'Payment Successful!' : 
+           status === 'error' ? 'Payment Confirmed' : 
+           'Processing Payment...'}
         </h1>
         
         <p style={{ 
@@ -144,4 +138,4 @@ const Eticket = () => {
   );
 };
 
-export default Eticket;
+export default Success;

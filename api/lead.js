@@ -10,29 +10,24 @@ export default async function handler(req, res) {
       return;
     }
 
-    // Configure GHL API: prefer direct Private Integration (token + Version header)
+    // Configure GHL API
     const apiBase = (process.env.GHL_API_BASE || 'https://services.leadconnectorhq.com').replace(/\/$/, '');
-    const ghlToken = process.env.GHL_TOKEN || process.env.GHL_API_KEY; // support either name
+    const ghlToken = process.env.GHL_TOKEN || process.env.GHL_API_KEY;
     const locationId = process.env.GHL_LOCATION_ID;
-    if (!locationId) {
-      res.status(500).json({ error: 'Missing GHL_LOCATION_ID' });
-      return;
-    }
-    if (!ghlToken && !process.env.PRIVATE_GHL_PROXY_URL) {
-      res.status(500).json({ error: 'Missing GHL token (GHL_TOKEN) or PRIVATE_GHL_PROXY_URL' });
+
+    if (!locationId || !ghlToken) {
+      res.status(500).json({ error: 'GHL configuration missing' });
       return;
     }
 
     const headers = { 
       'Content-Type': 'application/json', 
       'Accept': 'application/json',
+      'Authorization': `Bearer ${ghlToken}`,
+      'Version': '2021-07-28',
       'Cache-Control': 'no-cache',
       'Pragma': 'no-cache'
     };
-    if (ghlToken) {
-      headers['Authorization'] = `Bearer ${ghlToken}`;
-      headers['Version'] = '2021-07-28';
-    }
 
     // 1) Create or upsert contact
     const [firstName, ...rest] = String(name || '').trim().split(' ');
@@ -46,9 +41,7 @@ export default async function handler(req, res) {
       source: 'public api',
       tags: ['MBA Lead', role]
     };
-    const contactUrl = process.env.PRIVATE_GHL_PROXY_URL
-      ? `${process.env.PRIVATE_GHL_PROXY_URL.replace(/\/$/, '')}/contacts/upsert`
-      : `${apiBase}/contacts/`;
+    const contactUrl = `${apiBase}/contacts/`;
 
     let contactRes;
     try {
@@ -130,9 +123,7 @@ export default async function handler(req, res) {
           source: 'public api',
           tags: ['MBA Lead', 'student', 'participant']
         };
-        const url = process.env.PRIVATE_GHL_PROXY_URL
-          ? `${process.env.PRIVATE_GHL_PROXY_URL.replace(/\/$/, '')}/contacts/upsert`
-          : `${apiBase}/contacts/`;
+        const url = `${apiBase}/contacts/`;
         try {
           await fetch(url, { method: 'POST', headers, body: JSON.stringify(body) });
         } catch {}
@@ -143,9 +134,7 @@ export default async function handler(req, res) {
     const pipelineId = process.env.GHL_PIPELINE_ID;
     const pipelineStageId = process.env.GHL_PIPELINE_STAGE_ID; // optional
     if (pipelineId && contactId) {
-      const oppUrl = process.env.PRIVATE_GHL_PROXY_URL
-        ? `${process.env.PRIVATE_GHL_PROXY_URL.replace(/\/$/, '')}/opportunities/`
-        : `${apiBase}/opportunities/`;
+      const oppUrl = `${apiBase}/opportunities/`;
       const monetaryValue = role === 'student'
         ? Number(process.env.PRICE_STUDENT || 500)
         : Number(process.env.PRICE_PROFESSIONAL || 1000);
@@ -165,22 +154,23 @@ export default async function handler(req, res) {
       }
     }
 
-    // Decide redirect URL based on role
+    // Use static payment links with success redirect tracking
     const studentUrl = process.env.XENDIT_STUDENT_LINK;
     const proUrl = process.env.XENDIT_PROFESSIONAL_LINK;
     const chosen = role === 'student' ? studentUrl : proUrl;
     if (!chosen) {
-      // Contact created; payment link not configured yet. Return success without redirect.
       res.status(200).json({ created: true, contactId, redirectUrl: null, contact: contactJson });
       return;
     }
 
-    // Optionally append non-sensitive tracking
+    // Add email and role to success URL for tracking
     const url = new URL(chosen);
     if (utms && typeof utms === 'object') {
       Object.entries(utms).forEach(([k, v]) => { if (v) url.searchParams.set(k, String(v)); });
     }
     url.searchParams.set('r', role);
+    url.searchParams.set('email', email);
+    url.searchParams.set('success_url', `${process.env.VERCEL_URL || 'https://aihero.millennialbusinessacademy.net'}/eticket?t=${role}&email=${encodeURIComponent(email)}`);
 
     res.status(200).json({ created: true, contactId, redirectUrl: url.toString(), contact: contactJson });
   } catch (e) {

@@ -10,10 +10,8 @@ import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import { LeadModalProvider } from './components/LeadModalContext';
 import LeadModal from './components/LeadModal';
- 
 
 function App() {
-
   return (
     <LeadModalProvider>
       <div className="App">
