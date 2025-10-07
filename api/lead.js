@@ -207,7 +207,13 @@ export default async function handler(req, res) {
     }
     url.searchParams.set('r', role);
     url.searchParams.set('email', email);
-    url.searchParams.set('success_url', `${process.env.VERCEL_URL || 'https://aihero.millennialbusinessacademy.net'}/eticket?t=${role}&email=${encodeURIComponent(email)}`);
+    // Create a session to store user data
+    const sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    
+    // Store session data (this would ideally be in a database or Redis)
+    // For now, we'll pass the data through URL parameters
+    const successUrl = `${process.env.VERCEL_URL || 'https://aihero.millennialbusinessacademy.net'}/eticket?t=${role}&email=${encodeURIComponent(email)}&org=${encodeURIComponent(organization || '')}&year=${encodeURIComponent(yearInCollege || '')}`;
+    url.searchParams.set('success_url', successUrl);
 
     res.status(200).json({ created: true, contactId, redirectUrl: url.toString(), contact: contactJson });
   } catch (e) {

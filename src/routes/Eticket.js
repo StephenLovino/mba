@@ -9,8 +9,16 @@ const Eticket = () => {
   useEffect(() => {
     const type = searchParams.get('t'); // student or professional
     const email = searchParams.get('email'); // if passed from Xendit
+    const organization = searchParams.get('org'); // organization/school
+    const yearInCollege = searchParams.get('year'); // year in college
 
-    console.log('Eticket page loaded:', { type, email, searchParams: Object.fromEntries(searchParams.entries()) });
+    console.log('Eticket page loaded:', { 
+      type, 
+      email, 
+      organization, 
+      yearInCollege, 
+      searchParams: Object.fromEntries(searchParams.entries()) 
+    });
 
     if (!type) {
       setStatus('error');
@@ -27,7 +35,12 @@ const Eticket = () => {
           const response = await fetch('/api/payment-success', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, role: type })
+            body: JSON.stringify({ 
+              email, 
+              role: type, 
+              organization: organization || '', 
+              yearInCollege: yearInCollege || '' 
+            })
           });
 
           const data = await response.json();
