@@ -24,43 +24,7 @@ const Checkout = () => {
       return;
     }
 
-    // Initialize Xendit checkout
-    const initializeCheckout = () => {
-      if (window.XenditCheckout) {
-        try {
-          // Use the staging student link for testing
-          const checkoutUrl = 'https://checkout-staging.xendit.co/od/aistudent';
-          
-          window.XenditCheckout.init({
-            checkoutUrl: checkoutUrl,
-            containerId: 'xendit-checkout-container',
-            onSuccess: (data) => {
-              console.log('Payment successful:', data);
-              setPaymentStatus('success');
-              
-              // Update GHL contact with payment status
-              updateGHLContactWithPayment();
-            },
-            onError: (error) => {
-              console.error('Payment error:', error);
-              setPaymentStatus('error');
-            }
-          });
-          
-          setLoading(false);
-        } catch (error) {
-          console.error('Failed to initialize Xendit checkout:', error);
-          setPaymentStatus('error');
-          setLoading(false);
-        }
-      } else {
-        // Xendit script not loaded yet, retry
-        setTimeout(initializeCheckout, 500);
-      }
-    };
-
-    // Small delay to ensure DOM is ready
-    setTimeout(initializeCheckout, 100);
+    setLoading(false);
   }, [email, role]);
 
   const updateGHLContactWithPayment = async () => {
@@ -157,20 +121,20 @@ const Checkout = () => {
 
         {!paymentStatus && (
           <>
-            {loading && (
-              <div className="checkout-loading">
-                <p>Loading payment form...</p>
-              </div>
-            )}
-            <div 
-              id="xendit-checkout-container" 
-              style={{ 
-                minHeight: '400px', 
-                margin: '20px 0',
-                display: loading ? 'none' : 'block'
-              }}
-            >
-              {/* Xendit checkout will be embedded here */}
+            <div className="checkout-payment-container">
+              <iframe
+                src="https://checkout-staging.xendit.co/od/aistudent"
+                title="Xendit Payment"
+                style={{
+                  width: '100%',
+                  height: '600px',
+                  border: 'none',
+                  borderRadius: '12px',
+                  backgroundColor: '#fff'
+                }}
+                allow="payment *; clipboard-write *;"
+                sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-top-navigation-by-user-activation"
+              />
             </div>
             <div className="checkout-actions">
               <button className="checkout-btn-secondary" onClick={handleBackToForm}>

@@ -67,11 +67,12 @@
   color: #e2e8f0;
 }
 
-#xendit-checkout-container {
+.checkout-payment-container {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   background: #0f172a;
   padding: 20px;
+  margin: 20px 0;
 }
 
 .checkout-success {
