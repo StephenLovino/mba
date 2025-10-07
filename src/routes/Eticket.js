@@ -62,9 +62,9 @@ const Eticket = () => {
 
       updateContact();
     } else {
-      // No email provided, just show success
+      // No email provided, show success but mention webhook will handle GHL update
       setStatus('success');
-      setMessage('Payment confirmed! You will receive webinar details shortly.');
+      setMessage('Payment confirmed! You will receive webinar details shortly. (GHL contact will be updated automatically)');
     }
   }, [searchParams]);
 
