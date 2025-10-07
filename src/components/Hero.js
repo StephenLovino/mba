@@ -4,6 +4,7 @@ import { Announcement, AnnouncementTag, AnnouncementTitle } from './ui/announcem
 import { ArrowUpRight } from 'lucide-react';
 import { Dock, DockIcon } from './ui/dock';
 import { useLeadModal } from './LeadModalContext';
+import ShinyText from './ShinyText';
 
 const Hero = () => {
   const { open } = useLeadModal();
@@ -31,7 +32,7 @@ const Hero = () => {
           
           <h1 className="hero-title">
             <span className="hero-title-thin">FROM ZERO TO</span>{' '}
-            <span className="hero-title-strong">AI HERO</span>
+            <ShinyText text="AI HERO" speed={3} className="hero-title-strong" />
             <span className="highlight"> 🚀</span>
           </h1>
           
