@@ -81,6 +81,18 @@ const LeadModal = () => {
       
       if (!res.ok) {
         console.error('API Error:', data);
+        
+        // Fallback: Direct redirect to Xendit if API fails
+        console.log('API failed, using direct Xendit redirect');
+        const studentUrl = 'https://checkout.xendit.co/od/ai-student'; // Replace with your actual URLs
+        const proUrl = 'https://checkout.xendit.co/od/ai-professional';
+        const chosen = role === 'student' ? studentUrl : proUrl;
+        
+        if (chosen) {
+          window.location.href = chosen;
+          return;
+        }
+        
         const errorMsg = data?.details || data?.error || `Server error (${res.status})`;
         setError(`Error: ${errorMsg}`);
         return;
@@ -100,6 +112,18 @@ const LeadModal = () => {
       throw new Error('Unexpected response format');
     } catch (e) {
       console.error('Submit error:', e);
+      
+      // Fallback: Direct redirect to Xendit if network fails
+      console.log('Network error, using direct Xendit redirect');
+      const studentUrl = 'https://checkout.xendit.co/od/ai-student'; // Replace with your actual URLs
+      const proUrl = 'https://checkout.xendit.co/od/ai-professional';
+      const chosen = role === 'student' ? studentUrl : proUrl;
+      
+      if (chosen) {
+        window.location.href = chosen;
+        return;
+      }
+      
       setError(`Network error: ${e.message}`);
     } finally {
       setLoading(false);

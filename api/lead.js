@@ -4,7 +4,17 @@ export default async function handler(req, res) {
     return;
   }
   try {
-    const { name, email, role, utms, participants } = req.body || {};
+    // Better JSON parsing
+    let body = {};
+    try {
+      body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+    } catch (parseError) {
+      console.error('JSON parse error:', parseError);
+      res.status(400).json({ error: 'Invalid JSON', details: parseError.message });
+      return;
+    }
+    
+    const { name, email, role, utms, participants } = body;
     if (!name || !email || !role) {
       res.status(400).json({ error: 'Missing required fields' });
       return;
