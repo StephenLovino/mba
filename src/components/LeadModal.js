@@ -9,7 +9,6 @@ const StepIndicator = ({ step }) => (
     <div className={`lm-step ${step >= 1 ? 'active' : ''}`}>1</div>
     <div className={`lm-step ${step >= 2 ? 'active' : ''}`}>2</div>
     <div className={`lm-step ${step >= 3 ? 'active' : ''}`}>3</div>
-    <div className={`lm-step ${step >= 4 ? 'active' : ''}`}>4</div>
   </div>
 );
 
@@ -36,8 +35,6 @@ const LeadModal = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [extraParticipants, setExtraParticipants] = useState([]); // up to 4 {name,email}
-  const [paymentData, setPaymentData] = useState(null); // Store payment session data
-  const [paymentStatus, setPaymentStatus] = useState(''); // 'loading', 'success', 'error'
 
   useEffect(() => {
     if (isOpen) {
@@ -49,68 +46,9 @@ const LeadModal = () => {
       setYearInCollege('');
       setError('');
       setExtraParticipants([]);
-      setPaymentData(null);
-      setPaymentStatus('');
     }
   }, [isOpen]);
 
-  // Initialize Xendit checkout when step 4 is reached
-  useEffect(() => {
-    if (step === 4 && paymentData && !paymentStatus && window.XenditCheckout) {
-      const initializeCheckout = () => {
-        try {
-          // Use the staging student link for testing
-          const checkoutUrl = 'https://checkout-staging.xendit.co/od/aistudent';
-          
-          window.XenditCheckout.init({
-            checkoutUrl: checkoutUrl,
-            containerId: 'xendit-checkout-container',
-            onSuccess: (data) => {
-              console.log('Payment successful:', data);
-              setPaymentStatus('success');
-              
-              // Update GHL contact with payment status
-              updateGHLContactWithPayment();
-            },
-            onError: (error) => {
-              console.error('Payment error:', error);
-              setPaymentStatus('error');
-            }
-          });
-        } catch (error) {
-          console.error('Failed to initialize Xendit checkout:', error);
-          setPaymentStatus('error');
-        }
-      };
-
-      // Small delay to ensure DOM is ready
-      setTimeout(initializeCheckout, 100);
-    }
-  }, [step, paymentData, paymentStatus]);
-
-  const updateGHLContactWithPayment = async () => {
-    try {
-      const apiBase = process.env.REACT_APP_API_BASE || '';
-      const response = await fetch(`${apiBase}/api/payment-success`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          email, 
-          role, 
-          organization: organization.trim(), 
-          yearInCollege: yearInCollege.trim() 
-        })
-      });
-
-      if (response.ok) {
-        console.log('GHL contact updated with payment status');
-      } else {
-        console.error('Failed to update GHL contact');
-      }
-    } catch (error) {
-      console.error('Error updating GHL contact:', error);
-    }
-  };
 
   if (!isOpen) return null;
 
@@ -169,13 +107,19 @@ const LeadModal = () => {
       
       if (data && data.created) {
         console.log('Contact created successfully:', data.contactId);
-        // Store payment data and go to embedded payment step
-        setPaymentData({
-          contactId: data.contactId,
-          contact: data.contact
+        
+        // Redirect to checkout page with query parameters
+        const params = new URLSearchParams({
+          name: name.trim(),
+          email: email.trim(),
+          role: role,
+          org: organization.trim(),
+          year: yearInCollege.trim()
         });
-        setStep(4); // Go to embedded payment step
-        setError('');
+        
+        // Close modal and redirect to checkout
+        close();
+        window.location.href = `/checkout?${params.toString()}`;
         return;
       }
       throw new Error('Unexpected response format');
@@ -343,42 +287,6 @@ const LeadModal = () => {
               <button className="lm-btn-secondary" onClick={() => setStep(2)}>Back</button>
               <button className="lm-btn" onClick={submit} disabled={loading}>{loading ? 'Submitting...' : 'Proceed to payment'}</button>
             </div>
-          </div>
-        )}
-        {step === 4 && (
-          <div className="lm-step-content">
-            <h3>Complete your payment</h3>
-            <p className="lm-summary">You're almost there! Complete your payment to secure your spot.</p>
-            
-            {paymentStatus === 'success' && (
-              <div className="lm-success">
-                <h4>🎉 Payment Successful!</h4>
-                <p>Thank you for your payment. You will receive webinar details via email shortly.</p>
-                <button className="lm-btn" onClick={close}>Close</button>
-              </div>
-            )}
-            
-            {paymentStatus === 'error' && (
-              <div className="lm-error">
-                <h4>Payment Failed</h4>
-                <p>There was an issue processing your payment. Please try again.</p>
-                <div className="lm-actions">
-                  <button className="lm-btn-secondary" onClick={() => setStep(3)}>Back</button>
-                  <button className="lm-btn" onClick={() => setPaymentStatus('')}>Try Again</button>
-                </div>
-              </div>
-            )}
-            
-            {!paymentStatus && (
-              <>
-                <div id="xendit-checkout-container" style={{ minHeight: '400px', margin: '20px 0' }}>
-                  {/* Xendit checkout will be embedded here */}
-                </div>
-                <div className="lm-actions">
-                  <button className="lm-btn-secondary" onClick={() => setStep(3)}>Back</button>
-                </div>
-              </>
-            )}
           </div>
         )}
       </div>

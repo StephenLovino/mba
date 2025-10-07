@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import Checkout from './routes/Checkout';
+import Checkout from './components/Checkout';
 import Eticket from './routes/Eticket';
 import TestPayment from './routes/TestPayment';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
