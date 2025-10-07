@@ -61,8 +61,8 @@ const CheckoutStudent = () => {
 
           if (response.ok && data.invoice_url) {
             console.log('Invoice created via API:', data);
-            setInvoiceUrl(data.invoice_url);
-            setLoading(false);
+            // Redirect directly to Xendit checkout
+            window.location.href = data.invoice_url;
             return;
           }
         }
@@ -83,8 +83,8 @@ const CheckoutStudent = () => {
         : 'https://checkout.xendit.co/od/aistudent';
 
       console.log('Using static link:', staticLink);
-      setInvoiceUrl(staticLink);
-      setLoading(false);
+      // Redirect directly to Xendit checkout
+      window.location.href = staticLink;
 
     } catch (err) {
       console.error('Error in createInvoice:', err);
