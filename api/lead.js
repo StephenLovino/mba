@@ -212,7 +212,10 @@ export default async function handler(req, res) {
     
     // Store session data (this would ideally be in a database or Redis)
     // For now, we'll pass the data through URL parameters
-    const successUrl = `${process.env.VERCEL_URL || 'https://aihero.millennialbusinessacademy.net'}/eticket?t=${role}&email=${encodeURIComponent(email)}&org=${encodeURIComponent(organization || '')}&year=${encodeURIComponent(yearInCollege || '')}`;
+    const baseUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://aihero.millennialbusinessacademy.net'
+      : (process.env.VERCEL_URL || 'https://aihero.millennialbusinessacademy.net');
+    const successUrl = `${baseUrl}/eticket?t=${role}&email=${encodeURIComponent(email)}&org=${encodeURIComponent(organization || '')}&year=${encodeURIComponent(yearInCollege || '')}`;
     url.searchParams.set('success_url', successUrl);
 
     res.status(200).json({ created: true, contactId, redirectUrl: url.toString(), contact: contactJson });
