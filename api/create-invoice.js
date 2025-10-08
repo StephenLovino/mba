@@ -163,19 +163,25 @@ export default async function handler(req, res) {
  * Helper function to get the base URL of the application
  */
 function getBaseUrl(req) {
-  // Check if we're on Vercel
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
+  // PRIORITY 1: Use production URL if explicitly set (for payment redirects)
+  if (process.env.PRODUCTION_URL) {
+    return process.env.PRODUCTION_URL;
   }
-  
-  // Check if we have a custom domain
+
+  // PRIORITY 2: Check if we have a custom domain from the request
   const host = req.headers.host;
-  if (host) {
+  if (host && !host.includes('vercel.app')) {
+    // Only use host if it's a custom domain, not a Vercel preview URL
     const protocol = host.includes('localhost') ? 'http' : 'https';
     return `${protocol}://${host}`;
   }
-  
-  // Fallback
+
+  // PRIORITY 3: Check if we're on Vercel (this will be preview URLs)
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  // PRIORITY 4: Fallback for local development
   return 'http://localhost:3000';
 }
 
