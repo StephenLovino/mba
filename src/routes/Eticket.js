@@ -71,12 +71,20 @@ const Eticket = () => {
     }
   }, [searchParams]);
 
+  // Get the e-ticket image based on role
+  const type = searchParams.get('role') || searchParams.get('t');
+  const eticketImage = type === 'student'
+    ? '/eticket-students.png'
+    : type === 'professional'
+    ? '/eticket-professionals.png'
+    : null;
+
   return (
-    <div style={{ 
-      minHeight: '100vh', 
-      background: '#0b0b0b', 
-      display: 'flex', 
-      alignItems: 'center', 
+    <div style={{
+      minHeight: '100vh',
+      background: '#0b0b0b',
+      display: 'flex',
+      alignItems: 'center',
       justifyContent: 'center',
       padding: '20px',
       position: 'fixed',
@@ -86,45 +94,65 @@ const Eticket = () => {
       height: '100%',
       zIndex: 10000
     }}>
-      <div style={{ 
-        textAlign: 'center', 
-        maxWidth: '600px',
+      <div style={{
+        textAlign: 'center',
+        maxWidth: '800px',
         background: 'rgba(0, 0, 0, 0.8)',
         padding: '40px',
         borderRadius: '20px',
         border: '2px solid rgba(255, 255, 255, 0.3)',
         boxShadow: '0 0 20px rgba(255, 255, 255, 0.1)'
       }}>
-        <div style={{ 
-          fontSize: '4rem', 
+        <div style={{
+          fontSize: '4rem',
           marginBottom: '20px',
           color: status === 'success' ? '#22c55e' : status === 'error' ? '#ef4444' : '#f59e0b'
         }}>
           {status === 'success' ? '🎫' : status === 'error' ? '❌' : '⏳'}
         </div>
-        
-        <h1 style={{ 
-          color: '#fff', 
-          fontSize: '2rem', 
+
+        <h1 style={{
+          color: '#fff',
+          fontSize: '2rem',
           marginBottom: '20px',
           fontWeight: '700'
         }}>
-          {status === 'success' ? 'Your E-Ticket is Ready!' : 
-           status === 'error' ? 'Ticket Error' : 
+          {status === 'success' ? 'Your E-Ticket is Ready!' :
+           status === 'error' ? 'Ticket Error' :
            'Processing Your Ticket...'}
         </h1>
-        
-        <p style={{ 
-          color: '#b0b0b0', 
-          fontSize: '1.1rem', 
+
+        <p style={{
+          color: '#b0b0b0',
+          fontSize: '1.1rem',
           lineHeight: '1.6',
           marginBottom: '30px'
         }}>
           {message}
         </p>
 
+        {/* Display the e-ticket image */}
+        {status === 'success' && eticketImage && (
+          <div style={{
+            marginBottom: '30px',
+            borderRadius: '10px',
+            overflow: 'hidden',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
+          }}>
+            <img
+              src={eticketImage}
+              alt={`${type} e-ticket`}
+              style={{
+                width: '100%',
+                height: 'auto',
+                display: 'block'
+              }}
+            />
+          </div>
+        )}
+
         {status === 'success' && (
-          <div style={{ 
+          <div style={{
             background: 'rgba(34, 197, 94, 0.1)',
             border: '1px solid rgba(34, 197, 94, 0.3)',
             borderRadius: '10px',
@@ -134,21 +162,21 @@ const Eticket = () => {
             <h3 style={{ color: '#22c55e', marginBottom: '10px' }}>
               What's Next?
             </h3>
-            <ul style={{ 
-              color: '#b0b0b0', 
+            <ul style={{
+              color: '#b0b0b0',
               textAlign: 'left',
               listStyle: 'none',
               padding: 0
             }}>
-              <li style={{ marginBottom: '8px' }}>📧 Check your email for webinar details</li>
-              <li style={{ marginBottom: '8px' }}>📅 Add the webinar to your calendar</li>
-              <li style={{ marginBottom: '8px' }}>🚀 Get ready to build your first AI app!</li>
+              <li style={{ marginBottom: '8px' }}>✅ Check your email for webinar details</li>
+              <li style={{ marginBottom: '8px' }}>✅ Add the webinar to your calendar</li>
+              <li style={{ marginBottom: '8px' }}>✅ Get ready to build your first AI app!</li>
             </ul>
           </div>
         )}
 
-        <a 
-          href="/" 
+        <a
+          href="/"
           style={{
             display: 'inline-block',
             background: 'linear-gradient(90deg, #a83086, #4db1bd)',
