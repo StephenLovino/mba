@@ -93,24 +93,32 @@ const Eticket = () => {
 
   return (
     <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
       minHeight: '100vh',
       background: '#0b0b0b',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       padding: '40px 20px',
-      overflowY: 'auto'
+      overflowY: 'auto',
+      zIndex: 9999
     }}>
       <div style={{
         textAlign: 'center',
         maxWidth: '800px',
         width: '100%',
-        background: 'rgba(0, 0, 0, 0.8)',
+        background: 'rgba(0, 0, 0, 0.95)',
         padding: '40px',
         borderRadius: '20px',
         border: '2px solid rgba(255, 255, 255, 0.3)',
         boxShadow: '0 0 20px rgba(255, 255, 255, 0.1)',
-        margin: '20px auto'
+        margin: '20px auto',
+        position: 'relative',
+        zIndex: 10000
       }}>
         <div style={{
           fontSize: '4rem',
