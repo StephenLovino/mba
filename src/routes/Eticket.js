@@ -7,17 +7,20 @@ const Eticket = () => {
   const [message, setMessage] = useState('Processing your payment...');
 
   useEffect(() => {
-    const type = searchParams.get('t'); // student or professional
+    // Accept both 'role' (from Xendit redirect) and 't' (legacy) parameters
+    const type = searchParams.get('role') || searchParams.get('t'); // student or professional
     const email = searchParams.get('email'); // if passed from Xendit
+    const name = searchParams.get('name'); // customer name
     const organization = searchParams.get('org'); // organization/school
     const yearInCollege = searchParams.get('year'); // year in college
 
-    console.log('Eticket page loaded:', { 
-      type, 
-      email, 
-      organization, 
-      yearInCollege, 
-      searchParams: Object.fromEntries(searchParams.entries()) 
+    console.log('Eticket page loaded:', {
+      type,
+      email,
+      name,
+      organization,
+      yearInCollege,
+      searchParams: Object.fromEntries(searchParams.entries())
     });
 
     if (!type) {
