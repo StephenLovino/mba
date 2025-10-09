@@ -42,61 +42,77 @@ export default async function handler(req, res) {
 
     // Determine payment tag based on role
     const paymentTag = role === 'student' ? 'students-paid' : 'professionals-paid';
-    
+
     console.log('Adding payment tag to contact:', { email, role, paymentTag });
 
-    // Use the Upsert Contact API instead - it can handle both create and update
-    console.log('Upserting contact with payment tags:', { email, role, paymentTag, organization, yearInCollege });
-    
-    // Build tags array with new fields
-    const tags = ['MBA Lead', role, paymentTag];
-    if (organization) {
-      tags.push(`org:${organization.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase()}`);
-    }
-    if (yearInCollege) {
-      tags.push(`year:${yearInCollege.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase()}`);
-    }
-    
-    const upsertRes = await fetch(`${apiBase}/contacts/`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
-        email: email,
-        locationId: locationId,
-        source: 'payment confirmation',
-        tags: tags
-      })
+    // Step 1: Search for existing contact by email (avoid creating duplicates)
+    const searchUrl = `${apiBase}/contacts/search/duplicate?locationId=${locationId}&email=${encodeURIComponent(email)}`;
+    console.log('Searching for existing contact:', email);
+
+    const searchRes = await fetch(searchUrl, {
+      method: 'GET',
+      headers
     });
 
-    const upsertText = await upsertRes.text();
-    let upsertJson = {};
-    try { 
-      upsertJson = JSON.parse(upsertText || '{}'); 
-    } catch (parseErr) {
-      console.error('Upsert response parse error:', parseErr);
-    }
+    let contactId = null;
 
-    console.log('GHL Upsert Response:', {
-      status: upsertRes.status,
-      statusText: upsertRes.statusText,
-      body: upsertText,
-      parsed: upsertJson
-    });
-
-    if (!upsertRes.ok) {
-      console.error('Failed to upsert contact with payment tags:', {
-        status: upsertRes.status,
-        response: upsertText,
-        request: { email, role, paymentTag }
-      });
-      res.status(502).json({ 
-        error: 'Failed to upsert contact', 
-        details: upsertJson || upsertText 
+    if (!searchRes.ok) {
+      const errorText = await searchRes.text();
+      console.error('Failed to search for contact:', errorText);
+      res.status(502).json({
+        error: 'Failed to search for contact',
+        details: errorText
       });
       return;
     }
 
-    const contactId = upsertJson?.contact?.id || upsertJson?.id;
+    const searchData = await searchRes.json();
+    const existingContact = searchData?.contact;
+
+    if (!existingContact) {
+      console.error('Contact not found:', email);
+      res.status(404).json({
+        error: 'Contact not found. Please register first.'
+      });
+      return;
+    }
+
+    contactId = existingContact.id;
+    console.log('Found existing contact:', { id: contactId, email, currentTags: existingContact.tags });
+
+    // Step 2: Build tags to add
+    const tagsToAdd = [paymentTag];
+    if (organization) {
+      tagsToAdd.push(`org:${organization.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase()}`);
+    }
+    if (yearInCollege) {
+      tagsToAdd.push(`year:${yearInCollege.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase()}`);
+    }
+
+    console.log('Adding tags to contact:', tagsToAdd);
+
+    // Step 3: Add tags to existing contact (no upsert, no duplicates)
+    const addTagsUrl = `${apiBase}/contacts/${contactId}/tags`;
+    const addTagsRes = await fetch(addTagsUrl, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        tags: tagsToAdd
+      })
+    });
+
+    if (!addTagsRes.ok) {
+      const errorText = await addTagsRes.text();
+      console.error('Failed to add tags to contact:', errorText);
+      res.status(502).json({
+        error: 'Failed to add payment tags',
+        details: errorText
+      });
+      return;
+    }
+
+    const addTagsData = await addTagsRes.json();
+    console.log('Successfully added tags:', addTagsData);
 
     // If this is a student payment and there are participants, tag them with 'participants-paid'
     if (role === 'student' && Array.isArray(participantEmails) && participantEmails.length > 0) {

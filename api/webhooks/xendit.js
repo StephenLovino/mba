@@ -82,34 +82,62 @@ export default async function handler(req, res) {
           'Pragma': 'no-cache'
         };
 
-        // Use Upsert Contact API to add payment tag
-        const contactBody = {
-          email,
-          locationId,
-          tags: ['MBA Lead', role, paymentTag],
-          source: 'xendit webhook',
-          // Add metadata if available
-          ...(metadata.organization && { customField: { organization: metadata.organization } }),
-          ...(metadata.yearInCollege && { customField: { yearInCollege: metadata.yearInCollege } })
-        };
+        // Search for existing contact first (avoid duplicates)
+        const searchUrl = `${apiBase}/contacts/search/duplicate?locationId=${locationId}&email=${encodeURIComponent(email)}`;
+        console.log('Searching for existing contact:', email);
 
-        const contactRes = await fetch(`${apiBase}/contacts/`, {
-          method: 'POST',
-          headers,
-          body: JSON.stringify(contactBody)
+        const searchRes = await fetch(searchUrl, {
+          method: 'GET',
+          headers
         });
 
-        const contactData = await contactRes.json();
-        console.log('GHL contact update result:', {
-          status: contactRes.status,
-          data: contactData
-        });
+        let contactId = null;
 
-        if (contactRes.ok) {
-          console.log('Successfully updated GHL contact with payment status');
+        if (searchRes.ok) {
+          const searchData = await searchRes.json();
+          const existingContact = searchData?.contact;
 
-          // If this is a student payment and there are participants in metadata, tag them
-          if (role === 'student' && metadata.participantEmails) {
+          if (existingContact) {
+            contactId = existingContact.id;
+            console.log('Found existing contact:', { id: contactId, email, currentTags: existingContact.tags });
+          } else {
+            console.warn('Contact not found for webhook payment:', email);
+          }
+        } else {
+          console.error('Failed to search for contact:', await searchRes.text());
+        }
+
+        // If contact found, add payment tags
+        if (contactId) {
+          const tagsToAdd = [paymentTag];
+          if (metadata.organization) {
+            tagsToAdd.push(`org:${metadata.organization.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase()}`);
+          }
+          if (metadata.yearInCollege) {
+            tagsToAdd.push(`year:${metadata.yearInCollege.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase()}`);
+          }
+
+          const addTagsUrl = `${apiBase}/contacts/${contactId}/tags`;
+          const addTagsRes = await fetch(addTagsUrl, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({
+              tags: tagsToAdd
+            })
+          });
+
+          if (addTagsRes.ok) {
+            const addTagsData = await addTagsRes.json();
+            console.log('Successfully added payment tags via webhook:', addTagsData);
+          } else {
+            console.error('Failed to add payment tags via webhook:', await addTagsRes.text());
+          }
+        } else {
+          console.error('Cannot add payment tags - contact not found');
+        }
+
+        // If this is a student payment and there are participants in metadata, tag them
+        if (contactId && role === 'student' && metadata.participantEmails) {
             try {
               const participantEmails = JSON.parse(metadata.participantEmails);
               console.log('Tagging participants from webhook:', participantEmails);
@@ -169,9 +197,6 @@ export default async function handler(req, res) {
               console.error('Error parsing participant emails from metadata:', parseError);
             }
           }
-        } else {
-          console.error('Failed to update GHL contact:', contactData);
-        }
       } else {
         console.error('Missing GHL credentials for webhook');
       }
