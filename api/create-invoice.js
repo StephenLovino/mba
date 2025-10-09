@@ -63,7 +63,7 @@ export default async function handler(req, res) {
       invoice_duration: 86400, // 24 hours
       currency: 'PHP',
       reminder_time: 1,
-      success_redirect_url: `${getBaseUrl(req)}/eticket?email=${encodeURIComponent(email)}&role=${role}&org=${encodeURIComponent(organization || '')}&year=${encodeURIComponent(yearInCollege || '')}&name=${encodeURIComponent(name)}`,
+      success_redirect_url: `${getBaseUrl(req)}/eticket?email=${encodeURIComponent(email)}&role=${role}&org=${encodeURIComponent(organization || '')}&year=${encodeURIComponent(yearInCollege || '')}&name=${encodeURIComponent(name)}${participantEmails && participantEmails.length > 0 ? `&participants=${encodeURIComponent(participantEmails.join(','))}` : ''}`,
       failure_redirect_url: `${getBaseUrl(req)}/checkout-${role}?email=${encodeURIComponent(email)}&org=${encodeURIComponent(organization || '')}&year=${encodeURIComponent(yearInCollege || '')}&name=${encodeURIComponent(name)}&error=payment_failed`,
       customer: {
         given_names: name,

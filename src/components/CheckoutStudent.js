@@ -124,8 +124,14 @@ const CheckoutStudent = () => {
 
       if (response.ok) {
         console.log('GHL contact updated with payment status');
-        // Redirect to eticket page
-        const eticketUrl = `/eticket?t=${role}&email=${encodeURIComponent(email)}&org=${encodeURIComponent(organization || '')}&year=${encodeURIComponent(yearInCollege || '')}`;
+        // Redirect to eticket page with participants
+        let eticketUrl = `/eticket?t=${role}&email=${encodeURIComponent(email)}&org=${encodeURIComponent(organization || '')}&year=${encodeURIComponent(yearInCollege || '')}`;
+
+        // Add participants to URL if present
+        if (participantEmails.length > 0) {
+          eticketUrl += `&participants=${encodeURIComponent(participantEmails.join(','))}`;
+        }
+
         window.location.href = eticketUrl;
       } else {
         console.error('Failed to update GHL contact');

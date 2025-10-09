@@ -16,10 +16,10 @@ const headers = {
 
 // Test with emails from your screenshot
 const TEST_PARTICIPANTS = [
-  'stephenjj.lovino@gmail.com',
-  'yurakusu@gmail.com',
-  'rakusu17@gmail.com',
-  'stephenkiri7@gmail.com'
+  'stephenj.lovino@gmail.com',
+  'yuraikusu@gmail.com',
+  'raikusu17@gmail.com',
+  'stephenkiri17@gmail.com'
 ];
 
 async function diagnose() {

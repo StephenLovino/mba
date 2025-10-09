@@ -14,12 +14,17 @@ const Eticket = () => {
     const organization = searchParams.get('org'); // organization/school
     const yearInCollege = searchParams.get('year'); // year in college
 
+    // Extract participants if passed (comma-separated emails)
+    const participantsParam = searchParams.get('participants') || '';
+    const participantEmails = participantsParam ? participantsParam.split(',').filter(e => e.trim()) : [];
+
     console.log('Eticket page loaded:', {
       type,
       email,
       name,
       organization,
       yearInCollege,
+      participantEmails,
       searchParams: Object.fromEntries(searchParams.entries())
     });
 
@@ -33,16 +38,17 @@ const Eticket = () => {
     if (email) {
       const updateContact = async () => {
         try {
-          console.log('Updating contact with payment status:', { email, role: type });
-          
+          console.log('Updating contact with payment status:', { email, role: type, participantEmails });
+
           const response = await fetch('/api/payment-success', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-              email, 
-              role: type, 
-              organization: organization || '', 
-              yearInCollege: yearInCollege || '' 
+            body: JSON.stringify({
+              email,
+              role: type,
+              organization: organization || '',
+              yearInCollege: yearInCollege || '',
+              participantEmails: participantEmails // Pass participants to tag them
             })
           });
 
