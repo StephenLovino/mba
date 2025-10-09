@@ -17,6 +17,10 @@ const CheckoutStudent = () => {
   const name = searchParams.get('name') || '';
   const role = 'student'; // Fixed role for this route
 
+  // Extract participants if passed (comma-separated emails)
+  const participantsParam = searchParams.get('participants') || '';
+  const participantEmails = participantsParam ? participantsParam.split(',').filter(e => e.trim()) : [];
+
   useEffect(() => {
     // Validate required parameters
     if (!email || !name) {
@@ -50,7 +54,8 @@ const CheckoutStudent = () => {
             name,
             role: 'student',
             organization,
-            yearInCollege
+            yearInCollege,
+            participantEmails: participantEmails // Pass participant emails
           })
         });
 
@@ -105,7 +110,8 @@ const CheckoutStudent = () => {
           email,
           role,
           organization: organization || '',
-          yearInCollege: yearInCollege || ''
+          yearInCollege: yearInCollege || '',
+          participantEmails: participantEmails // Pass participant emails to tag them
         })
       });
 

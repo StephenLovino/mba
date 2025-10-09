@@ -100,6 +100,17 @@ const LeadModal = () => {
           year: yearInCollege.trim()
         });
 
+        // Add participant emails for students
+        if (role === 'student' && extraParticipants.length > 0) {
+          const participantEmails = extraParticipants
+            .filter(p => p.email && EMAIL_REGEX.test(p.email))
+            .map(p => p.email.trim())
+            .join(',');
+          if (participantEmails) {
+            params.set('participants', participantEmails);
+          }
+        }
+
         const checkoutRoute = role === 'student' ? '/checkout-student' : '/checkout-professional';
 
         close();
@@ -117,6 +128,17 @@ const LeadModal = () => {
           org: organization.trim(),
           year: yearInCollege.trim()
         });
+
+        // Add participant emails for students
+        if (role === 'student' && extraParticipants.length > 0) {
+          const participantEmails = extraParticipants
+            .filter(p => p.email && EMAIL_REGEX.test(p.email))
+            .map(p => p.email.trim())
+            .join(',');
+          if (participantEmails) {
+            params.set('participants', participantEmails);
+          }
+        }
 
         // Determine checkout route based on role
         const checkoutRoute = role === 'student' ? '/checkout-student' : '/checkout-professional';
@@ -140,6 +162,17 @@ const LeadModal = () => {
         org: organization.trim(),
         year: yearInCollege.trim()
       });
+
+      // Add participant emails for students
+      if (role === 'student' && extraParticipants.length > 0) {
+        const participantEmails = extraParticipants
+          .filter(p => p.email && EMAIL_REGEX.test(p.email))
+          .map(p => p.email.trim())
+          .join(',');
+        if (participantEmails) {
+          params.set('participants', participantEmails);
+        }
+      }
 
       const checkoutRoute = role === 'student' ? '/checkout-student' : '/checkout-professional';
 

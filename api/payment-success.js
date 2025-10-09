@@ -15,11 +15,13 @@ export default async function handler(req, res) {
       return;
     }
     
-    const { email, role, organization, yearInCollege } = body;
+    const { email, role, organization, yearInCollege, participantEmails } = body;
     if (!email || !role) {
       res.status(400).json({ error: 'Missing email or role' });
       return;
     }
+
+    console.log('Payment success request:', { email, role, organization, yearInCollege, participantEmails });
 
     // Configure GHL API
     const apiBase = (process.env.GHL_API_BASE || 'https://services.leadconnectorhq.com').replace(/\/$/, '');
@@ -95,14 +97,71 @@ export default async function handler(req, res) {
     }
 
     const contactId = upsertJson?.contact?.id || upsertJson?.id;
-    
-    res.status(200).json({ 
-      success: true, 
+
+    // If this is a student payment and there are participants, tag them with 'participants-paid'
+    if (role === 'student' && Array.isArray(participantEmails) && participantEmails.length > 0) {
+      console.log('Tagging participants with participants-paid:', participantEmails);
+
+      for (const participantEmail of participantEmails) {
+        if (!participantEmail || !participantEmail.trim()) continue;
+
+        try {
+          const trimmedEmail = participantEmail.trim();
+
+          // Step 1: Search for existing contact by email
+          const searchUrl = `${apiBase}/contacts/search/duplicate?locationId=${locationId}&email=${encodeURIComponent(trimmedEmail)}`;
+          const searchRes = await fetch(searchUrl, {
+            method: 'GET',
+            headers
+          });
+
+          let contactIdToTag = null;
+
+          if (searchRes.ok) {
+            const searchData = await searchRes.json();
+            const existingContact = searchData?.contact;
+
+            if (existingContact) {
+              contactIdToTag = existingContact.id;
+              console.log(`Found existing participant ${trimmedEmail} with ID: ${contactIdToTag}`);
+            }
+          }
+
+          // Step 2: Add 'participants-paid' tag using the Add Tags endpoint
+          if (contactIdToTag) {
+            const addTagsUrl = `${apiBase}/contacts/${contactIdToTag}/tags`;
+            const addTagsRes = await fetch(addTagsUrl, {
+              method: 'POST',
+              headers,
+              body: JSON.stringify({
+                tags: ['participants-paid']
+              })
+            });
+
+            if (addTagsRes.ok) {
+              console.log(`Successfully added participants-paid tag to ${trimmedEmail}`);
+            } else {
+              const errorText = await addTagsRes.text();
+              console.error(`Failed to add tag to participant ${trimmedEmail}:`, errorText);
+            }
+          } else {
+            console.warn(`Participant ${trimmedEmail} not found in GHL, skipping tag addition`);
+          }
+        } catch (participantError) {
+          console.error(`Error tagging participant ${participantEmail}:`, participantError);
+          // Continue with other participants even if one fails
+        }
+      }
+    }
+
+    res.status(200).json({
+      success: true,
       message: 'Payment confirmed and contact updated with payment tags',
       contactId: contactId,
       email: email,
       role: role,
-      paymentTag: paymentTag
+      paymentTag: paymentTag,
+      participantsTagged: participantEmails?.length || 0
     });
 
   } catch (e) {

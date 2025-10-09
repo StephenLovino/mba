@@ -107,6 +107,68 @@ export default async function handler(req, res) {
 
         if (contactRes.ok) {
           console.log('Successfully updated GHL contact with payment status');
+
+          // If this is a student payment and there are participants in metadata, tag them
+          if (role === 'student' && metadata.participantEmails) {
+            try {
+              const participantEmails = JSON.parse(metadata.participantEmails);
+              console.log('Tagging participants from webhook:', participantEmails);
+
+              if (Array.isArray(participantEmails) && participantEmails.length > 0) {
+                for (const participantEmail of participantEmails) {
+                  if (!participantEmail || !participantEmail.trim()) continue;
+
+                  try {
+                    const trimmedEmail = participantEmail.trim();
+
+                    // Step 1: Search for existing contact by email
+                    const searchUrl = `${apiBase}/contacts/search/duplicate?locationId=${locationId}&email=${encodeURIComponent(trimmedEmail)}`;
+                    const searchRes = await fetch(searchUrl, {
+                      method: 'GET',
+                      headers
+                    });
+
+                    let contactIdToTag = null;
+
+                    if (searchRes.ok) {
+                      const searchData = await searchRes.json();
+                      const existingContact = searchData?.contact;
+
+                      if (existingContact) {
+                        contactIdToTag = existingContact.id;
+                        console.log(`Found existing participant ${trimmedEmail} with ID: ${contactIdToTag}`);
+                      }
+                    }
+
+                    // Step 2: Add 'participants-paid' tag using the Add Tags endpoint
+                    if (contactIdToTag) {
+                      const addTagsUrl = `${apiBase}/contacts/${contactIdToTag}/tags`;
+                      const addTagsRes = await fetch(addTagsUrl, {
+                        method: 'POST',
+                        headers,
+                        body: JSON.stringify({
+                          tags: ['participants-paid']
+                        })
+                      });
+
+                      if (addTagsRes.ok) {
+                        console.log(`Successfully added participants-paid tag to ${trimmedEmail}`);
+                      } else {
+                        const errorText = await addTagsRes.text();
+                        console.error(`Failed to add tag to participant ${trimmedEmail}:`, errorText);
+                      }
+                    } else {
+                      console.warn(`Participant ${trimmedEmail} not found in GHL, skipping tag addition`);
+                    }
+                  } catch (participantError) {
+                    console.error(`Error tagging participant ${participantEmail}:`, participantError);
+                  }
+                }
+              }
+            } catch (parseError) {
+              console.error('Error parsing participant emails from metadata:', parseError);
+            }
+          }
         } else {
           console.error('Failed to update GHL contact:', contactData);
         }

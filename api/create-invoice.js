@@ -30,13 +30,15 @@ export default async function handler(req, res) {
       return;
     }
 
-    const { email, name, role, organization, yearInCollege } = body;
+    const { email, name, role, organization, yearInCollege, participantEmails } = body;
 
     // Validate required fields
     if (!email || !name || !role) {
       res.status(400).json({ error: 'Missing required fields: email, name, role' });
       return;
     }
+
+    console.log('Create invoice request:', { email, name, role, organization, yearInCollege, participantEmails });
 
     // Get Xendit secret key
     const xenditSecretKey = process.env.XENDIT_SECRET_KEY;
@@ -87,7 +89,11 @@ export default async function handler(req, res) {
         organization: organization || '',
         yearInCollege: yearInCollege || '',
         name: name,
-        source: 'MBA Registration Form'
+        source: 'MBA Registration Form',
+        // Store participant emails for tagging after payment
+        ...(participantEmails && participantEmails.length > 0 && {
+          participantEmails: JSON.stringify(participantEmails)
+        })
       }
     };
 
