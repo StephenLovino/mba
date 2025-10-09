@@ -30,6 +30,8 @@ const CheckoutStudent = () => {
     }
 
     console.log('Student Checkout loaded with:', { email, organization, yearInCollege, name });
+    console.log('Participants from URL:', participantsParam);
+    console.log('Parsed participant emails:', participantEmails);
 
     // Create Xendit invoice
     createInvoice();
@@ -103,16 +105,21 @@ const CheckoutStudent = () => {
 
     try {
       const apiBase = process.env.REACT_APP_API_BASE || '';
+      const payload = {
+        email,
+        role,
+        organization: organization || '',
+        yearInCollege: yearInCollege || '',
+        participantEmails: participantEmails // Pass participant emails to tag them
+      };
+
+      console.log('Sending payment confirmation with payload:', payload);
+      console.log('Participant emails being sent:', participantEmails);
+
       const response = await fetch(`${apiBase}/api/payment-success`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          role,
-          organization: organization || '',
-          yearInCollege: yearInCollege || '',
-          participantEmails: participantEmails // Pass participant emails to tag them
-        })
+        body: JSON.stringify(payload)
       });
 
       if (response.ok) {

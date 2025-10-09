@@ -117,14 +117,22 @@ export default async function handler(req, res) {
 
           let contactIdToTag = null;
 
+          console.log(`Search response status for ${trimmedEmail}:`, searchRes.status);
+
           if (searchRes.ok) {
             const searchData = await searchRes.json();
+            console.log(`Search data for ${trimmedEmail}:`, JSON.stringify(searchData));
             const existingContact = searchData?.contact;
 
             if (existingContact) {
               contactIdToTag = existingContact.id;
-              console.log(`Found existing participant ${trimmedEmail} with ID: ${contactIdToTag}`);
+              console.log(`Found existing participant ${trimmedEmail} with ID: ${contactIdToTag}, current tags:`, existingContact.tags);
+            } else {
+              console.warn(`No contact found in search response for ${trimmedEmail}`);
             }
+          } else {
+            const errorText = await searchRes.text();
+            console.error(`Search failed for ${trimmedEmail}:`, errorText);
           }
 
           // Step 2: Add 'participants-paid' tag using the Add Tags endpoint
