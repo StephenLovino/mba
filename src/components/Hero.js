@@ -14,6 +14,7 @@ const Hero = () => {
   
   // Detect if device is mobile for performance optimization
   const [isMobile, setIsMobile] = React.useState(window.innerWidth <= 768);
+  const [disableEffect, setDisableEffect] = React.useState(false);
   
   React.useEffect(() => {
     const handleResize = () => {
@@ -23,11 +24,18 @@ const Hero = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+  
+  // Optional: Disable effect on very small screens or if performance is poor
+  React.useEffect(() => {
+    const isVerySmallScreen = window.innerWidth <= 480 && window.innerHeight <= 667;
+    setDisableEffect(isVerySmallScreen);
+  }, []);
   return (
     <section className="hero" id="home">
       {/* LiquidEther Background */}
-      <div className="hero-background">
-        <LiquidEther
+      {!disableEffect && (
+        <div className="hero-background">
+          <LiquidEther
           colors={['#5227FF', '#FF9FFC', '#B19EEF']}
           mouseForce={isMobile ? 10 : 15}
           cursorSize={isMobile ? 60 : 80}
@@ -44,7 +52,8 @@ const Hero = () => {
           autoResumeDelay={2000}
           autoRampDuration={0.4}
         />
-      </div>
+        </div>
+      )}
       <div className="container">
         <div className="hero-content" ref={contentRef}>
           {/* Mobile logo above the banner */}

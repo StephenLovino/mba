@@ -1228,7 +1228,7 @@ export default function LiquidEther({
       className={`w-full h-full relative overflow-hidden ${className || ''}`}
       style={{
         ...style,
-        pointerEvents: 'auto',
+        pointerEvents: window.innerWidth <= 768 ? 'none' : 'auto',
         touchAction: 'none'
       }}
     />

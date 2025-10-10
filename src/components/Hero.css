@@ -302,6 +302,8 @@ body.clay .hero > .container {
     /* Optimize for mobile performance */
     will-change: transform;
     transform: translateZ(0); /* Force hardware acceleration */
+    z-index: 1 !important; /* Keep background behind content */
+    pointer-events: none; /* Prevent background from blocking interactions */
   }
   
   /* For very low-end devices, you can disable the effect entirely */
@@ -314,12 +316,15 @@ body.clay .hero > .container {
   
   .hero .container {
     padding: 0 16px; /* Increased mobile padding */
+    z-index: 50 !important; /* Ensure container is above background */
   }
   
   .hero-content {
     padding: 0 8px; /* Additional content padding */
     max-width: 100%;
     overflow-x: hidden; /* Prevent horizontal overflow */
+    z-index: 60 !important; /* Ensure content is visible */
+    position: relative;
   }
   
   .hero-title {
@@ -357,6 +362,8 @@ body.clay .hero > .container {
     padding: 12px 20px;
     font-size: 15px;
     border-radius: 32px;
+    z-index: 70 !important; /* Ensure buttons are clickable */
+    position: relative;
   }
   
   .hero-stats {
