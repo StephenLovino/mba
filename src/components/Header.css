@@ -6,7 +6,7 @@
   background: transparent;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  z-index: 1000;
+  z-index: var(--z-navigation);
   border-bottom: none;
   pointer-events: none; /* Allow clicks to pass through to floating nav */
 }
@@ -38,7 +38,7 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50px;
   padding: 8px 12px;
-  z-index: 9999;
+  z-index: var(--z-navigation);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
   pointer-events: auto;
 }
@@ -60,7 +60,7 @@
   cursor: pointer;
   pointer-events: auto;
   position: relative;
-  z-index: 10000;
+  z-index: var(--z-navigation);
 }
 
 .nav-item:hover {

@@ -1,4 +1,4 @@
-.lm-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:1000}
+.lm-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:var(--z-modal)}
 .lm-modal{background:#0b1220;color:#fff;border:1px solid rgba(255,255,255,.08);border-radius:16px;width:100%;max-width:520px;padding:24px;box-shadow:0 10px 40px rgba(0,0,0,.4);max-height:86vh;display:flex;flex-direction:column}
 .lm-close{position:absolute;right:20px;top:14px;background:transparent;color:#fff;border:none;font-size:24px;cursor:pointer}
 .lm-steps{display:flex;gap:8px;margin-bottom:16px}

@@ -179,7 +179,7 @@
   -webkit-mask-composite: xor;
   pointer-events: none;
   transition: opacity 0.3s ease;
-  z-index: 1;
+  z-index: var(--z-content);
 }
 
 .card--border-glow:hover::after {
@@ -206,7 +206,7 @@
   bottom: -2px;
   background: rgba(196, 76, 156, 0.2);
   border-radius: 50%;
-  z-index: -1;
+  z-index: var(--z-background);
 }
 
 .particle-container:hover {
@@ -219,7 +219,7 @@
 .global-spotlight {
   mix-blend-mode: screen;
   will-change: transform, opacity;
-  z-index: 200 !important;
+  z-index: var(--z-floating);
   pointer-events: none;
 }
 

@@ -348,7 +348,7 @@ body::before {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  z-index: 0;
+  z-index: var(--z-background);
   filter: brightness(0.4);
   animation: kenburns-bg 24s ease-in-out infinite alternate;
   pointer-events: none; /* never block mouse on desktop */
@@ -359,11 +359,24 @@ code {
     monospace;
 }
 
+/* Global Z-Index Hierarchy */
+:root {
+  --z-background: 0;
+  --z-content: 1;
+  --z-elevated: 10;
+  --z-floating: 100;
+  --z-modal: 1000;
+  --z-navigation: 2000;
+  --z-tooltip: 3000;
+}
+
 /* Global styles - 8-point spacing system */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px; /* 3 * 8px */
+  position: relative;
+  z-index: var(--z-content);
 }
 
 /* Mobile container adjustments */
@@ -528,7 +541,7 @@ body.clay button {
   transition: transform .18s ease, box-shadow .18s ease, background .18s ease !important;
   border: 1px solid rgba(255,255,255,0.06) !important;
   position: relative;
-  z-index: 2;
+  z-index: var(--z-elevated);
   pointer-events: auto;
 }
 
@@ -560,7 +573,7 @@ body.clay .btn.btn-primary {
 .trusted-logos nav,
 .trusted-logos ul {
   position: relative;
-  z-index: 5;
+  z-index: var(--z-elevated);
   pointer-events: auto;
 }
 
