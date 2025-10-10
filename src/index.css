@@ -394,6 +394,26 @@ code {
   * {
     max-width: 100%;
   }
+  
+  /* Ensure all content is visible on mobile */
+  section, div, article, main {
+    position: relative;
+    z-index: var(--z-content);
+  }
+  
+  /* Ensure buttons and interactive elements are clickable */
+  button, a, input, select, textarea {
+    position: relative;
+    z-index: var(--z-elevated);
+  }
+  
+  /* Debug: Add outline to see what might be covering content */
+  /* Uncomment the lines below to debug layering issues */
+  /*
+  * {
+    outline: 1px solid rgba(255, 0, 0, 0.1) !important;
+  }
+  */
 }
 
 .btn {

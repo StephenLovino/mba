@@ -219,7 +219,7 @@
 .global-spotlight {
   mix-blend-mode: screen;
   will-change: transform, opacity;
-  z-index: var(--z-floating);
+  z-index: var(--z-background);
   pointer-events: none;
 }
 
