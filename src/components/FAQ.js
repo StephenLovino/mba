@@ -41,14 +41,14 @@ const FAQ = () => {
     <section className="faq section" id="faq">
       <div className="container">
         <div className="faq-content">
-          <div className="faq-header">
+          <div className="faq-header animate-on-scroll">
             <h2 className="section-title">Frequently Asked Questions</h2>
             <p className="section-subtitle">Everything you need to know before joining</p>
           </div>
           
-          <div className="faq-list">
+          <div className="faq-list animate-stagger">
             {faqs.map((faq, index) => (
-              <div key={index} className={`faq-item ${openIndex === index ? 'open' : ''}`}>
+              <div key={index} className={`faq-item ${openIndex === index ? 'open' : ''} animate-fade-left`}>
                 <button 
                   className="faq-question"
                   onClick={() => toggleFAQ(index)}

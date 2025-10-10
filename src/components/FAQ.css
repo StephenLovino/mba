@@ -42,8 +42,7 @@ body.clay .faq-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.1rem;
-  font-weight: 600;
+  /* Using standardized text-base styles from global typography */
   color: var(--brand-bluegreen, #6fccdb);
   transition: color 0.3s ease;
 }

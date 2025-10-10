@@ -23,7 +23,7 @@
 }
 
 .story-content {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
   text-align: center;
   position: relative;
@@ -31,58 +31,153 @@
 }
 
 .story-header {
-  margin-bottom: 48px; /* 6 * 8px */
+  margin-bottom: 64px; /* 8 * 8px */
 }
 
 .story-header h2 {
-  font-size: 3rem;
-  font-weight: 800;
+  /* Using standardized h2 styles from global typography */
   margin-bottom: 16px;
   color: #fff;
-  line-height: 1.2;
 }
 
 .story-header p {
-  font-size: 1.25rem;
+  /* Using standardized h4 styles from global typography */
   color: rgba(255, 255, 255, 0.9);
-  font-weight: 500;
 }
 
-.story-text {
-  text-align: left;
+/* Two-column layout */
+.story-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px; /* 6 * 8px */
   margin-bottom: 48px; /* 6 * 8px */
+  align-items: start;
 }
 
-.story-text p {
-  font-size: 1.125rem;
-  line-height: 1.8;
+.story-column {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 32px; /* 4 * 8px */
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.story-column::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--brand-pink), var(--brand-bluegreen));
+}
+
+.column-header {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* 2 * 8px */
   margin-bottom: 24px; /* 3 * 8px */
+}
+
+.column-header h3 {
+  /* Using standardized h3 styles from global typography */
+  color: #fff;
+  margin: 0;
+}
+
+.problem-icon, .solution-icon {
+  font-size: 2rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Problems column styling */
+.story-problems {
+  border-left: 4px solid #ff6b6b;
+}
+
+.story-problems .column-header h3 {
+  color: #ff6b6b;
+}
+
+.problem-list {
+  text-align: left;
+}
+
+.problem-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px; /* 1.5 * 8px */
+  margin-bottom: 20px; /* 2.5 * 8px */
+  padding: 16px; /* 2 * 8px */
+  background: rgba(255, 107, 107, 0.1);
+  border-radius: 8px;
+  border-left: 3px solid #ff6b6b;
+  transition: all 0.3s ease;
+}
+
+.problem-item:hover {
+  background: rgba(255, 107, 107, 0.15);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
+}
+
+.problem-bullet {
+  color: #ff6b6b;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.problem-item p {
+  /* Using standardized text-base styles from global typography */
   color: rgba(255, 255, 255, 0.9);
+  margin: 0;
 }
 
-.problem-list p {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 16px; /* 2 * 8px */
+/* Solution column styling */
+.story-solution {
+  border-left: 4px solid var(--brand-pink);
 }
 
-.solution-section {
-  margin-top: 32px; /* 4 * 8px */
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.solution-section h3 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 16px; /* 2 * 8px */
+.story-solution .column-header h3 {
   color: var(--brand-pink);
 }
 
-.story-text strong {
-  color: var(--brand-pink);
-  font-weight: 700;
+.solution-content {
+  text-align: left;
+}
+
+.solution-content p {
+  /* Using standardized text-base styles from global typography */
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 32px; /* 4 * 8px */
+  background: rgba(196, 76, 156, 0.1);
+  padding: 20px; /* 2.5 * 8px */
+  border-radius: 8px;
+  border-left: 3px solid var(--brand-pink);
+}
+
+.solution-stats {
+  display: flex;
+  gap: 24px; /* 3 * 8px */
+  margin-bottom: 24px; /* 3 * 8px */
+  justify-content: center;
+}
+
+.solution-features {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* 2 * 8px */
 }
 
 .story-cta {
@@ -92,79 +187,111 @@
   gap: 32px; /* 4 * 8px */
 }
 
-.story-stats {
-  display: flex;
-  justify-content: center;
-  gap: 48px; /* 6 * 8px */
-}
-
 .stat {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px; /* 1 * 8px */
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px; /* 2.5 * 8px */
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  min-width: 100px;
 }
 
 .stat-number {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 800;
   color: var(--brand-pink);
+  text-shadow: 0 0 20px rgba(196, 76, 156, 0.5);
+  font-family: 'Montserrat', sans-serif;
 }
 
 .stat-label {
-  font-size: 1rem;
+  /* Using standardized text-base styles from global typography */
   color: rgba(255, 255, 255, 0.8);
-  font-weight: 500;
-}
-
-.story-features {
-  display: flex;
-  gap: 32px; /* 4 * 8px */
-  justify-content: center;
-  flex-wrap: wrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .feature {
   display: flex;
   align-items: center;
-  gap: 8px; /* 1 * 8px */
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.8);
+  gap: 12px; /* 1.5 * 8px */
+  /* Using standardized text-base styles from global typography */
+  color: rgba(255, 255, 255, 0.9);
+  padding: 12px; /* 1.5 * 8px */
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.feature:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(196, 76, 156, 0.2);
 }
 
 .feature-icon {
-  width: 20px;
-  height: 20px;
-  background: var(--brand-pink);
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, var(--brand-pink), var(--brand-bluegreen));
   color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
+  box-shadow: 0 4px 12px rgba(196, 76, 156, 0.3);
 }
 
 @media (max-width: 768px) {
-  .story-header h2 {
-    font-size: 2.25rem;
+  /* Mobile typography handled by global responsive styles */
+  
+  /* Stack columns vertically on mobile */
+  .story-layout {
+    grid-template-columns: 1fr;
+    gap: 32px; /* 4 * 8px */
   }
   
-  .story-header p {
-    font-size: 1.125rem;
+  .story-column {
+    padding: 24px; /* 3 * 8px */
   }
   
-  .story-text {
+  .column-header {
+    justify-content: center;
     text-align: center;
   }
   
-  .story-text p {
-    font-size: 1rem;
+  .problem-list {
+    text-align: center;
   }
   
-  .story-features {
+  .problem-item {
+    text-align: left;
+  }
+  
+  .solution-content {
+    text-align: center;
+  }
+  
+  .solution-stats {
     flex-direction: column;
+    gap: 16px; /* 2 * 8px */
+  }
+  
+  .solution-features {
     align-items: center;
-    gap: 1rem;
+  }
+  
+  .feature {
+    justify-content: center;
+    min-width: 200px;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
   }
 }

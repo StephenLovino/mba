@@ -109,16 +109,29 @@
 }
 
 .plan-header { text-align: center; margin-bottom: 2rem; }
-.plan-name { font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 1rem; }
-.price-currency { font-size: 1.5rem; font-weight: 600; color: var(--brand-bluegreen, #6fccdb); }
-.price-amount { font-size: 3rem; font-weight: 800; color: #fff; margin: 0 0.25rem; }
+.plan-name { 
+  /* Using standardized h3 styles from global typography */
+  color: #fff; 
+  margin-bottom: 1rem; 
+}
+.price-currency { 
+  /* Using standardized h3 styles from global typography */
+  color: var(--brand-bluegreen, #6fccdb); 
+}
+.price-amount { 
+  /* Using standardized h2 styles from global typography */
+  color: #fff; 
+  margin: 0 0.25rem; 
+}
 .original-price { text-decoration: line-through; opacity: 0.8; margin-right: 8px; }
 .price-period {
-  font-size: 1.2rem;
+  /* Using standardized text-base styles from global typography */
   color: #666;
-  font-weight: 500;
 }
-.price-description { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+.price-description { 
+  color: rgba(255,255,255,0.7); 
+  /* Using standardized text-sm styles from global typography */
+}
 
 .plan-features {
   margin-bottom: 2rem;
@@ -132,9 +145,25 @@
 }
 
 .feature-icon { background: var(--brand-bluegreen, #6fccdb); color: #0b0b0b; }
-.feature-text { color: rgba(255,255,255,0.85); font-weight: 500; }
+.feature-text { 
+  color: rgba(255,255,255,0.85); 
+  /* Using standardized text-base styles from global typography */
+}
 
-.plan-cta { width: 420px; margin-left: auto; margin-right: auto; text-align: center; padding: 14px 24px; font-size: 1rem; border-radius: 9999px; background: linear-gradient(90deg, var(--brand-pink) 0%, var(--brand-bluegreen) 100%); display: flex; align-items: center; justify-content: center; transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; }
+.plan-cta { 
+  width: 420px; 
+  margin-left: auto; 
+  margin-right: auto; 
+  text-align: center; 
+  padding: 14px 24px; 
+  /* Using standardized btn-text styles from global typography */
+  border-radius: 9999px; 
+  background: linear-gradient(90deg, var(--brand-pink) 0%, var(--brand-bluegreen) 100%); 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; 
+}
 .plan-cta:hover { transform: translateY(-2px); background: linear-gradient(90deg, var(--brand-pink-dark, #a63086) 0%, var(--brand-bluegreen-dark, #3aa5b0) 100%); box-shadow: 0 12px 24px rgba(166, 48, 134, 0.25); }
 
 /* Footer texts under the CTA */

@@ -19,6 +19,322 @@ body {
   min-height: 100vh;
 }
 
+/* ===== TYPOGRAPHY SYSTEM ===== */
+/* Standardized font sizes and weights based on Hero section */
+
+/* Headings */
+.h1, h1 {
+  font-size: 4.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.h2, h2 {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.2;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.h3, h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.h4, h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Body text */
+.text-lg {
+  font-size: 1.375rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.text-base {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.text-sm {
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.text-xs {
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Special text styles */
+.text-thin {
+  font-weight: 300;
+}
+
+.text-medium {
+  font-weight: 500;
+}
+
+.text-semibold {
+  font-weight: 600;
+}
+
+.text-bold {
+  font-weight: 700;
+}
+
+.text-extrabold {
+  font-weight: 800;
+}
+
+.text-black {
+  font-weight: 900;
+}
+
+/* Button text */
+.btn-text {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Section titles - standardized */
+.section-title {
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 16px;
+  color: #fff;
+  line-height: 1.1;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.section-subtitle {
+  font-size: 1.25rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 48px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+/* Responsive typography */
+@media (max-width: 768px) {
+  .h1, h1 {
+    font-size: 2.6rem;
+  }
+  
+  .h2, h2 {
+    font-size: 2.25rem;
+  }
+  
+  .h3, h3 {
+    font-size: 1.25rem;
+  }
+  
+  .text-lg {
+    font-size: 1.125rem;
+  }
+  
+  .section-title {
+    font-size: 2.25rem;
+  }
+  
+  .section-subtitle {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .h1, h1 {
+    font-size: 5rem;
+  }
+}
+
+/* ===== SCROLL ANIMATIONS ===== */
+/* Smooth reveal animations for better user experience */
+
+/* Base animation classes */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.animate-on-scroll.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fade in from left */
+.animate-fade-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.animate-fade-left.animate-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Fade in from right */
+.animate-fade-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.animate-fade-right.animate-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Scale in animation */
+.animate-scale {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.animate-scale.animate-in {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Staggered animations for lists */
+.animate-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.animate-stagger.animate-in > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate-stagger.animate-in > *:nth-child(1) { transition-delay: 0.1s; }
+.animate-stagger.animate-in > *:nth-child(2) { transition-delay: 0.2s; }
+.animate-stagger.animate-in > *:nth-child(3) { transition-delay: 0.3s; }
+.animate-stagger.animate-in > *:nth-child(4) { transition-delay: 0.4s; }
+.animate-stagger.animate-in > *:nth-child(5) { transition-delay: 0.5s; }
+.animate-stagger.animate-in > *:nth-child(6) { transition-delay: 0.6s; }
+
+/* Parallax effect for background elements */
+.parallax-slow {
+  transform: translateY(0);
+  transition: transform 0.1s ease-out;
+}
+
+.parallax-medium {
+  transform: translateY(0);
+  transition: transform 0.1s ease-out;
+}
+
+.parallax-fast {
+  transform: translateY(0);
+  transition: transform 0.1s ease-out;
+}
+
+/* Floating animation for special elements */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Pulse animation for call-to-action elements */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(196, 76, 156, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(196, 76, 156, 0.6);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Slide in from bottom with bounce */
+@keyframes slideInBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-bounce-in {
+  opacity: 0;
+  animation: slideInBounce 0.8s ease-out forwards;
+}
+
+/* Rotate in animation */
+@keyframes rotateIn {
+  0% {
+    opacity: 0;
+    transform: rotate(-180deg) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+.animate-rotate-in {
+  opacity: 0;
+  animation: rotateIn 0.8s ease-out forwards;
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-scroll,
+  .animate-fade-left,
+  .animate-fade-right,
+  .animate-scale,
+  .animate-stagger > *,
+  .animate-float,
+  .animate-pulse-glow,
+  .animate-bounce-in,
+  .animate-rotate-in {
+    animation: none;
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Unified background for entire page */
 body::before {
   content: '';
@@ -72,11 +388,12 @@ code {
   padding: 16px 32px; /* 2 * 8px, 4 * 8px */
   border: none;
   border-radius: 8px;
-  font-weight: 600;
+  font-weight: 700; /* Standardized to match Hero */
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 16px;
+  font-size: 16px; /* Standardized to match Hero */
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* Button brand styles */
@@ -106,24 +423,7 @@ code {
   padding: 96px 0; /* 12 * 8px */
 }
 
-.section-title {
-  font-size: 3rem; /* Increased for more impact */
-  font-weight: 900; /* Increased weight */
-  text-align: center;
-  margin-bottom: 16px; /* 2 * 8px */
-  color: #fff;
-  line-height: 1.1; /* Tighter line height for impact */
-}
-
-.section-subtitle {
-  font-size: 1.25rem;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 48px; /* 6 * 8px */
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
+/* Section titles moved to typography system above */
 
 /* Responsive design */
 @media (max-width: 768px) {

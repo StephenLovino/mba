@@ -67,6 +67,12 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.hero-title .highlight:hover {
+  transform: scale(1.1);
 }
 
 
@@ -387,5 +393,196 @@ body.clay .hero > .container {
   .hero-3d-model .model-container {
     height: 300px;
     max-width: 100%;
+  }
+}
+
+/* ===== HERO VIDEO SECTION ===== */
+.hero-video-section {
+  margin-top: 48px; /* 6 * 8px */
+  margin-bottom: 32px; /* 4 * 8px */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.video-container {
+  position: relative;
+  max-width: 800px;
+  width: 100%;
+  min-height: 300px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(196, 76, 156, 0.3); /* Temporary border to see container */
+}
+
+.hero-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 20px;
+  filter: 
+    brightness(0.9) 
+    contrast(1.1) 
+    saturate(1.1);
+  transition: all 0.3s ease;
+}
+
+.hero-video:hover {
+  filter: 
+    brightness(1) 
+    contrast(1.2) 
+    saturate(1.2);
+  transform: scale(1.02);
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.1) 70%),
+    linear-gradient(45deg, 
+      rgba(196, 76, 156, 0.05) 0%, 
+      transparent 20%, 
+      transparent 80%, 
+      rgba(111, 204, 219, 0.05) 100%);
+  border-radius: 20px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.video-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  z-index: 2;
+}
+
+.placeholder-content {
+  text-align: center;
+  color: white;
+}
+
+.placeholder-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  opacity: 0.8;
+}
+
+.placeholder-content p {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--brand-pink);
+}
+
+.placeholder-content small {
+  font-size: 1rem;
+  opacity: 0.7;
+}
+
+/* Subtle edge blur effect */
+.video-container::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    rgba(196, 76, 156, 0.3) 0%, 
+    rgba(111, 204, 219, 0.3) 50%, 
+    rgba(196, 76, 156, 0.3) 100%);
+  border-radius: 22px;
+  z-index: -1;
+  filter: blur(8px);
+  opacity: 0.6;
+}
+
+/* Clay mode enhancements */
+body.clay .video-container {
+  background: rgba(24, 28, 34, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    18px 18px 36px rgba(0, 0, 0, 0.55), 
+    -12px -12px 28px rgba(255, 255, 255, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+body.clay .video-container::before {
+  background: linear-gradient(45deg, 
+    rgba(196, 76, 156, 0.2) 0%, 
+    rgba(111, 204, 219, 0.2) 50%, 
+    rgba(196, 76, 156, 0.2) 100%);
+  filter: blur(12px);
+  opacity: 0.4;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .hero-video-section {
+    margin-top: 32px; /* 4 * 8px */
+    margin-bottom: 24px; /* 3 * 8px */
+    padding: 0 16px; /* 2 * 8px */
+  }
+  
+  .video-container {
+    max-width: 100%;
+    border-radius: 16px;
+  }
+  
+  .hero-video {
+    border-radius: 16px;
+  }
+  
+  .video-overlay {
+    border-radius: 16px;
+  }
+  
+  .video-container::before {
+    border-radius: 18px;
+    filter: blur(6px);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-video-section {
+    margin-top: 24px; /* 3 * 8px */
+    margin-bottom: 16px; /* 2 * 8px */
+  }
+  
+  .video-container {
+    border-radius: 12px;
+  }
+  
+  .hero-video {
+    border-radius: 12px;
+  }
+  
+  .video-overlay {
+    border-radius: 12px;
+  }
+  
+  .video-container::before {
+    border-radius: 14px;
+    filter: blur(4px);
   }
 }

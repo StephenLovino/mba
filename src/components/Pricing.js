@@ -48,14 +48,14 @@ const Pricing = () => {
   return (
     <section className="pricing section" id="pricing">
       <div className="container">
-        <div className="pricing-header">
+        <div className="pricing-header animate-on-scroll">
           <h2 className="section-title">Your Career Transformation Starts Here</h2>
           <p className="section-subtitle">Everything you need to become an AI professional in just one session</p>
         </div>
         
-        <div className="pricing-plans">
+        <div className="pricing-plans animate-stagger">
           {plans.map((plan, index) => (
-            <div key={plan.name} className={`plan ${plan.popular ? 'popular' : ''} ${typeof document !== 'undefined' && document.body.classList.contains('clay') ? 'clay-card' : ''}`}>
+            <div key={plan.name} className={`plan ${plan.popular ? 'popular' : ''} ${typeof document !== 'undefined' && document.body.classList.contains('clay') ? 'clay-card' : ''} animate-scale`}>
               {plan.popular && <div className="popular-badge">🔥 Popular</div>}
               
               <div className="plan-header">

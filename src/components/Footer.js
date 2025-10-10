@@ -13,9 +13,8 @@ const Footer = () => {
             </p>
             
             <div className="social-links">
-              <a href="#" className="social-link">FACEBOOK</a>
-              <a href="#" className="social-link">INSTAGRAM</a>
-              <a href="#" className="social-link">Linkedin</a>
+              <a href="https://www.facebook.com/MillennialBusinessAcademy" target="_blank" rel="noopener noreferrer" className="social-link">FACEBOOK</a>
+              <a href="https://www.linkedin.com/company/millennial-business-academy" target="_blank" rel="noopener noreferrer" className="social-link">LINKEDIN</a>
             </div>
           </div>
           
