@@ -12,9 +12,8 @@ const Hero = () => {
   const contentRef = useRef(null);
   const logosRef = useRef(null);
   
-  // Detect if device is mobile for performance optimization
+  // Detect if device is mobile - disable LiquidEther on mobile entirely
   const [isMobile, setIsMobile] = React.useState(window.innerWidth <= 768);
-  const [disableEffect, setDisableEffect] = React.useState(false);
   
   React.useEffect(() => {
     const handleResize = () => {
@@ -24,34 +23,35 @@ const Hero = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  
-  // Optional: Disable effect on very small screens or if performance is poor
-  React.useEffect(() => {
-    const isVerySmallScreen = window.innerWidth <= 480 && window.innerHeight <= 667;
-    setDisableEffect(isVerySmallScreen);
-  }, []);
   return (
     <section className="hero" id="home">
-      {/* LiquidEther Background */}
-      {!disableEffect && (
+      {/* LiquidEther Background - Desktop Only */}
+      {!isMobile && (
         <div className="hero-background">
           <LiquidEther
-          colors={['#5227FF', '#FF9FFC', '#B19EEF']}
-          mouseForce={isMobile ? 10 : 15}
-          cursorSize={isMobile ? 60 : 80}
-          isViscous={false}
-          viscous={isMobile ? 15 : 20}
-          iterationsViscous={isMobile ? 8 : 16}
-          iterationsPoisson={isMobile ? 8 : 16}
-          resolution={isMobile ? 0.2 : 0.3}
-          isBounce={false}
-          autoDemo={false}
-          autoSpeed={isMobile ? 0.2 : 0.3}
-          autoIntensity={isMobile ? 1.0 : 1.5}
-          takeoverDuration={0.2}
-          autoResumeDelay={2000}
-          autoRampDuration={0.4}
-        />
+            colors={['#5227FF', '#FF9FFC', '#B19EEF']}
+            mouseForce={15}
+            cursorSize={80}
+            isViscous={false}
+            viscous={20}
+            iterationsViscous={16}
+            iterationsPoisson={16}
+            resolution={0.3}
+            isBounce={false}
+            autoDemo={false}
+            autoSpeed={0.3}
+            autoIntensity={1.5}
+            takeoverDuration={0.2}
+            autoResumeDelay={2000}
+            autoRampDuration={0.4}
+          />
+        </div>
+      )}
+      
+      {/* Mobile Fallback Background */}
+      {isMobile && (
+        <div className="hero-background-mobile">
+          <div className="mobile-gradient-bg"></div>
         </div>
       )}
       <div className="container">
