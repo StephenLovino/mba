@@ -88,6 +88,8 @@
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   font-weight: 600; /* Added weight for impact */
+  position: relative;
+  z-index: var(--z-elevated);
 }
 
 .hero-title {
@@ -98,6 +100,8 @@
   letter-spacing: -0.02em; /* Tighter letter spacing for impact */
   text-transform: uppercase; /* Already uppercase in content, but ensure it */
   font-family: 'Montserrat', sans-serif;
+  position: relative;
+  z-index: var(--z-elevated);
 }
 
 
@@ -130,6 +134,8 @@
   line-height: 1.6;
   color: #B0B0B0;
   font-weight: 500; /* Added weight for impact */
+  position: relative;
+  z-index: var(--z-elevated);
 }
 
 .hero-mobile-logo {
@@ -142,6 +148,8 @@
   gap: 16px; /* 2 * 8px */
   margin-bottom: 64px; /* 8 * 8px */
   flex-wrap: wrap;
+  position: relative;
+  z-index: var(--z-elevated);
 }
 
 .btn {
@@ -238,6 +246,8 @@ body.clay .hero > .container {
   align-items: center;
   gap: 20px;
   margin-bottom: 40px;
+  position: relative;
+  z-index: var(--z-elevated);
 }
 
 .stats-photos {
@@ -301,6 +311,8 @@ body.clay .hero > .container {
 
 .trusted-by {
   text-align: center;
+  position: relative;
+  z-index: var(--z-elevated);
 }
 
 .trusted-by p {
@@ -475,6 +487,7 @@ body.clay .hero > .container {
   justify-content: center;
   align-items: center;
   position: relative;
+  z-index: var(--z-elevated);
 }
 
 .video-container {
