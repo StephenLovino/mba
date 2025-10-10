@@ -21,6 +21,20 @@ class ScrollAnimations {
     this.setupScrollReveal();
     this.setupParallax();
     this.setupIntersectionObserver();
+
+    // Re-scan for new elements periodically (for React components)
+    this.rescanInterval = setInterval(() => {
+      this.setupScrollReveal();
+      this.setupIntersectionObserver();
+    }, 500);
+
+    // Stop rescanning after 5 seconds (all components should be loaded by then)
+    setTimeout(() => {
+      if (this.rescanInterval) {
+        clearInterval(this.rescanInterval);
+        this.rescanInterval = null;
+      }
+    }, 5000);
   }
 
   setupScrollReveal() {
@@ -36,7 +50,10 @@ class ScrollAnimations {
     ].join(','));
 
     elements.forEach(element => {
-      this.animatedElements.add(element);
+      // Only add if not already tracked
+      if (!this.animatedElements.has(element)) {
+        this.animatedElements.add(element);
+      }
     });
   }
 
@@ -70,17 +87,31 @@ class ScrollAnimations {
       rootMargin: '0px 0px -50px 0px'
     };
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          this.triggerAnimation(entry.target);
-        }
-      });
-    }, options);
+    // Create observer if it doesn't exist
+    if (!this.observer) {
+      this.observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            this.triggerAnimation(entry.target);
+          }
+        });
+      }, options);
+    }
 
-    // Observe all animated elements
+    // Observe all animated elements that aren't already being observed
     this.animatedElements.forEach(element => {
-      observer.observe(element);
+      // Check if element is already being observed
+      if (!element.hasAttribute('data-observed')) {
+        element.setAttribute('data-observed', 'true');
+        this.observer.observe(element);
+
+        // If element is already in viewport, trigger animation immediately
+        const rect = element.getBoundingClientRect();
+        const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+        if (isInViewport) {
+          this.triggerAnimation(element);
+        }
+      }
     });
   }
 
@@ -136,6 +167,14 @@ class ScrollAnimations {
 
   // Cleanup method
   destroy() {
+    if (this.rescanInterval) {
+      clearInterval(this.rescanInterval);
+      this.rescanInterval = null;
+    }
+    if (this.observer) {
+      this.observer.disconnect();
+      this.observer = null;
+    }
     this.animatedElements.clear();
     this.parallaxElements = [];
   }

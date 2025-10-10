@@ -335,6 +335,22 @@ body {
   }
 }
 
+/* Ensure animations work properly on mobile - reduce initial opacity delay */
+@media (max-width: 768px) {
+  .animate-on-scroll,
+  .animate-fade-left,
+  .animate-fade-right,
+  .animate-scale {
+    /* Reduce animation duration on mobile for faster reveals */
+    transition-duration: 0.4s;
+  }
+
+  /* Ensure stagger children are visible faster on mobile */
+  .animate-stagger > * {
+    transition-duration: 0.3s;
+  }
+}
+
 /* Unified background for entire page */
 body::before {
   content: '';

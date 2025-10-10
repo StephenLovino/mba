@@ -11,18 +11,32 @@ const Hero = () => {
   const { open } = useLeadModal();
   const contentRef = useRef(null);
   const logosRef = useRef(null);
-  
+
   // Detect if device is mobile - disable LiquidEther on mobile entirely
   const [isMobile, setIsMobile] = React.useState(window.innerWidth <= 768);
-  
+
   React.useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-    
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Ensure animations trigger after component mounts
+  React.useEffect(() => {
+    // Small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      const animatedElements = document.querySelectorAll('.hero .animate-on-scroll, .hero .animate-scale, .hero .animate-stagger');
+      animatedElements.forEach(element => {
+        element.classList.add('animate-in');
+      });
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section className="hero" id="home">
       {/* LiquidEther Background - Desktop Only */}
