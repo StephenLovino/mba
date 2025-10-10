@@ -47,13 +47,6 @@ const Hero = () => {
           />
         </div>
       )}
-      
-      {/* Mobile Fallback Background */}
-      {isMobile && (
-        <div className="hero-background-mobile">
-          <div className="mobile-gradient-bg"></div>
-        </div>
-      )}
       <div className="container">
         <div className="hero-content" ref={contentRef}>
           {/* Mobile logo above the banner */}
