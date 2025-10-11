@@ -9,7 +9,7 @@ const Footer = () => {
           <div className="footer-cta">
             <h3 className="cta-title">Join the community</h3>
             <p className="cta-description">
-              With MBA, your satisfaction is our priority. If you're not completely satisfied with your learning experience within [specific time frame], we'll refund your investment, no questions asked.
+              With MBA, your satisfaction is our priority. If you're not completely satisfied with your learning experience and request a refund within 14 days of purchase, we'll refund your investment, no questions asked.
             </p>
             
             <div className="social-links">
@@ -25,11 +25,8 @@ const Footer = () => {
             
             <div className="footer-links">
               <a href="#pricing" className="footer-link">Pricing</a>
-              <a href="#blog" className="footer-link">Blog</a>
-              <a href="#contact" className="footer-link">Contact</a>
-              <a href="#" className="footer-link">Terms & Conditions</a>
-              <a href="#" className="footer-link">Privacy policy</a>
-              <a href="#" className="footer-link">Refund policy</a>
+              <a href="/terms" className="footer-link">Terms & Conditions</a>
+              <a href="/refund" className="footer-link">Refund policy</a>
             </div>
           </div>
           

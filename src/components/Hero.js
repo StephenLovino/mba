@@ -168,11 +168,11 @@ const Hero = () => {
           {/* Event Video Section */}
           <div className="hero-video-section animate-on-scroll">
             <div className="video-container">
-              <video 
+              <video
                 className="hero-video"
-                autoPlay 
-                muted 
-                loop 
+                autoPlay
+                muted
+                loop
                 playsInline
                 controls={true}
                 preload="metadata"
@@ -189,8 +189,7 @@ const Hero = () => {
                 onCanPlay={() => console.log('Video can play')}
                 onLoadedData={() => console.log('Video data loaded')}
               >
-                <source src="/PMA-EVENT-2025.mp4" type="video/mp4" />
-                <source src="/PMA- EVENT-2025.mp4" type="video/mp4" />
+                <source src="https://storage.googleapis.com/msgsndr/bbfZjbxapaQ2U2ocMVlA/media/68ea70d6054e0673a53727ba.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
               <div className="video-placeholder" style={{display: 'none'}}>

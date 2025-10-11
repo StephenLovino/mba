@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import Terms from './routes/Terms';
+import Refund from './routes/Refund';
 import Checkout from './components/Checkout';
 import CheckoutStudent from './components/CheckoutStudent';
 import CheckoutProfessional from './components/CheckoutProfessional';
@@ -20,6 +22,8 @@ root.render(
         <Route path="/checkout-professional" element={<CheckoutProfessional />} />
         <Route path="/eticket" element={<Eticket />} />
         <Route path="/test-payment" element={<TestPayment />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/refund" element={<Refund />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
