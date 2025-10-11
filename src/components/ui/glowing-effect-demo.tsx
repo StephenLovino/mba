@@ -11,32 +11,32 @@ export function GlowingEffectDemo() {
       <GridItem
         area="md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]"
         icon={<Box className="h-4 w-4" />}
-        title="Do things the right way"
-        description="Running out of copy so I'll write anything."
+        title="Stuck in a job with no growth?"
+        description="Break free from dead-end roles and unlock new career opportunities in AI."
       />
       <GridItem
         area="md:[grid-area:1/7/2/13] xl:[grid-area:2/1/3/5]"
         icon={<Settings className="h-4 w-4" />}
-        title="The best AI code editor ever."
-        description="Yes, it's true. I'm not even kidding. Ask my mom if you don't believe me."
+        title="No portfolio or GitHub projects to showcase?"
+        description="Build real projects that demonstrate your skills to recruiters and hiring managers."
       />
       <GridItem
         area="md:[grid-area:2/1/3/7] xl:[grid-area:1/5/3/8]"
         icon={<Lock className="h-4 w-4" />}
-        title="You should buy Aceternity UI Pro"
-        description="It's the best money you'll ever spend"
+        title="Overwhelmed by where to start in AI?"
+        description="Get a clear, step-by-step path from beginner to building your first AI application."
       />
       <GridItem
         area="md:[grid-area:2/7/3/13] xl:[grid-area:1/8/2/13]"
         icon={<Sparkles className="h-4 w-4" />}
-        title="This card is also built by Cursor"
-        description="I'm not even kidding. Ask my mom if you don't believe me."
+        title="Tired of expensive courses that give you no real results?"
+        description="This hands-on sprint delivers tangible outcomes: a working AI app, portfolio projects, and certification."
       />
       <GridItem
         area="md:[grid-area:3/1/4/13] xl:[grid-area:2/8/3/13]"
         icon={<Search className="h-4 w-4" />}
-        title="Coming soon on Aceternity UI"
-        description="I'm writing the code as I record this, no shit."
+        title="3-Hour Hands-On Sprint"
+        description="Walk away with your first AI app, a GitHub-ready portfolio, and your AI certification—100% guaranteed."
       />
     </ul>
   );

@@ -45,13 +45,13 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* Two-column layout */
+/* Two-column layout: Problems stacked on left, large solution card on right */
 .story-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 48px; /* 6 * 8px */
+  gap: 32px; /* 4 * 8px */
   margin-bottom: 48px; /* 6 * 8px */
-  align-items: start;
+  align-items: stretch;
 }
 
 .story-column {
@@ -99,9 +99,39 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Problems column styling */
+/* Problems column styling - Stacked vertically */
 .story-problems {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* 2 * 8px */
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.story-problems::before {
+  display: none;
+}
+
+.story-problems .column-header {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px; /* 3 * 8px */
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
   border-left: 4px solid #ff6b6b;
+}
+
+.story-problems .column-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
 }
 
 .story-problems .column-header h3 {
@@ -109,23 +139,39 @@
 }
 
 .problem-list {
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* 2 * 8px */
 }
 
 .problem-item {
   display: flex;
   align-items: flex-start;
   gap: 12px; /* 1.5 * 8px */
-  margin-bottom: 20px; /* 2.5 * 8px */
-  padding: 16px; /* 2 * 8px */
-  background: rgba(255, 107, 107, 0.1);
-  border-radius: 8px;
-  border-left: 3px solid #ff6b6b;
+  padding: 20px; /* 2.5 * 8px */
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  border-left: 4px solid #ff6b6b;
   transition: all 0.3s ease;
+  text-align: left;
+}
+
+.problem-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
 }
 
 .problem-item:hover {
-  background: rgba(255, 107, 107, 0.15);
+  background: rgba(255, 107, 107, 0.1);
   transform: translateX(4px);
   box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
 }
@@ -144,34 +190,53 @@
   margin: 0;
 }
 
-/* Solution column styling */
+/* Solution column styling - Large prominent card */
 .story-solution {
   border-left: 4px solid var(--brand-pink);
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(196, 76, 156, 0.3);
+  box-shadow: 0 8px 32px rgba(196, 76, 156, 0.2);
+}
+
+.story-solution::before {
+  background: linear-gradient(90deg, var(--brand-pink), var(--brand-bluegreen));
+  height: 6px;
 }
 
 .story-solution .column-header h3 {
   color: var(--brand-pink);
+  font-size: 1.75rem;
 }
 
 .solution-content {
   text-align: left;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px; /* 3 * 8px */
 }
 
-.solution-content p {
+.solution-content > p {
   /* Using standardized text-base styles from global typography */
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 32px; /* 4 * 8px */
-  background: rgba(196, 76, 156, 0.1);
-  padding: 20px; /* 2.5 * 8px */
-  border-radius: 8px;
-  border-left: 3px solid var(--brand-pink);
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  margin: 0;
+  background: rgba(196, 76, 156, 0.15);
+  padding: 24px; /* 3 * 8px */
+  border-radius: 12px;
+  border-left: 4px solid var(--brand-pink);
+  box-shadow: 0 4px 16px rgba(196, 76, 156, 0.15);
 }
 
 .solution-stats {
-  display: flex;
-  gap: 24px; /* 3 * 8px */
-  margin-bottom: 24px; /* 3 * 8px */
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px; /* 2.5 * 8px */
+  margin-bottom: 8px; /* 1 * 8px */
 }
 
 .solution-features {
@@ -191,107 +256,145 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 8px; /* 1 * 8px */
-  background: rgba(255, 255, 255, 0.05);
-  padding: 20px; /* 2.5 * 8px */
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  min-width: 100px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 28px 20px; /* 3.5 * 8px, 2.5 * 8px */
+  border-radius: 16px;
+  border: 2px solid rgba(196, 76, 156, 0.3);
+  box-shadow: 0 4px 16px rgba(196, 76, 156, 0.2);
+  transition: all 0.3s ease;
+}
+
+.stat:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(196, 76, 156, 0.3);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .stat-number {
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 800;
   color: var(--brand-pink);
-  text-shadow: 0 0 20px rgba(196, 76, 156, 0.5);
+  text-shadow: 0 0 30px rgba(196, 76, 156, 0.6);
   font-family: 'Montserrat', sans-serif;
+  line-height: 1;
 }
 
 .stat-label {
   /* Using standardized text-base styles from global typography */
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+  font-weight: 600;
+  font-size: 0.875rem;
 }
 
 .feature {
   display: flex;
   align-items: center;
-  gap: 12px; /* 1.5 * 8px */
+  gap: 14px; /* 1.75 * 8px */
   /* Using standardized text-base styles from global typography */
-  color: rgba(255, 255, 255, 0.9);
-  padding: 12px; /* 1.5 * 8px */
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.0625rem;
+  padding: 16px 18px; /* 2 * 8px, 2.25 * 8px */
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  border: 1px solid rgba(196, 76, 156, 0.2);
   transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .feature:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateX(4px);
-  box-shadow: 0 4px 12px rgba(196, 76, 156, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateX(6px);
+  box-shadow: 0 4px 16px rgba(196, 76, 156, 0.3);
+  border-color: rgba(196, 76, 156, 0.4);
 }
 
 .feature-icon {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   background: linear-gradient(135deg, var(--brand-pink), var(--brand-bluegreen));
   color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
-  box-shadow: 0 4px 12px rgba(196, 76, 156, 0.3);
+  box-shadow: 0 4px 16px rgba(196, 76, 156, 0.4);
+  flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
   /* Mobile typography handled by global responsive styles */
-  
+
   /* Stack columns vertically on mobile */
   .story-layout {
     grid-template-columns: 1fr;
-    gap: 32px; /* 4 * 8px */
+    gap: 24px; /* 3 * 8px */
   }
-  
+
   .story-column {
     padding: 24px; /* 3 * 8px */
   }
-  
+
+  .story-problems {
+    gap: 12px; /* 1.5 * 8px */
+  }
+
+  .story-problems .column-header {
+    padding: 20px; /* 2.5 * 8px */
+  }
+
   .column-header {
     justify-content: center;
     text-align: center;
   }
-  
+
   .problem-list {
-    text-align: center;
+    gap: 12px; /* 1.5 * 8px */
   }
-  
+
   .problem-item {
     text-align: left;
+    padding: 16px; /* 2 * 8px */
   }
-  
+
   .solution-content {
     text-align: center;
   }
-  
+
+  .solution-content > p {
+    font-size: 1rem;
+    padding: 20px; /* 2.5 * 8px */
+  }
+
   .solution-stats {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 16px; /* 2 * 8px */
   }
-  
-  .solution-features {
-    align-items: center;
+
+  .stat {
+    padding: 24px 20px; /* 3 * 8px, 2.5 * 8px */
   }
-  
-  .feature {
-    justify-content: center;
-    min-width: 200px;
-  }
-  
+
   .stat-number {
-    font-size: 2rem;
+    font-size: 2.5rem;
+  }
+
+  .solution-features {
+    align-items: stretch;
+  }
+
+  .feature {
+    justify-content: flex-start;
+    font-size: 1rem;
+    padding: 14px 16px; /* 1.75 * 8px, 2 * 8px */
+  }
+
+  .story-solution .column-header h3 {
+    font-size: 1.5rem;
   }
 }

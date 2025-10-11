@@ -1,5 +1,4 @@
 import React from 'react';
-import { GlowingEffectDemo } from './ui/glowing-effect-demo';
 import { useLeadModal } from './LeadModalContext';
 import './Story.css';
 
@@ -81,11 +80,6 @@ const Story = () => {
             </div>
           </div>
 
-          {/* Glowing grid demo */}
-          <div className="animate-on-scroll" style={{ marginTop: '2rem' }}>
-            <GlowingEffectDemo />
-          </div>
-          
           <div className="story-cta animate-bounce-in">
             <button onClick={open} className="btn btn-primary animate-pulse-glow">Enroll now</button>
           </div>
