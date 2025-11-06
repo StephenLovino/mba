@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import './LeadModal.css';
 import { useLeadModal } from './LeadModalContext';
+import { getAffiliateCode, isAffiliateUser } from '../utils/affiliateTracking';
 
 const EMAIL_REGEX = /.+@.+\..+/;
 
@@ -59,6 +60,11 @@ const LeadModal = () => {
     setError('');
     try {
       const apiBase = process.env.REACT_APP_API_BASE || '';
+
+      // Check if user is an affiliate user
+      const affiliateCode = getAffiliateCode();
+      const isAffiliate = isAffiliateUser();
+
       const payload = {
         name,
         email,
@@ -68,10 +74,13 @@ const LeadModal = () => {
         utms,
         participants: extraParticipants
           .map(p => ({ name: String(p.name||'').trim(), email: String(p.email||'').trim() }))
-          .filter(p => p.name && EMAIL_REGEX.test(p.email))
+          .filter(p => p.name && EMAIL_REGEX.test(p.email)),
+        // Add affiliate info if present
+        affiliateCode: isAffiliate ? affiliateCode : undefined,
+        isAffiliate: isAffiliate
       };
-      
-      console.log('Submitting lead:', { payload, apiBase });
+
+      console.log('Submitting lead:', { payload, apiBase, isAffiliate });
       
       const res = await fetch(`${apiBase}/api/lead?t=${Date.now()}`, {
         method: 'POST',
@@ -88,6 +97,27 @@ const LeadModal = () => {
       
       if (!res.ok) {
         console.error('API Error:', data);
+
+        // Check if affiliate user - even if API fails, skip checkout for affiliates
+        if (isAffiliate) {
+          console.log('API failed but user is affiliate, redirecting to e-ticket anyway');
+
+          let eticketUrl = `/eticket?t=${role}&email=${encodeURIComponent(email.trim())}&org=${encodeURIComponent(organization.trim())}&year=${encodeURIComponent(yearInCollege.trim())}`;
+
+          if (role === 'student' && extraParticipants.length > 0) {
+            const participantEmails = extraParticipants
+              .filter(p => p.email && EMAIL_REGEX.test(p.email))
+              .map(p => p.email.trim())
+              .join(',');
+            if (participantEmails) {
+              eticketUrl += `&participants=${encodeURIComponent(participantEmails)}`;
+            }
+          }
+
+          close();
+          window.location.href = eticketUrl;
+          return;
+        }
 
         // Fallback: Redirect to checkout route even if API fails
         // This allows user to still complete payment, we'll update GHL manually later
@@ -121,7 +151,33 @@ const LeadModal = () => {
       if (data && data.created) {
         console.log('Contact created successfully:', data.contactId);
 
-        // Redirect to role-specific checkout page with query parameters
+        // Check if user is affiliate - skip checkout and go to success
+        const affiliateCode = getAffiliateCode();
+        const isAffiliate = isAffiliateUser();
+
+        if (isAffiliate) {
+          console.log('Affiliate user detected, skipping checkout and going to e-ticket');
+
+          // Redirect to e-ticket page (same as after payment)
+          let eticketUrl = `/eticket?t=${role}&email=${encodeURIComponent(email.trim())}&org=${encodeURIComponent(organization.trim())}&year=${encodeURIComponent(yearInCollege.trim())}`;
+
+          // Add participants to URL if student with participants
+          if (role === 'student' && extraParticipants.length > 0) {
+            const participantEmails = extraParticipants
+              .filter(p => p.email && EMAIL_REGEX.test(p.email))
+              .map(p => p.email.trim())
+              .join(',');
+            if (participantEmails) {
+              eticketUrl += `&participants=${encodeURIComponent(participantEmails)}`;
+            }
+          }
+
+          close();
+          window.location.href = eticketUrl;
+          return;
+        }
+
+        // Regular flow: Redirect to role-specific checkout page with query parameters
         const params = new URLSearchParams({
           name: name.trim(),
           email: email.trim(),
@@ -151,6 +207,30 @@ const LeadModal = () => {
       throw new Error('Unexpected response format');
     } catch (e) {
       console.error('Submit error:', e);
+
+      // Check if affiliate user - even if network fails, skip checkout for affiliates
+      const affiliateCode = getAffiliateCode();
+      const isAffiliate = isAffiliateUser();
+
+      if (isAffiliate) {
+        console.log('Network error but user is affiliate, redirecting to e-ticket anyway');
+
+        let eticketUrl = `/eticket?t=${role}&email=${encodeURIComponent(email.trim())}&org=${encodeURIComponent(organization.trim())}&year=${encodeURIComponent(yearInCollege.trim())}`;
+
+        if (role === 'student' && extraParticipants.length > 0) {
+          const participantEmails = extraParticipants
+            .filter(p => p.email && EMAIL_REGEX.test(p.email))
+            .map(p => p.email.trim())
+            .join(',');
+          if (participantEmails) {
+            eticketUrl += `&participants=${encodeURIComponent(participantEmails)}`;
+          }
+        }
+
+        close();
+        window.location.href = eticketUrl;
+        return;
+      }
 
       // Fallback: Redirect to checkout route even if network fails
       // This allows user to still complete payment, we'll update GHL manually later

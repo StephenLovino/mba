@@ -11,8 +11,14 @@ import Footer from './components/Footer';
 import { LeadModalProvider } from './components/LeadModalContext';
 import LeadModal from './components/LeadModal';
 import './utils/scrollAnimations';
+import { captureAffiliateCode } from './utils/affiliateTracking';
 
 function App() {
+  // Capture affiliate code from URL on mount
+  useEffect(() => {
+    captureAffiliateCode();
+  }, []);
+
   return (
     <LeadModalProvider>
       <div className="App">

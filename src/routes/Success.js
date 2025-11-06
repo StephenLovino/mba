@@ -4,23 +4,31 @@ import { useSearchParams } from 'react-router-dom';
 const Success = () => {
   const [searchParams] = useSearchParams();
   const [status, setStatus] = useState('processing');
-  const [message, setMessage] = useState('Processing your payment...');
+  const [message, setMessage] = useState('Processing your registration...');
 
   useEffect(() => {
     const email = searchParams.get('email');
     const role = searchParams.get('role');
+    const isAffiliate = searchParams.get('affiliate') === 'true';
 
     if (!email || !role) {
       setStatus('error');
-      setMessage('Missing payment information. Please contact support.');
+      setMessage('Missing registration information. Please contact support.');
       return;
     }
 
-    // Update GHL contact with payment tag
+    // Update message based on affiliate status
+    if (isAffiliate) {
+      setMessage('Processing your free registration...');
+    } else {
+      setMessage('Processing your payment...');
+    }
+
+    // Update GHL contact with payment tag (same for both paid and affiliate users)
     const updateContact = async () => {
       try {
-        console.log('Updating contact with payment status:', { email, role });
-        
+        console.log('Updating contact:', { email, role, isAffiliate });
+
         const response = await fetch('/api/payment-success', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -28,19 +36,27 @@ const Success = () => {
         });
 
         const data = await response.json();
-        console.log('Payment success response:', data);
+        console.log('Success response:', data);
 
         if (response.ok) {
           setStatus('success');
-          setMessage('Payment confirmed! Check your email for webinar details.');
+          if (isAffiliate) {
+            setMessage('Registration confirmed! Check your email for webinar details.');
+          } else {
+            setMessage('Payment confirmed! Check your email for webinar details.');
+          }
         } else {
           setStatus('error');
-          setMessage('Payment confirmed but there was an issue updating your registration. Please contact support.');
+          if (isAffiliate) {
+            setMessage('Registration confirmed but there was an issue. Please contact support.');
+          } else {
+            setMessage('Payment confirmed but there was an issue updating your registration. Please contact support.');
+          }
         }
       } catch (error) {
-        console.error('Payment success error:', error);
+        console.error('Success page error:', error);
         setStatus('error');
-        setMessage('Payment confirmed but there was an issue updating your registration. Please contact support.');
+        setMessage('There was an issue completing your registration. Please contact support.');
       }
     };
 
@@ -72,15 +88,15 @@ const Success = () => {
           {status === 'success' ? '✅' : status === 'error' ? '❌' : '⏳'}
         </div>
         
-        <h1 style={{ 
-          color: '#fff', 
-          fontSize: '2rem', 
+        <h1 style={{
+          color: '#fff',
+          fontSize: '2rem',
           marginBottom: '20px',
           fontWeight: '700'
         }}>
-          {status === 'success' ? 'Payment Successful!' : 
-           status === 'error' ? 'Payment Confirmed' : 
-           'Processing Payment...'}
+          {status === 'success' ? 'Registration Successful!' :
+           status === 'error' ? 'Registration Confirmed' :
+           'Processing...'}
         </h1>
         
         <p style={{ 

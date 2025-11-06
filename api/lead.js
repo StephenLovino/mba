@@ -14,11 +14,13 @@ export default async function handler(req, res) {
       return;
     }
     
-    const { name, email, role, organization, yearInCollege, utms, participants } = body;
+    const { name, email, role, organization, yearInCollege, utms, participants, affiliateCode, isAffiliate } = body;
     if (!name || !email || !role) {
       res.status(400).json({ error: 'Missing required fields' });
       return;
     }
+
+    console.log('Processing lead:', { name, email, role, isAffiliate, affiliateCode });
 
     // Configure GHL API
     const apiBase = (process.env.GHL_API_BASE || 'https://services.leadconnectorhq.com').replace(/\/$/, '');
@@ -51,6 +53,21 @@ export default async function handler(req, res) {
       tags.push(`year:${yearInCollege.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase()}`);
     }
 
+    // Add affiliate tag if user came via affiliate link
+    if (isAffiliate) {
+      tags.push('affiliate_registration');
+      console.log('Adding affiliate_registration tag for:', email);
+    }
+
+    // Build custom fields for affiliate tracking
+    const customFields = [];
+    if (isAffiliate && affiliateCode) {
+      customFields.push({
+        key: 'affiliate_code',
+        field_value: affiliateCode
+      });
+    }
+
     const contactBody = {
       name,
       firstName: firstName || undefined,
@@ -58,7 +75,8 @@ export default async function handler(req, res) {
       email,
       locationId,
       source: 'public api',
-      tags: tags
+      tags: tags,
+      ...(customFields.length > 0 ? { customFields } : {})
     };
     const contactUrl = `${apiBase}/contacts/`;
 

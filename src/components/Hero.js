@@ -11,9 +11,12 @@ const Hero = () => {
   const { open } = useLeadModal();
   const contentRef = useRef(null);
   const logosRef = useRef(null);
+  const videoRef = useRef(null);
 
   // Detect if device is mobile - disable LiquidEther on mobile entirely
   const [isMobile, setIsMobile] = React.useState(window.innerWidth <= 768);
+  const [showSoundReminder, setShowSoundReminder] = React.useState(true);
+  const [isMuted, setIsMuted] = React.useState(true);
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -36,6 +39,24 @@ const Hero = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  // Auto-hide sound reminder after 5 seconds
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSoundReminder(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Handle sound toggle
+  const toggleSound = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(videoRef.current.muted);
+      setShowSoundReminder(false);
+    }
+  };
 
   return (
     <section className="hero" id="home">
@@ -169,13 +190,19 @@ const Hero = () => {
           <div className="hero-video-section animate-on-scroll">
             <div className="video-container">
               <video
+                ref={videoRef}
                 className="hero-video"
                 autoPlay
                 muted
                 loop
                 playsInline
                 controls={true}
-                preload="metadata"
+                preload="auto"
+                style={{
+                  opacity: 1,
+                  visibility: 'visible',
+                  display: 'block'
+                }}
                 onError={(e) => {
                   console.error('Video error:', e);
                   console.error('Video src:', e.target.src);
@@ -186,10 +213,35 @@ const Hero = () => {
                   if (placeholder) placeholder.style.display = 'flex';
                 }}
                 onLoadStart={() => console.log('Video loading started')}
-                onCanPlay={() => console.log('Video can play')}
-                onLoadedData={() => console.log('Video data loaded')}
+                onCanPlay={() => {
+                  console.log('Video can play');
+                  if (videoRef.current) {
+                    videoRef.current.style.opacity = '1';
+                  }
+                }}
+                onLoadedData={() => {
+                  console.log('Video data loaded');
+                  if (videoRef.current) {
+                    console.log('Video dimensions:', {
+                      videoWidth: videoRef.current.videoWidth,
+                      videoHeight: videoRef.current.videoHeight,
+                      clientWidth: videoRef.current.clientWidth,
+                      clientHeight: videoRef.current.clientHeight
+                    });
+                  }
+                }}
+                onLoadedMetadata={(e) => {
+                  console.log('Video metadata loaded', {
+                    videoWidth: e.target.videoWidth,
+                    videoHeight: e.target.videoHeight,
+                    duration: e.target.duration
+                  });
+                  if (e.target.videoWidth === 0 || e.target.videoHeight === 0) {
+                    console.warn('Video has zero dimensions - may only have audio track');
+                  }
+                }}
               >
-                <source src="https://storage.googleapis.com/msgsndr/bbfZjbxapaQ2U2ocMVlA/media/68ea70d6054e0673a53727ba.mp4" type="video/mp4" />
+                <source src="https://storage.googleapis.com/msgsndr/bbfZjbxapaQ2U2ocMVlA/media/690ce20097c051d172d06cce.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
               <div className="video-placeholder" style={{display: 'none'}}>
@@ -199,6 +251,37 @@ const Hero = () => {
                   <small>Video loading...</small>
                 </div>
               </div>
+
+              {/* Sound Toggle Button */}
+              <button
+                className="video-sound-toggle"
+                onClick={toggleSound}
+                aria-label={isMuted ? "Unmute video" : "Mute video"}
+              >
+                {isMuted ? (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                  </svg>
+                ) : (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                )}
+              </button>
+
+              {/* Sound Reminder Tooltip */}
+              {showSoundReminder && (
+                <div className="video-sound-reminder">
+                  <div className="sound-reminder-content">
+                    <span className="sound-icon">🔊</span>
+                    <span className="sound-text">Click to unmute</span>
+                  </div>
+                </div>
+              )}
+
               <div className="video-overlay"></div>
             </div>
           </div>
