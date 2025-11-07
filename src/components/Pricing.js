@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Pricing.css';
 import { useLeadModal } from './LeadModalContext';
+import { isAffiliateUser } from '../utils/affiliateTracking';
 
 const Pricing = () => {
   const [isYearly, setIsYearly] = useState(false);
+  const [isAffiliate, setIsAffiliate] = useState(false);
+
+  useEffect(() => {
+    setIsAffiliate(isAffiliateUser());
+  }, []);
 
   const plans = [
     {
@@ -61,13 +67,24 @@ const Pricing = () => {
               <div className="plan-header">
                 <h3 className="plan-name">{plan.name}</h3>
                 <div className="plan-price">
-                  <span className="original-price">₱{plan.originalPrice}</span>
-                  <span className="price-currency">₱</span>
-                  <span className="price-amount">
-                    {isYearly ? plan.yearlyPrice : plan.monthlyPrice}
-                  </span>
+                  {isAffiliate ? (
+                    <>
+                      <span className="original-price">₱{plan.originalPrice}</span>
+                      <span className="price-amount affiliate-free">FREE</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="original-price">₱{plan.originalPrice}</span>
+                      <span className="price-currency">₱</span>
+                      <span className="price-amount">
+                        {isYearly ? plan.yearlyPrice : plan.monthlyPrice}
+                      </span>
+                    </>
+                  )}
                 </div>
-                <p className="price-description">{plan.discount}</p>
+                <p className="price-description">
+                  {isAffiliate ? '🎁 Special affiliate pricing' : plan.discount}
+                </p>
               </div>
               
               <div className="plan-features">
@@ -80,7 +97,10 @@ const Pricing = () => {
               </div>
               
               <button onClick={open} className="plan-cta btn btn-primary">
-                {`Register Now - Only ₱${isYearly ? plan.yearlyPrice : plan.monthlyPrice}🚀`}
+                {isAffiliate 
+                  ? 'Register Now - FREE 🎁🚀'
+                  : `Register Now - Only ₱${isYearly ? plan.yearlyPrice : plan.monthlyPrice}🚀`
+                }
               </button>
               <p className="plan-guarantee">🔒 Secure payment • 💯 100% satisfaction guarantee</p>
               <p className="plan-limited">Limited spots available - Only 50 seats remaining</p>
