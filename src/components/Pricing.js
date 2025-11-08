@@ -1,14 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import './Pricing.css';
 import { useLeadModal } from './LeadModalContext';
-import { isAffiliateUser } from '../utils/affiliateTracking';
+import { isAffiliateUser, captureAffiliateCode } from '../utils/affiliateTracking';
 
 const Pricing = () => {
   const [isYearly] = useState(false);
   const [isAffiliate, setIsAffiliate] = useState(false);
 
   useEffect(() => {
-    setIsAffiliate(isAffiliateUser());
+    const checkAffiliate = () => {
+      // Capture affiliate code if present in URL (in case App.js hasn't run yet)
+      captureAffiliateCode();
+      // Check if user is affiliate from sessionStorage
+      const isAffiliateFromStorage = isAffiliateUser();
+      
+      // Also check URL directly as fallback
+      const urlParams = new URLSearchParams(window.location.search);
+      const refCode = urlParams.get('ref');
+      const isAffiliateFromUrl = refCode && refCode.toLowerCase() === 'zerotoaihero';
+      
+      setIsAffiliate(isAffiliateFromStorage || isAffiliateFromUrl);
+    };
+
+    // Check on mount
+    checkAffiliate();
+
+    // Also check when hash changes (in case user navigates to #pricing)
+    const handleHashChange = () => {
+      checkAffiliate();
+    };
+    
+    window.addEventListener('hashchange', handleHashChange);
+    
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
   }, []);
 
   const plans = [
