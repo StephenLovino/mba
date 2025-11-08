@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import './Hero.css';
 import { Announcement, AnnouncementTag, AnnouncementTitle } from './ui/announcement';
 import { ArrowUpRight } from 'lucide-react';

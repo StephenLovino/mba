@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import './Checkout.css';
 
@@ -8,7 +8,7 @@ const CheckoutProfessional = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [confirmingPayment, setConfirmingPayment] = useState(false);
-  const [invoiceUrl, setInvoiceUrl] = useState('');
+  const [invoiceUrl] = useState('');
 
   // Extract form data from URL parameters
   const email = searchParams.get('email') || '';
@@ -17,21 +17,7 @@ const CheckoutProfessional = () => {
   const name = searchParams.get('name') || '';
   const role = 'professional'; // Fixed role for this route
 
-  useEffect(() => {
-    // Validate required parameters
-    if (!email || !name) {
-      setError('Missing required information. Please start over.');
-      setLoading(false);
-      return;
-    }
-
-    console.log('Professional Checkout loaded with:', { email, organization, yearInCollege, name });
-
-    // Create Xendit invoice
-    createInvoice();
-  }, [email, organization, yearInCollege, name]);
-
-  const createInvoice = async () => {
+  const createInvoice = useCallback(async () => {
     try {
       setLoading(true);
       setError('');
@@ -91,7 +77,21 @@ const CheckoutProfessional = () => {
       setError(err.message || 'Failed to load payment form. Please try again.');
       setLoading(false);
     }
-  };
+  }, [email, name, organization, yearInCollege]);
+
+  useEffect(() => {
+    // Validate required parameters
+    if (!email || !name) {
+      setError('Missing required information. Please start over.');
+      setLoading(false);
+      return;
+    }
+
+    console.log('Professional Checkout loaded with:', { email, organization, yearInCollege, name });
+
+    // Create Xendit invoice
+    createInvoice();
+  }, [email, name, organization, yearInCollege, createInvoice]);
 
   const handlePaymentComplete = async () => {
     setConfirmingPayment(true);

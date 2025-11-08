@@ -5,7 +5,6 @@ import './Checkout.css';
 const Checkout = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [paymentStatus, setPaymentStatus] = useState(''); // 'loading', 'success', 'error'
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [confirmingPayment, setConfirmingPayment] = useState(false);

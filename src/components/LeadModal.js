@@ -152,7 +152,6 @@ const LeadModal = () => {
         console.log('Contact created successfully:', data.contactId);
 
         // Check if user is affiliate - skip checkout and go to success
-        const affiliateCode = getAffiliateCode();
         const isAffiliate = isAffiliateUser();
 
         if (isAffiliate) {
@@ -209,7 +208,6 @@ const LeadModal = () => {
       console.error('Submit error:', e);
 
       // Check if affiliate user - even if network fails, skip checkout for affiliates
-      const affiliateCode = getAffiliateCode();
       const isAffiliate = isAffiliateUser();
 
       if (isAffiliate) {

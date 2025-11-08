@@ -4,7 +4,7 @@ import { useLeadModal } from './LeadModalContext';
 import { isAffiliateUser } from '../utils/affiliateTracking';
 
 const Pricing = () => {
-  const [isYearly, setIsYearly] = useState(false);
+  const [isYearly] = useState(false);
   const [isAffiliate, setIsAffiliate] = useState(false);
 
   useEffect(() => {

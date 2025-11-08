@@ -3,8 +3,6 @@ import { useSearchParams } from 'react-router-dom';
 
 const TestPayment = () => {
   const [searchParams] = useSearchParams();
-  const [status, setStatus] = useState('processing');
-  const [message, setMessage] = useState('Processing test payment...');
   const [formData, setFormData] = useState({
     name: 'Test User',
     email: 'test@example.com',
