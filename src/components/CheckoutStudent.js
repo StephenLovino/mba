@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import './Checkout.css';
 
@@ -19,7 +19,9 @@ const CheckoutStudent = () => {
 
   // Extract participants if passed (comma-separated emails)
   const participantsParam = searchParams.get('participants') || '';
-  const participantEmails = participantsParam ? participantsParam.split(',').filter(e => e.trim()) : [];
+  const participantEmails = useMemo(() => {
+    return participantsParam ? participantsParam.split(',').filter(e => e.trim()) : [];
+  }, [participantsParam]);
 
   const createInvoice = useCallback(async () => {
     try {

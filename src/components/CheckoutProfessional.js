@@ -77,7 +77,7 @@ const CheckoutProfessional = () => {
       setError(err.message || 'Failed to load payment form. Please try again.');
       setLoading(false);
     }
-  }, [email, name, organization, yearInCollege]);
+  }, [email, name, organization]);
 
   useEffect(() => {
     // Validate required parameters
