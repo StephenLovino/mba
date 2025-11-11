@@ -522,7 +522,13 @@ const MagicBento = ({
                 enableMagnetism={enableMagnetism}
               >
                 {card.image && (
-                  <img className="card__image" src={card.image} alt={card.title} />
+                  <img 
+                    className="card__image" 
+                    src={card.image} 
+                    alt={card.title}
+                    loading="lazy"
+                    decoding="async"
+                  />
                 )}
                 <div className="card__header">
                   <div className="card__label">{card.label}</div>
@@ -648,7 +654,13 @@ const MagicBento = ({
               }}
             >
               {card.image && (
-                <img className="card__image" src={card.image} alt={card.title} />
+                <img 
+                  className="card__image" 
+                  src={card.image} 
+                  alt={card.title}
+                  loading="lazy"
+                  decoding="async"
+                />
               )}
               <div className="card__header">
                 <div className="card__label">{card.label}</div>

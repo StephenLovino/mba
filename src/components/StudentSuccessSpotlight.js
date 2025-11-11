@@ -54,6 +54,8 @@ const StudentSuccessSpotlight = () => {
                   src="/success-story-andrew.jpg" 
                   alt="Andrew - Business Analytics Officer at BPI BanKo" 
                   className="spotlight-image"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="image-overlay success-badge">
                   <div className="trophy-icon">🏆</div>

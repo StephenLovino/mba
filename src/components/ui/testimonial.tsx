@@ -121,6 +121,8 @@ const AnimatedTestimonials = ({
                       width={600}
                       height={600}
                       draggable={false}
+                      loading="lazy"
+                      decoding="async"
                       className="h-full w-full rounded-3xl object-contain shadow-2xl bg-white/5 border border-white/10"
                     style={{
                       filter: isActive(index) ? 'none' : 'blur(2px) brightness(0.3)',

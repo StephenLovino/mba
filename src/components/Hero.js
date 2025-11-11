@@ -89,6 +89,8 @@ const Hero = () => {
             className="hero-mobile-logo animate-scale"
             src={require('../MBA.png')}
             alt="MBA"
+            loading="eager"
+            decoding="async"
           />
           <div className="hero-badge animate-on-scroll" style={{background:'transparent', border:'none', padding:0, marginBottom:24}}>
             <Announcement themed variant="outline" className="backdrop-blur supports-[backdrop-filter]:bg-white/5 border-white/10 text-white">
@@ -139,13 +141,28 @@ const Hero = () => {
             <div className="stats-photos">
               <div className="photo-stack animate-stagger">
                 <div className="photo photo-1">
-                  <img src="https://framerusercontent.com/images/sFJggTzla8eMLg8n1AbKDQlyulU.jpg" alt="Student" />
+                  <img 
+                    src="https://framerusercontent.com/images/sFJggTzla8eMLg8n1AbKDQlyulU.jpg" 
+                    alt="Student"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </div>
                 <div className="photo photo-2">
-                  <img src="https://framerusercontent.com/images/JhbGle453RWF0QjzZnSxbtxRBiA.jpg" alt="Student" />
+                  <img 
+                    src="https://framerusercontent.com/images/JhbGle453RWF0QjzZnSxbtxRBiA.jpg" 
+                    alt="Student"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </div>
                 <div className="photo photo-3">
-                  <img src="https://framerusercontent.com/images/hCsV8dkBKP9VEaaIlJr8Bk89bX4.jpg" alt="Student" />
+                  <img 
+                    src="https://framerusercontent.com/images/hCsV8dkBKP9VEaaIlJr8Bk89bX4.jpg" 
+                    alt="Student"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </div>
                 <div className="photo photo-4">500+</div>
               </div>

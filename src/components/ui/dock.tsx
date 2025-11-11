@@ -136,7 +136,13 @@ export function DockIcon({
             {name}
           </span>
           {src ? (
-            <img src={src} alt={name} className="h-full w-full rounded-[inherit]" />
+            <img 
+              src={src} 
+              alt={name} 
+              className="h-full w-full rounded-[inherit]"
+              loading="lazy"
+              decoding="async"
+            />
           ) : (
             children
           )}

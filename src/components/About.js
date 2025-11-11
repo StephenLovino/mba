@@ -34,6 +34,8 @@ const About = () => {
               src="https://framerusercontent.com/images/pA9bUThxVP8czm17AmfCWp313o.jpg" 
               alt="Mai Nguyen" 
               className="about-img"
+              loading="lazy"
+              decoding="async"
             />
           </div>
         </div>
